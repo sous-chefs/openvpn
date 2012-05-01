@@ -17,7 +17,16 @@
 # limitations under the License.
 #
 
-search("users", "*:*") do |u|
+search("users", "action:remove") do |u|
+  execute "remove-openvpn-#{u['id']}" do
+    cwd node["openvpn"]["key_dir"]
+    command <<-EOH
+      rm -f #{u['id']}.crt #{u['id']}.key #{u['id']}.conf #{u['id']}.ovpn
+    EOH
+  end
+end
+
+search("users", "NOT action:remove") do |u|
   execute "generate-openvpn-#{u['id']}" do
     command "./pkitool #{u['id']}"
     cwd "/etc/openvpn/easy-rsa"
