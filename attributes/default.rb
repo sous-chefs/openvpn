@@ -30,6 +30,7 @@ default["openvpn"]["signing_ca_key"]  = "#{node["openvpn"]["key_dir"]}/ca.key"
 default["openvpn"]["signing_ca_cert"] = "#{node["openvpn"]["key_dir"]}/ca.crt"
 default["openvpn"]["routes"] = []
 default["openvpn"]["script_security"] = 1
+default["openvpn"]["tls_auth_direction"] = 0
 
 # Used by helper library to generate certificates/keys
 default["openvpn"]["key"]["ca_expire"] = 3650
@@ -40,3 +41,6 @@ default["openvpn"]["key"]["province"]  = "CA"
 default["openvpn"]["key"]["city"]      = "SanFrancisco"
 default["openvpn"]["key"]["org"]       = "Fort-Funston"
 default["openvpn"]["key"]["email"]     = "me@example.com"
+
+# default["openvpn"]["topology"]
+# default["openvpn"]["tls-auth"]
