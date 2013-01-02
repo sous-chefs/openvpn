@@ -4,7 +4,8 @@ maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures openvpn and includes rake tasks for managing certs"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           "1.0.1"
+version           "1.0.2"
+depends           "logrotate"
 
 recipe "openvpn", "Installs and configures openvpn"
 recipe "openvpn::users", "Sets up openvpn cert/configs for users data bag items"
@@ -38,3 +39,28 @@ attribute "openvpn/netmask",
   :description => "Netmask for clients",
   :default => "255.255.0.0"
 
+attribute "openvpn/topology",
+  :display_name => "VPN topology",
+  :description => "Virtual addressing topology used by the VPN",
+  :default => "subnet"
+
+attribute "openvpn/tls_auth",
+  :display_name => "TLS authentication key",
+  :description => "The key to use for TLS authentication"
+
+attribute "openvpn/tls_auth_direction",
+  :display_name => "TLS authentication direction",
+  :description => "Direction for TLS authentication",
+  :default => "0"
+
+attribute "openvpn/cipher",
+  :display_name => "Cipher to use",
+  :description => "Override the cipher to use for encryption on the VPN"
+
+attribute "openvpn/client_config_dir",
+  :display_name => "Directory for client configuration",
+  :description => "Directory for client configuration"
+
+attribute "openvpn/client_to_client",
+  :display_name => "Allow client-to-client communication",
+  :description => "Route communication between clients"

@@ -121,6 +121,14 @@ template "/etc/openvpn/server.conf" do
   notifies :restart, "service[openvpn]"
 end
 
+logrotate_app "openvpn" do
+  cookbook "logrotate"
+  path node["openvpn"]["log"]
+  frequency "daily"
+  create "644 nobody nogroup"
+  rotate 7
+end
+
 service "openvpn" do
   action [:enable, :start]
 end

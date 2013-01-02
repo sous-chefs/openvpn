@@ -9,6 +9,9 @@ dev tap
 <% else -%>
 dev tun
 <% end -%>
+<% if node["openvpn"]["topology"] -%>
+topology <%= node["openvpn"]["topology"] %>
+<% end -%>
 keepalive 10 120
 comp-lzo
 local <%= node["openvpn"]["local"] %>
@@ -24,6 +27,9 @@ ca   /etc/openvpn/keys/ca.crt
 key  /etc/openvpn/keys/server.key # This file should be kept secret. 
 cert /etc/openvpn/keys/server.crt
 dh   /etc/openvpn/keys/dh<%= node["openvpn"]["key"]["size"] %>.pem
+<% if node['openvpn']['tls_auth'] -%>
+tls-auth <%= node['openvpn']['tls_auth'] %> <%= node['openvpn']['tls_auth_direction'] %>
+<% end -%>
 
 ifconfig-pool-persist /etc/openvpn/ipp.txt
 
@@ -47,3 +53,15 @@ verb 1  # don't spam the log with messages.
 mute 10 # suppress identical messages > 10 occurances.
 
 script-security <%= node["openvpn"]["script_security"] %>
+
+<% if node['openvpn']['cipher'] -%>
+cipher <%= node['openvpn']['cipher'] %>
+<% end %>
+
+<% if node['openvpn']['client_config_dir'] -%>
+client-config-dir <%= node['openvpn']['client_config_dir'] %>
+<% end %>
+
+<% if node['openvpn']['client_to_client'] %>
+client-to-client
+<% end %>
