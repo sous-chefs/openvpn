@@ -31,8 +31,8 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 <%= node["openvpn"]["type"] %> <%= node["openvpn"]["subnet"] %> <%= node["openvpn"]["netmask"] %>
 <% end -%>
 
-user nobody
-group nogroup
+user <%= node["openvpn"]["user"] %>
+group <%= node["openvpn"]["group"] %>
 
 # avoid accessing certain resources on restart 
 persist-key
