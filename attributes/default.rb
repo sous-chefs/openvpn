@@ -30,12 +30,12 @@ default["openvpn"]["signing_ca_key"]  = "#{node["openvpn"]["key_dir"]}/ca.key"
 default["openvpn"]["signing_ca_cert"] = "#{node["openvpn"]["key_dir"]}/ca.crt"
 default["openvpn"]["routes"] = []
 default["openvpn"]["script_security"] = 1
-default["openvpn"]["user"] = "nobody" 
+default["openvpn"]["user"] = "nobody"
 case platform
 when "redhat", "centos", "fedora"
-  default["openvpn"]["group"] = "nobody" 
-else 
-  default["openvpn"]["group"] = "nogroup" 
+  default["openvpn"]["group"] = "nobody"
+else
+  default["openvpn"]["group"] = "nogroup"
 end
 # Used by helper library to generate certificates/keys
 default["openvpn"]["key"]["ca_expire"] = 3650

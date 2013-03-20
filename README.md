@@ -48,6 +48,7 @@ These attributes are set by the cookbook by default.
 * `node["openvpn"]["signing_ca_cert"]` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 * `node["openvpn"]["signing_ca_key"]` - CA key for signing, default `/etc/openvpn/keys/ca.key`
 * `node["openvpn"]["routes"]` - Array of routes to add as `push` statements in the server.conf. Default is empty.
+* `node["openvpn"]["script_security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
 * `node["openvpn"]["push"]` - DEPRECATED: Use `routes` above. If you're still using this in your roles, the recipe will append to `routes` attribute.
 
 The following attributes are used to populate the `easy-rsa` vars file. Defaults are the same as the vars file that ships with OpenVPN.
@@ -120,7 +121,7 @@ To automatically create new certificates and configurations for users, create da
       "id": "jtimberman"
     }
 
-This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out).
+This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out). The attribute `node["openvpn"]["script_security"]` must be set to 2 or higher to use this otherwise openvpn server startup will fail.
 
 Customizing Server Configuration
 --------------------------------

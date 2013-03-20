@@ -17,11 +17,13 @@ local <%= node["openvpn"]["local"] %>
 <%= route %>
 <% end -%>
 <% end -%>
+<% if node['openvpn']['script_security'] > 1 -%>
 up /etc/openvpn/server.up.sh
+<% end -%>
 
 # Keys and certificates.
 ca   /etc/openvpn/keys/ca.crt
-key  /etc/openvpn/keys/server.key # This file should be kept secret. 
+key  /etc/openvpn/keys/server.key # This file should be kept secret.
 cert /etc/openvpn/keys/server.crt
 dh   /etc/openvpn/keys/dh<%= node["openvpn"]["key"]["size"] %>.pem
 
@@ -34,7 +36,7 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 user <%= node["openvpn"]["user"] %>
 group <%= node["openvpn"]["group"] %>
 
-# avoid accessing certain resources on restart 
+# avoid accessing certain resources on restart
 persist-key
 persist-tun
 
