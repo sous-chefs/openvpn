@@ -11,7 +11,9 @@ dev tun
 <% end -%>
 keepalive 10 120
 comp-lzo
+<% if node["openvpn"]["local"] != "" -%>
 local <%= node["openvpn"]["local"] %>
+<% end -%>
 <% if node['openvpn']['routes'] -%>
 <% node["openvpn"]["routes"].each do |route| -%>
 <%= route %>
