@@ -15,3 +15,4 @@ FILES=$(/bin/ls /etc/openvpn/server.up.d/*.sh 2>/dev/null || echo)
 for f in $FILES; do
     . $f
 done
+
