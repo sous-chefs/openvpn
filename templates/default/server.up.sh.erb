@@ -9,3 +9,6 @@
 # Set up iptables NAT rules as needed.
 # Example:
 # /sbin/iptables -t nat -A POSTROUTING -s <%= node["openvpn"]["subnet"] %>/<%= node["openvpn"]["netmask"] %> -o <%= node["network"]["default_interface"] %> -j MASQUERADE
+
+# Add additional scripts to /etc/openvpn/server.up.sh.d
+source /etc/openvpn/server.up.d/*.sh
