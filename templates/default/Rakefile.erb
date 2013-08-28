@@ -1,13 +1,13 @@
 # Rakefile for generating server and client OpenVPN certificates.
 #
 # Copyright:: 2009, Opscode, Inc
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,20 +23,20 @@ end
 desc "Create a tar file for the specified user in /tmp."
 task :client do
   Dir.chdir(ENV['PWD'])
-  if (ENV['KEY_DIR'] == nil) 
+  if (ENV['KEY_DIR'] == nil)
     raise "Source 'vars' file and try again."
     exit 1
   else
     keydir = ENV['KEY_DIR']
   end
 
-  if (ENV['name'] == nil) 
+  if (ENV['name'] == nil)
     raise "Specify username with 'name=\"username\"'"
     exit 1
   else
     usercn = ENV['name'].gsub(/@/, '_')
   end
-  
+
   if (ENV['gateway'] == nil)
     raise "Specify the vpn gateway with 'gateway=\"gateway\"'"
     exit 1
