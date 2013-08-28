@@ -3,6 +3,11 @@ openvpn Cookbook CHANGELOG
 This file is used to list changes made in each version of the openvpn cookbook.
 
 
+v1.1.2
+------
+### Improvement
+- **[COOK-2820](https://tickets.opscode.com/browse/COOK-2820)** - Update metadata.rb for all attributes and recipes
+
 v1.1.0
 ------
 - [COOK-1231] - dont use up script if security isnt >1
