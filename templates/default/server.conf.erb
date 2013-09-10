@@ -22,10 +22,10 @@ up /etc/openvpn/server.up.sh
 <% end -%>
 
 # Keys and certificates.
-ca   /etc/openvpn/keys/ca.crt
-key  /etc/openvpn/keys/server.key # This file should be kept secret.
-cert /etc/openvpn/keys/server.crt
-dh   /etc/openvpn/keys/dh<%= node["openvpn"]["key"]["size"] %>.pem
+ca   <%= node['openvpn']['key_dir'] %>/ca.crt
+key  <%= node['openvpn']['key_dir'] %>/server.key # This file should be kept secret.
+cert <%= node['openvpn']['key_dir'] %>/server.crt
+dh   <%= node['openvpn']['key_dir'] %>/dh<%= node["openvpn"]["key"]["size"] %>.pem
 
 ifconfig-pool-persist /etc/openvpn/ipp.txt
 
