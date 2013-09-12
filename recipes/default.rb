@@ -57,6 +57,12 @@ template "/etc/openvpn/server.up.sh" do
   notifies :restart, "service[openvpn]"
 end
 
+directory "/etc/openvpn/server.up.d" do
+  owner "root"
+  group "root"
+  mode 0755
+end
+
 template "#{key_dir}/openssl.cnf" do
   source "openssl.cnf.erb"
   owner "root"
