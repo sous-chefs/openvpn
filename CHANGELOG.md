@@ -3,6 +3,11 @@ openvpn Cookbook CHANGELOG
 This file is used to list changes made in each version of the openvpn cookbook.
 
 
+v1.1.4
+------
+### Improvement
+- Ability to add unspecified options to the server config, made verb and mute values configurable
+
 v1.1.2
 ------
 ### Improvement

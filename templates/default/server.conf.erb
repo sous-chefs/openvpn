@@ -11,7 +11,6 @@ dev tun
 <% end -%>
 keepalive 10 120
 comp-lzo
-local <%= node["openvpn"]["local"] %>
 <% if node['openvpn']['routes'] -%>
 <% node["openvpn"]["routes"].each do |route| -%>
 <%= route %>
@@ -33,9 +32,6 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 <%= node["openvpn"]["type"] %> <%= node["openvpn"]["subnet"] %> <%= node["openvpn"]["netmask"] %>
 <% end -%>
 
-user <%= node["openvpn"]["user"] %>
-group <%= node["openvpn"]["group"] %>
-
 # avoid accessing certain resources on restart
 persist-key
 persist-tun
@@ -45,7 +41,9 @@ status /etc/openvpn/openvpn-status.log
 
 # logging settings.
 log-append  <%= node["openvpn"]["log"] %>
-verb 1  # don't spam the log with messages.
-mute 10 # suppress identical messages > 10 occurances.
+verb <%= node["openvpn"]["verb"] %> # don't spam the log with messages.
+mute <%= node["openvpn"]["mute"] %> # suppress identical messages > 10 occurances.
 
-script-security <%= node["openvpn"]["script_security"] %>
+<% node["openvpn"]["other_options"].each do |option| %>
+<%= option %>
+<% end %>
