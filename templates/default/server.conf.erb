@@ -45,7 +45,11 @@ status /etc/openvpn/openvpn-status.log
 
 # logging settings.
 log-append  <%= node["openvpn"]["log"] %>
-verb 1  # don't spam the log with messages.
-mute 10 # suppress identical messages > 10 occurances.
+verb <%= node["openvpn"]["verb"] %> # don't spam the log with messages.
+mute <%= node["openvpn"]["mute"] %> # suppress identical messages > 10 occurances.
 
 script-security <%= node["openvpn"]["script_security"] %>
+
+<% node["openvpn"]["other_options"].each do |option| %>
+<%= option %>
+<% end %>
