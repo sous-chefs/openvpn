@@ -122,7 +122,7 @@ end
 openvpn_conf "server" do
   port node["openvpn"]["port"]
   proto node["openvpn"]["proto"]
-  type ["openvpn"]["type"]
+  type node["openvpn"]["type"]
   local node["openvpn"]["local"]
   routes node["openvpn"]["routes"]
   script_security node["openvpn"]["script_security"]
@@ -133,6 +133,7 @@ openvpn_conf "server" do
   user node["openvpn"]["user"]
   group node["openvpn"]["group"]
   log node["openvpn"]["log"]
+  notifies :restart, "service[openvpn]"
 end
 
 service 'openvpn' do
