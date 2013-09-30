@@ -16,3 +16,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+actions :create, :delete
+default_action :create
+
+attribute :name, :kind_of => String, :name_attribute => true
+attribute :port, :kind_of => String
+attribute :proto, :kind_of => String
+attribute :type, :kind_of => String
+attribute :local, :kind_of => String
+attribute :routes, :kind_of => Array
+attribute :script_security, :kind_of => Integer
+attribute :key_dir, :kind_of => String
+attribute :key_size, :kind_of => Integer
+attribute :subnet, :kind_of => String
+attribute :netmask, :kind_of => String
+attribute :user, :kind_of => String
+attribute :group, :kind_of => String
+attribute :log, :kind_of => String
