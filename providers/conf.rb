@@ -26,7 +26,15 @@ action :create do
     :script_security => new_resource.script_security,
     :key_dir => new_resource.key_dir, :key_size => new_resource.key_size,
     :subnet => new_resource.subnet, :netmask => new_resource.netmask,
-    :user => new_resource.user, :group => new_resource.group
+    :user => new_resource.user, :group => new_resource.group,
+    :verb => new_resource.verb, :mute => new_resource.mute,
+    :dhcp_dns => new_resource.dhcp_dns, :tls_key => new_resource.tls_key,
+    :dhcp_domain => new_resource.dhcp_domain,
+    :duplicate_cn => new_resource.duplicate_cn,
+    :interface_num => new_resource.interface_num,
+    :client_subnet_route => new_resource.client_subnet_route,
+    :max_clients => new_resource.max_clients, 
+    :status_log => new_resource.status_log
   }
 
   template "/etc/openvpn/#{new_resource.name}.conf" do

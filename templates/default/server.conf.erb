@@ -5,11 +5,14 @@
 port <%= @port %>
 proto <%= @proto %>
 <% if @type == "server-bridge" -%>
-dev tap
+dev tap<%= @interface_num %>
 <% else -%>
-dev tun
+dev tun<%= @interface_num %>
 <% end -%>
 keepalive 10 120
+<% if @max_clients -%>
+max-clients <%= @max_clients %>
+<% end -%>
 comp-lzo
 local <%= @local %>
 <% if @routes -%>
@@ -21,11 +24,28 @@ local <%= @local %>
 up /etc/openvpn/server.up.sh
 <% end -%>
 
+<% if @dhcp_dns -%>
+push "dhcp-option DNS <%= @dhcp_dns %>"
+<% end -%>
+<% if @dhcp_domain -%>
+push "dhcp-option DOMAIN <%= @dhcp_domain %>"
+<% end -%>
+<% if @duplicate_cn -%>
+duplicate-cn
+<% end -%>
+<% if @client_subnet_route -%>
+client-config-dir ccd
+route <%= @client_subnet_route %>
+<% end -%>
+
 # Keys and certificates.
 ca   <%= @key_dir %>/ca.crt
 key  <%= @key_dir %>/server.key # This file should be kept secret.
 cert <%= @key_dir %>/server.crt
 dh   <%= @key_dir %>/dh<%= @key_size %>.pem
+<% if @tls_key -%>
+tls-auth <%= @tls_key %> 0
+<% end -%>
 
 ifconfig-pool-persist /etc/openvpn/ipp.txt
 
@@ -41,11 +61,11 @@ persist-key
 persist-tun
 
 # current client connections
-status /etc/openvpn/openvpn-status.log
+status <%= @status_log %>
 
 # logging settings.
 log-append  <%= @log %>
-verb 1  # don't spam the log with messages.
-mute 10 # suppress identical messages > 10 occurances.
+verb <%= @verb %>  # don't spam the log with messages.
+mute <%= @mute %>  # suppress identical messages > 10 occurances.
 
 script-security <%= @script_security %>
