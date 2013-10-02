@@ -95,7 +95,7 @@ attribute 'openvpn/script_security',
 attribute 'openvpn/configure_default_server',
           :display_name => 'Configure Default Server',
           :description => 'Boolean to determine whether the default recipe will create a "conf" file for the default server. Set to false if you want to use only the LWRP to create the conf files.',
-          :default => true,
+          :default => "true",
           :recipes => [ 'openvpn::default' ]
 
 attribute 'openvpn/key/ca_expire',
