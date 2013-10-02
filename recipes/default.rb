@@ -119,23 +119,22 @@ bash 'openvpn-server-key' do
   not_if { ::File.exists?("#{key_dir}/server.crt") }
 end
 
-if node["openvpn"]["configure_default_server"]
-  openvpn_conf "server" do
-    port node["openvpn"]["port"]
-    proto node["openvpn"]["proto"]
-    type node["openvpn"]["type"]
-    local node["openvpn"]["local"]
-    routes node["openvpn"]["routes"]
-    script_security node["openvpn"]["script_security"]
-    key_dir node["openvpn"]["key_dir"]
-    key_size node["openvpn"]["key"]["size"]
-    subnet node["openvpn"]["subnet"]
-    netmask node["openvpn"]["netmask"]
-    user node["openvpn"]["user"]
-    group node["openvpn"]["group"]
-    log node["openvpn"]["log"]
-    notifies :restart, "service[openvpn]"
-  end
+openvpn_conf "server" do
+  port node["openvpn"]["port"]
+  proto node["openvpn"]["proto"]
+  type node["openvpn"]["type"]
+  local node["openvpn"]["local"]
+  routes node["openvpn"]["routes"]
+  script_security node["openvpn"]["script_security"]
+  key_dir node["openvpn"]["key_dir"]
+  key_size node["openvpn"]["key"]["size"]
+  subnet node["openvpn"]["subnet"]
+  netmask node["openvpn"]["netmask"]
+  user node["openvpn"]["user"]
+  group node["openvpn"]["group"]
+  log node["openvpn"]["log"]
+  only_if { node["openvpn"]["configure_default_server"] }
+  notifies :restart, "service[openvpn]"
 end
 
 service 'openvpn' do
