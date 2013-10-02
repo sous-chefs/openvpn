@@ -47,6 +47,7 @@ These attributes are set by the cookbook by default.
 * `node["openvpn"]["signing_ca_key"]` - CA key for signing, default `/etc/openvpn/keys/ca.key`
 * `node["openvpn"]["routes"]` - Array of routes to add as `push` statements in the server.conf. Default is empty.
 * `node["openvpn"]["script_security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
+* `node["openvpn"]["configure_default_server"]` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
 * `node["openvpn"]["push"]` - DEPRECATED: Use `routes` above. If you're still using this in your roles, the recipe will append to `routes` attribute.
 
 The following attributes are used to populate the `easy-rsa` vars file. Defaults are the same as the vars file that ships with OpenVPN.
@@ -130,6 +131,11 @@ To further customize the server configuration, there are two templates that can 
 * templates/default/server.up.sh.erb
 
 The first is the OpenVPN server configuration file. Modify to suit your needs for more advanced features of [OpenVPN](http://openvpn.net). The second is an `up` script run when OpenVPN starts. This is where you can add firewall rules, enable IP forwarding and other OS network settings required for OpenVPN. Attributes in the cookbook are provided as defaults, you can add more via the openvpn role if you need them.
+
+
+Using the LWRP
+--------------
+To create (possibly multiple) "conf" files on a server, use openvpn_conf "name".  See the conf.rb file in the resources directory to find the supported attributes, or add some of your own.  If you don't want to use the default "server.conf" from the default recipe, set `node["openvpn"]["configure_default_server"]` to false, then use the LWRP to configure as many as you like.
 
 
 SSL Certificates
