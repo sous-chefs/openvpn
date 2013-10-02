@@ -9,6 +9,9 @@ dev tap<%= @interface_num %>
 <% else -%>
 dev tun<%= @interface_num %>
 <% end -%>
+<% @plugins.each do |p| -%>
+plugin <%= p %>
+<% end -%>
 keepalive 10 120
 <% if @max_clients -%>
 max-clients <%= @max_clients %>
