@@ -33,15 +33,15 @@ action :create do
     :duplicate_cn => new_resource.duplicate_cn,
     :interface_num => new_resource.interface_num,
     :client_subnet_route => new_resource.client_subnet_route,
-    :max_clients => new_resource.max_clients, 
+    :max_clients => new_resource.max_clients,
     :status_log => new_resource.status_log,
     :plugins => new_resource.plugins
   }
 
   template "/etc/openvpn/#{new_resource.name}.conf" do
-    source "server.conf.erb"
-    owner "root"
-    group "root"
+    source 'server.conf.erb'
+    owner 'root'
+    group 'root'
     mode 0644
     variables vars
   end
@@ -52,4 +52,3 @@ action :delete do
     action :delete
   end
 end
-
