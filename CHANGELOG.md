@@ -3,6 +3,15 @@ openvpn Cookbook CHANGELOG
 This file is used to list changes made in each version of the openvpn cookbook.
 
 
+v1.1.4
+------
+### Bug
+- **[COOK-3317](https://tickets.opscode.com/browse/COOK-3317)** - Fix and make `server.up.sh` useful and customizable
+
+### New Feature
+- **[COOK-3315](https://tickets.opscode.com/browse/COOK-3315)** - Remove hardcoded variables in configuration file
+
+
 v1.1.2
 ------
 ### Improvement
