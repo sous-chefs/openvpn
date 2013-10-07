@@ -1,6 +1,6 @@
 # Rakefile for generating server and client OpenVPN certificates.
 #
-# Copyright:: 2009, Opscode, Inc
+# Copyright:: 2009-2013, Opscode, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ task :client do
 client
 dev tun
 proto udp
-remote <%= node["openvpn"]["gateway"] %> <%= node["openvpn"]["port"] %>
+remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['port'] %>
 resolv-retry infinite
 nobind
 persist-key
