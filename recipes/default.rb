@@ -124,7 +124,7 @@ bash "openvpn-ta-key" do
   code <<-EOF
       openvpn --genkey --secret #{key_dir}/ta.key 
   EOF
-  not_if { ::File.exists?("#{key_dir}/ta.key") || node["openvpn"]["tls"] == "false" }
+  not_if { ::File.exists?("#{key_dir}/ta.key") || node["openvpn"]["tls"] == false }
 end
 
 template "/etc/openvpn/server.conf" do

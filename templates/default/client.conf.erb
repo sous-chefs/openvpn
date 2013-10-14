@@ -9,7 +9,7 @@ persist-tun
 ca ca.crt
 cert <%= @username %>.crt
 key <%= @username %>.key
-<% if node["openvpn"]["tls"] -%>
+<% if node["openvpn"]["tls"] == true -%>
 tls-auth ta.key 1
 <% end -%>
 comp-lzo
