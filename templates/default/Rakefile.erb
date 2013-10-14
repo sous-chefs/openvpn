@@ -71,7 +71,7 @@ EOF
   end
 
   puts "* Create .tar.gz archive for #{usercn}."
-  sh %{(cd #{keydir} && tar zcf #{usercn}.tar.gz ca.crt #{usercn}.crt #{usercn}.key #{usercn}.conf #{usercn}.ovpn)}
+  sh %{(cd #{keydir} && tar zcf #{usercn}.tar.gz ca.crt #{usercn}.crt #{usercn}.key #{usercn}.conf #{usercn}.ovpn <%="ta.key" if node["openvpn"]["tls"] == true %>) }
   sh %{chmod 0600 #{keydir}/#{usercn}.tar.gz}
   tar_path = "/tmp"
   sh %{cp #{keydir}/#{usercn}.tar.gz #{tar_path}/}

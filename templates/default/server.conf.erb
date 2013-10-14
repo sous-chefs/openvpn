@@ -23,7 +23,7 @@ up /etc/openvpn/server.up.sh
 
 # Keys and certificates.
 ca         <%= node['openvpn']['key_dir'] %>/ca.crt
-<% if node['openvpn']['tls'] == 'true' -%>
+<% if node['openvpn']['tls'] == true -%>
 tls-auth   <%= node['openvpn']['key_dir'] %>/ta.key 0
 <% end -%>
 key        <%= node['openvpn']['key_dir'] %>/server.key # This file should be kept secret.
