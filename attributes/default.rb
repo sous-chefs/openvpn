@@ -37,6 +37,7 @@ default['openvpn']['group']           = case node['platform_family']
                                         else
                                           'nogroup'
                                         end
+default['openvpn']['tls']             = false
 
 # Used by helper library to generate certificates/keys
 default['openvpn']['key']['ca_expire'] = 3650
