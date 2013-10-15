@@ -48,7 +48,7 @@ else
     end
 
     execute "create-openvpn-tar-#{u['id']}" do
-      cwd node["openvpn"]["key_dir"]
+      cwd node['openvpn']['key_dir']
       command <<-EOH
         tar zcf #{u['id']}.tar.gz ca.crt #{u['id']}.crt #{u['id']}.key #{u['id']}.conf #{u['id']}.ovpn #{"ta.key" if node["openvpn"]["tls"] == true}
       EOH
