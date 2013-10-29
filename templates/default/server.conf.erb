@@ -49,3 +49,7 @@ verb 1  # don't spam the log with messages.
 mute 10 # suppress identical messages > 10 occurances.
 
 script-security <%= node['openvpn']['script_security'] %>
+
+<% node['openvpn']['other_options'].each do |option| %>
+<%= option %>
+<% end %>

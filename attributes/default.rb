@@ -30,6 +30,7 @@ default['openvpn']['signing_ca_key']  = "#{node["openvpn"]["key_dir"]}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node["openvpn"]["key_dir"]}/ca.crt"
 default['openvpn']['routes']          = []
 default['openvpn']['script_security'] = 1
+default['openvpn']['user_query']      = '*:*'
 default['openvpn']['user']            = 'nobody'
 default['openvpn']['group']           = case node['platform_family']
                                         when 'rhel'
@@ -47,3 +48,4 @@ default['openvpn']['key']['province']  = 'CA'
 default['openvpn']['key']['city']      = 'SanFrancisco'
 default['openvpn']['key']['org']       = 'Fort-Funston'
 default['openvpn']['key']['email']     = 'me@example.com'
+default['openvpn']['other_options']    = []

@@ -20,7 +20,7 @@
 if Chef::Config[:solo]
   Chef::Log.warn 'The openvpn::users recipe requires a Chef Server, skipping.'
 else
-  search('users', '*:*') do |u|
+  search('users', node['openvpn']['user_query']) do |u|
     execute "generate-openvpn-#{u['id']}" do
       command "./pkitool #{u['id']}"
       cwd     '/etc/openvpn/easy-rsa'
