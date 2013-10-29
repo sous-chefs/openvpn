@@ -48,3 +48,4 @@ default['openvpn']['key']['province']  = 'CA'
 default['openvpn']['key']['city']      = 'SanFrancisco'
 default['openvpn']['key']['org']       = 'Fort-Funston'
 default['openvpn']['key']['email']     = 'me@example.com'
+default['openvpn']['other_options']    = []
