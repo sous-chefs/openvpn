@@ -3,6 +3,11 @@ openvpn Cookbook CHANGELOG
 This file is used to list changes made in each version of the openvpn cookbook.
 
 
+v2.0.0
+------
+- [COOK-3691] Creating and using a openvpn_conf LWRP
+
+
 v1.1.4
 ------
 ### Bug
