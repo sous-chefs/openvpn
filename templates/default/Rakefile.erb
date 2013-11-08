@@ -53,7 +53,7 @@ resolv-retry infinite
 nobind
 persist-key
 persist-tun
-ca ca.crt
+ca <%= File.basename(node['openvpn']['signing_ca_cert']) %>
 cert #{usercn}.crt
 key #{usercn}.key
 comp-lzo
@@ -71,7 +71,7 @@ EOF
   end
 
   puts "* Create .tar.gz archive for #{usercn}."
-  sh %{(cd #{keydir} && tar zcf #{usercn}.tar.gz ca.crt #{usercn}.crt #{usercn}.key #{usercn}.conf #{usercn}.ovpn)}
+  sh %{(cd #{keydir} && tar zcf #{usercn}.tar.gz <%= File.basename(node["openvpn"]["signing_ca_cert"]) %> #{usercn}.crt #{usercn}.key #{usercn}.conf #{usercn}.ovpn)}
   sh %{chmod 0600 #{keydir}/#{usercn}.tar.gz}
   tar_path = "/tmp"
   sh %{cp #{keydir}/#{usercn}.tar.gz #{tar_path}/}

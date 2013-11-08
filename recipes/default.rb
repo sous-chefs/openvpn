@@ -128,6 +128,7 @@ openvpn_conf 'server' do
   script_security node['openvpn']['script_security']
   key_dir node['openvpn']['key_dir']
   key_size node['openvpn']['key']['size']
+  signing_ca_cert node['openvpn']['signing_ca_cert'] 
   subnet node['openvpn']['subnet']
   netmask node['openvpn']['netmask']
   user node['openvpn']['user']
