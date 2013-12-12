@@ -3,6 +3,11 @@ openvpn Cookbook CHANGELOG
 This file is used to list changes made in each version of the openvpn cookbook.
 
 
+v2.0.4
+------
+fixing metadata version error. locking to 3.0
+
+
 v2.0.2
 ------
 Locking yum dependency to '< 3'
