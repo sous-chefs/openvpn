@@ -9,6 +9,9 @@ version           '2.0.5'
 recipe 'openvpn', 'Installs and configures openvpn'
 recipe 'openvpn::users', 'Sets up openvpn cert/configs for users data bag items'
 
+depends 'yum', '~> 3.0'
+depends 'yum-epel'
+
 supports 'centos'
 supports 'debian'
 supports 'fedora'
@@ -88,13 +91,13 @@ attribute 'openvpn/routes',
 
 attribute 'openvpn/script_security',
           :display_name => 'OpenVPN Script Security',
-          :description  => 'Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script',
+          :description  => 'Script Security setting to use in server config. Default is 1. The "up" script will not be included if this is 0 or 1. Set it to 2 to use the "up" script',
           :default      => '1',
           :recipes      => ['openvpn::default']
 
 attribute 'openvpn/configure_default_server',
           :display_name => 'Configure Default Server',
-          :description => 'Boolean to determine whether the default recipe will create a "conf" file for the default server. Set to false if you want to use only the LWRP to create the conf files.',
+          :description => 'Boolean to determine whether the default recipe will create a "conf" file for the default server. Set to false if you want to use the LWRP to create the conf files.',
           :default => 'true',
           :recipes => ['openvpn::default']
 

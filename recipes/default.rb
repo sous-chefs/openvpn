@@ -24,6 +24,8 @@ node.default['openvpn']['routes'] = routes.flatten
 key_dir  = node['openvpn']['key_dir']
 key_size = node['openvpn']['key']['size']
 
+include_recipe 'yum-epel' if platform_family?('rhel')
+
 package 'openvpn' do
   action :install
 end
