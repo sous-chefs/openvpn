@@ -1,6 +1,6 @@
 openvpn Cookbook
 ================
-[![Build Status](https://secure.travis-ci.org/opscode-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/opscode-cookbooks/openvpn)
+[![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline, but your site will need probably need to customize.
 
