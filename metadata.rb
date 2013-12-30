@@ -6,8 +6,8 @@ description       'Installs and configures openvpn and includes rake tasks for m
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           '2.1.1'
 
-recipe 'openvpn', 'Installs and configures openvpn'
-recipe 'openvpn::users', 'Sets up openvpn cert/configs for users data bag items'
+recipe 'openvpn',         'Installs and configures OpenVPN.'
+recipe 'openvpn::users',  'Sets up openvpn cert/configs for users data bag items.'
 
 depends 'yum', '~> 3.0'
 depends 'yum-epel'
