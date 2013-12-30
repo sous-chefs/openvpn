@@ -101,10 +101,10 @@ end
 bash 'openvpn-initca' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
   code <<-EOF
-    openssl req -batch -days #{node["openvpn"]["key"]["ca_expire"]} \
+    openssl req -batch -days #{node['openvpn']['key']['ca_expire']} \
       -nodes -new -newkey rsa:#{key_size} -sha1 -x509 \
-      -keyout #{node["openvpn"]["signing_ca_key"]} \
-      -out #{node["openvpn"]["signing_ca_cert"]} \
+      -keyout #{node['openvpn']['signing_ca_key']} \
+      -out #{node['openvpn']['signing_ca_cert']} \
       -config #{key_dir}/openssl.cnf
   EOF
   not_if { ::File.exists?(node['openvpn']['signing_ca_cert']) }
@@ -113,11 +113,11 @@ end
 bash 'openvpn-server-key' do
   environment('KEY_CN' => 'server')
   code <<-EOF
-    openssl req -batch -days #{node["openvpn"]["key"]["expire"]} \
+    openssl req -batch -days #{node['openvpn']['key']['expire']} \
       -nodes -new -newkey rsa:#{key_size} -keyout #{key_dir}/server.key \
       -out #{key_dir}/server.csr -extensions server \
       -config #{key_dir}/openssl.cnf && \
-    openssl ca -batch -days #{node["openvpn"]["key"]["ca_expire"]} \
+    openssl ca -batch -days #{node['openvpn']['key']['ca_expire']} \
       -out #{key_dir}/server.crt -in #{key_dir}/server.csr \
       -extensions server -md sha1 -config #{key_dir}/openssl.cnf
   EOF
