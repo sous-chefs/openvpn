@@ -134,7 +134,7 @@ DO_ROOT="0"
 NODES_REQ="-nodes"
 NODES_P12=""
 BATCH="-batch"
-CA="ca"
+[ -n "$CA" ]  || export CA="ca"  
 # must be set or errors of openssl.cnf
 PKCS11_MODULE_PATH="dummy"
 PKCS11_PIN="dummy"

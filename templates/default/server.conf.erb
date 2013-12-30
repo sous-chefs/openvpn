@@ -42,7 +42,7 @@ route <%= @client_subnet_route %>
 <% end -%>
 
 # Keys and certificates.
-ca   <%= @key_dir %>/ca.crt
+ca   <%= @signing_ca_cert %>
 key  <%= @key_dir %>/server.key # This file should be kept secret.
 cert <%= @key_dir %>/server.crt
 dh   <%= @key_dir %>/dh<%= @key_size %>.pem

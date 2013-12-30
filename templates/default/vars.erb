@@ -66,3 +66,6 @@ export KEY_PROVINCE="<%= node['openvpn']['key']['province'] %>"
 export KEY_CITY="<%= node['openvpn']['key']['city'] %>"
 export KEY_ORG="<%= node['openvpn']['key']['org'] %>"
 export KEY_EMAIL="<%= node['openvpn']['key']['email'] %>"
+
+# Override the value of the signing key/cert (default $CA.[crt,key])  
+export CA="<%= File.basename(node['openvpn']['signing_ca_key'], ".*") %>"

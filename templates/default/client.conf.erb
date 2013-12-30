@@ -6,7 +6,7 @@ resolv-retry infinite
 nobind
 persist-key
 persist-tun
-ca ca.crt
+ca <%= File.basename(node['openvpn']['signing_ca_cert']) %>
 cert <%= @username %>.crt
 key <%= @username %>.key
 comp-lzo
