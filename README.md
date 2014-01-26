@@ -72,6 +72,7 @@ Sets up an OpenVPN server.
 
 ### users
 Utilizes a data bag called `users` to generate OpenVPN keys for each user.
+[chef-solo-search](https://github.com/edelight/chef-solo-search) is required in order to use this recipe with Chef-Solo, although it is not a dependency of this cookbook.
 
 
 Usage
