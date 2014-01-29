@@ -65,6 +65,12 @@ attribute 'openvpn/log',
           :default      => '/var/log/openvpn.log',
           :recipes      => ['openvpn']
 
+attribute 'openvpn/status_log',
+          :display_name => 'OpenVPN Status Log File',
+          :description  => 'OpenVPN Status log file. Default /etc/openvpn/openvpn-status.log',
+          :default      => '/etc/openvpn/openvpn-status.log',
+          :recipes      => ['openvpn']
+
 attribute 'openvpn/key_dir',
           :display_name => 'OpenVPN Key Directory',
           :description  => 'Location to store keys, certificates and related files. Default /etc/openvpn/keys',
