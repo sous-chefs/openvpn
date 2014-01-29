@@ -138,6 +138,7 @@ openvpn_conf 'server' do
   user node['openvpn']['user']
   group node['openvpn']['group']
   log node['openvpn']['log']
+  status_log node['openvpn']['status_log']
   only_if { node['openvpn']['configure_default_server'] }
   notifies :restart, 'service[openvpn]'
 end

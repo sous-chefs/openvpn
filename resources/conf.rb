@@ -42,5 +42,5 @@ attribute :duplicate_cn, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :interface_num, :kind_of => Integer
 attribute :client_subnet_route, :kind_of => String
 attribute :max_clients, :kind_of => Integer
-attribute :status_log, :kind_of => String, :default => '/etc/openvpn/openvpn-status.log'
+attribute :status_log, :kind_of => String
 attribute :plugins, :kind_of => Array, :default => []
