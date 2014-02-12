@@ -64,6 +64,12 @@ The following are for the default values for fields place in the certificate fro
 * `node["openvpn"]["key"]["org"]` - `KEY_ORG`
 * `node["openvpn"]["key"]["email"]` - `KEY_EMAIL`
 
+Generate certificates for ldap group members (default disabled):
+* `node["openvpn"]["ldap_users"]` - `false`
+* `node["openvpn"]["ldap_group_name"]` - `nil`, for example `users`
+* `node["openvpn"]["ldap_groups_dn"]` - `nil`, for example `ou=users,dc=example,dc=com`
+
+
 
 Recipes
 -------
