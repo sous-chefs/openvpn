@@ -21,6 +21,7 @@ max-routes <%= @max_routes %>
 <% end -%>
 comp-lzo
 local <%= @local %>
+
 <% if @routes -%>
 <% @routes.each do |route| -%>
 <%= route %>
@@ -58,7 +59,7 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 <% if @type == "server" -%>
 <%= @type %> <%= @subnet %> <%= @netmask %>
 <% if @topology -%>
-topology <%- @topology -%>
+topology <%= @topology -%>
 <% end -%>
 <% end -%>
 user <%= @user %>
