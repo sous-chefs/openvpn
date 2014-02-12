@@ -59,7 +59,7 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 <% if @type == "server" -%>
 <%= @type %> <%= @subnet %> <%= @netmask %>
 <% if @topology -%>
-topology <%= @topology -%>
+topology <%= @topology %>
 <% end -%>
 <% end -%>
 user <%= @user %>
