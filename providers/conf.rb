@@ -34,7 +34,9 @@ action :create do
     :interface_num => new_resource.interface_num,
     :client_subnet_route => new_resource.client_subnet_route,
     :max_clients => new_resource.max_clients,
+    :max_routes  => new_resource.max_routes,
     :status_log => new_resource.status_log,
+    :topology   =>  new_resource.topology,
     :plugins => new_resource.plugins
   }
 
