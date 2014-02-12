@@ -64,6 +64,12 @@ The following are for the default values for fields place in the certificate fro
 * `node["openvpn"]["key"]["org"]` - `KEY_ORG`
 * `node["openvpn"]["key"]["email"]` - `KEY_EMAIL`
 
+Generate certificates for ldap group members (default disabled):
+* `node["openvpn"]["ldap_users"]` - `false`
+* `node["openvpn"]["ldap_group_name"]` - `nil`, for example `users`
+* `node["openvpn"]["ldap_groups_dn"]` - `nil`, for example `ou=users,dc=example,dc=com`
+
+
 
 Recipes
 -------
@@ -148,6 +154,12 @@ Some of the easy-rsa tools are copied to /etc/openvpn/easy-rsa to provide the mi
 
 Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake task will generate a tar.gz file with the configuration and certificates for the client.
 
+
+Recreating SSL Certificates
+----------------
+Remove one line of any appropriate certificate issued in the file `node["openvpn"]["key_dir"]/index.txt`.
+Remove all files `<name>.*` from `node["openvpn"]["key_dir"]`
+Re-run chef-client!
 
 License & Authors
 -----------------

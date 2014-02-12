@@ -17,42 +17,71 @@
 # limitations under the License.
 #
 
-if Chef::Config[:solo]
+if Chef::Config[:solo] && node['openvpn']['ldap_users'] == false
   Chef::Log.warn 'The openvpn::users recipe requires a Chef Server, skipping.'
 else
-  search('users', '*:*') do |u|
-    execute "generate-openvpn-#{u['id']}" do
-      command "./pkitool #{u['id']}"
-      cwd     '/etc/openvpn/easy-rsa'
-      environment(
-        'EASY_RSA'     => '/etc/openvpn/easy-rsa',
-        'KEY_CONFIG'   => '/etc/openvpn/easy-rsa/openssl.cnf',
-        'KEY_DIR'      => node['openvpn']['key_dir'],
-        'CA_EXPIRE'    => node['openvpn']['key']['ca_expire'].to_s,
-        'KEY_EXPIRE'   => node['openvpn']['key']['expire'].to_s,
-        'KEY_SIZE'     => node['openvpn']['key']['size'].to_s,
-        'KEY_COUNTRY'  => node['openvpn']['key']['country'],
-        'KEY_PROVINCE' => node['openvpn']['key']['province'],
-        'KEY_CITY'     => node['openvpn']['key']['city'],
-        'KEY_ORG'      => node['openvpn']['key']['org'],
-        'KEY_EMAIL'    => node['openvpn']['key']['email']
-      )
-      not_if { ::File.exists?("#{node["openvpn"]["key_dir"]}/#{u['id']}.crt") }
-    end
+   # Retrive users from ldap
+   if node['openvpn']['ldap_users']
 
-    %w[conf ovpn].each do |ext|
-      template "#{node["openvpn"]["key_dir"]}/#{u['id']}.#{ext}" do
-        source   'client.conf.erb'
-        variables(:username => u['id'])
+     require 'net/ldap'
+
+     ldap_group = node['openvpn']['ldap_group_name']
+     ldap_con = Net::LDAP.new( {:host => node['dc']['ip'], :port => '389', :auth =>
+     { :method => :anonymous }} )
+     treebase = "#{node['openvpn']['ldap_groups_dn']}"
+
+     users = Array.new()
+     attrs = ["memberUid", "cn"]
+     ldap_con.search( :base => treebase, :attributes=> attrs) do |entry|
+
+      if entry['cn'][0] ==  ("#{ldap_group}")
+	puts "I find the following users in LDAP #{node['openvpn']['ldap_users']} group:"
+	entry['memberUid'].each do |member|
+	  puts "#{member}"
+	  users << {"id" => "#{member}"}
+	  end
       end
-    end
+     end
 
-    execute "create-openvpn-tar-#{u['id']}" do
-      cwd     node['openvpn']['key_dir']
-      command <<-EOH
-        tar zcf #{u['id']}.tar.gz ca.crt #{u['id']}.crt #{u['id']}.key #{u['id']}.conf #{u['id']}.ovpn
-      EOH
-      not_if { ::File.exists?("#{node["openvpn"]["key_dir"]}/#{u['id']}.tar.gz") }
-    end
-  end
+   else
+     # Retrive users from search (chef-server)
+     users = search('users', '*:*')
+   end
+
+   users.each do |u|
+
+	    execute "generate-openvpn-#{u['id']}" do
+	      command "./pkitool #{u['id']}"
+	      cwd     '/etc/openvpn/easy-rsa'
+	      environment(
+		'EASY_RSA'     => '/etc/openvpn/easy-rsa',
+		'KEY_CONFIG'   => '/etc/openvpn/easy-rsa/openssl.cnf',
+		'KEY_DIR'      => node['openvpn']['key_dir'],
+		'CA_EXPIRE'    => node['openvpn']['key']['ca_expire'].to_s,
+		'KEY_EXPIRE'   => node['openvpn']['key']['expire'].to_s,
+		'KEY_SIZE'     => node['openvpn']['key']['size'].to_s,
+		'KEY_COUNTRY'  => node['openvpn']['key']['country'],
+		'KEY_PROVINCE' => node['openvpn']['key']['province'],
+		'KEY_CITY'     => node['openvpn']['key']['city'],
+		'KEY_ORG'      => node['openvpn']['key']['org'],
+		'KEY_EMAIL'    => node['openvpn']['key']['email']
+	      )
+	      not_if { ::File.exists?("#{node["openvpn"]["key_dir"]}/#{u['id']}.crt") }
+	    end
+
+	    %w[conf ovpn].each do |ext|
+	      template "#{node["openvpn"]["key_dir"]}/#{u['id']}.#{ext}" do
+		  source   'client.conf.erb'
+		  variables(:username => u['id'])
+	      end
+	    end
+
+	    execute "create-openvpn-tar-#{u['id']}" do
+	      cwd     node['openvpn']['key_dir']
+	      command <<-EOH
+		tar zcf #{u['id']}.tar.gz ca.crt #{u['id']}.crt #{u['id']}.key #{u['id']}.conf #{u['id']}.ovpn
+	      EOH
+	      not_if { ::File.exists?("#{node["openvpn"]["key_dir"]}/#{u['id']}.tar.gz") }
+	    end
+   end
 end

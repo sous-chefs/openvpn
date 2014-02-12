@@ -49,3 +49,14 @@ default['openvpn']['key']['province']  = 'CA'
 default['openvpn']['key']['city']      = 'SanFrancisco'
 default['openvpn']['key']['org']       = 'Fort-Funston'
 default['openvpn']['key']['email']     = 'me@example.com'
+
+
+
+# Retrive users from ldap group
+# Enable?
+default['openvpn']['ldap_users'] = false
+# For example: "vpngroup"
+default['openvpn']['ldap_group_name'] = nil
+# For example: "dc=groups,dc=example,dc=local"
+default['openvpn']['ldap_groups_dn'] = nil
+
