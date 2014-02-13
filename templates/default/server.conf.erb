@@ -12,6 +12,9 @@ dev tun<%= @interface_num %>
 <% @plugins.each do |p| -%>
 plugin <%= p %>
 <% end -%>
+<% if @external_auth -%>
+<%= @external_auth %>
+<% end -%>
 keepalive 10 120
 <% if @max_clients -%>
 max-clients <%= @max_clients %>

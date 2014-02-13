@@ -138,6 +138,7 @@ openvpn_conf 'server' do
   user node['openvpn']['user']
   max_routes node['openvpn']['max_routes']
   topology node['openvpn']['topology']
+  external_auth node['openvpn']['external_auth']
   group node['openvpn']['group']
   log node['openvpn']['log']
   only_if { node['openvpn']['configure_default_server'] }
