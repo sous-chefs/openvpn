@@ -141,6 +141,7 @@ openvpn_conf 'server' do
   external_auth node['openvpn']['external_auth']
   group node['openvpn']['group']
   log node['openvpn']['log']
+  plugins node['openvpn']['plugins']
   only_if { node['openvpn']['configure_default_server'] }
   notifies :restart, 'service[openvpn]'
 end
