@@ -48,8 +48,12 @@ These attributes are set by the cookbook by default.
 * `node["openvpn"]["routes"]` - Array of routes to add as `push` statements in the server.conf. Default is empty.
 * `node["openvpn"]["script_security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
 * `node["openvpn"]["configure_default_server"]` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
+* `node["openvpn"]["max_routes"]` - Max number of routes, Chef default is nil, Openvpn default is 100.
+* `node["openvpn"]["max_client"]` - Max number of clients, default is nil / no limit.
+* `node["openvpn"]["topology"]` - Sets the [server topology](https://community.openvpn.net/openvpn/wiki/Topology).  Chef default is nil, Openvpn will use it's default (net30).  The recommended value for OpenVPN 2.3+ is subnet, additional info can be found [here](https://community.openvpn.net/openvpn/wiki/Topology).
 * `node["openvpn"]["push"]` - DEPRECATED: Use `routes` above. If you're still using this in your roles, the recipe will append to `routes` attribute.
 
+topology
 The following attributes are used to populate the `easy-rsa` vars file. Defaults are the same as the vars file that ships with OpenVPN.
 
 * `node["openvpn"]["key"]["ca_expire"]` - In how many days should the root CA key expire - `CA_EXPIRE`.

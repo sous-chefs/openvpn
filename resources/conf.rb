@@ -32,6 +32,8 @@ attribute :subnet, :kind_of => String
 attribute :netmask, :kind_of => String
 attribute :user, :kind_of => String
 attribute :group, :kind_of => String
+attribute :reneg_sec, :kind_of => Integer
+attribute :external_auth, :kind_of => String
 attribute :log, :kind_of => String
 attribute :verb, :kind_of => Integer, :default => 1
 attribute :mute, :kind_of => Integer, :default => 10
@@ -42,5 +44,7 @@ attribute :duplicate_cn, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :interface_num, :kind_of => Integer
 attribute :client_subnet_route, :kind_of => String
 attribute :max_clients, :kind_of => Integer
+attribute :max_routes, :kind_of => Integer
+attribute :topology, :kind_of => String
 attribute :status_log, :kind_of => String, :default => '/etc/openvpn/openvpn-status.log'
 attribute :plugins, :kind_of => Array, :default => []

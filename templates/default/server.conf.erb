@@ -12,12 +12,21 @@ dev tun<%= @interface_num %>
 <% @plugins.each do |p| -%>
 plugin <%= p %>
 <% end -%>
+<% if @external_auth -%>
+<%= @external_auth %>
+<% end -%>
 keepalive 10 120
 <% if @max_clients -%>
 max-clients <%= @max_clients %>
 <% end -%>
+<% if @max_routes -%>
+max-routes <%= @max_routes %>
+<% end -%>
 comp-lzo
 local <%= @local %>
+<% if @reneg_sec -%>
+reneg-sec <%= @reneg_sec %>
+<% end -%>
 <% if @routes -%>
 <% @routes.each do |route| -%>
 <%= route %>
@@ -54,8 +63,10 @@ ifconfig-pool-persist /etc/openvpn/ipp.txt
 
 <% if @type == "server" -%>
 <%= @type %> <%= @subnet %> <%= @netmask %>
+<% if @topology -%>
+topology <%= @topology %>
 <% end -%>
-
+<% end -%>
 user <%= @user %>
 group <%= @group %>
 

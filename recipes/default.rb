@@ -136,8 +136,12 @@ openvpn_conf 'server' do
   subnet node['openvpn']['subnet']
   netmask node['openvpn']['netmask']
   user node['openvpn']['user']
+  max_routes node['openvpn']['max_routes']
+  topology node['openvpn']['topology']
+  external_auth node['openvpn']['external_auth']
   group node['openvpn']['group']
   log node['openvpn']['log']
+  plugins node['openvpn']['plugins']
   only_if { node['openvpn']['configure_default_server'] }
   notifies :restart, 'service[openvpn]'
 end
