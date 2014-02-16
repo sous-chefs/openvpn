@@ -24,7 +24,9 @@ max-routes <%= @max_routes %>
 <% end -%>
 comp-lzo
 local <%= @local %>
-
+<%= if @reneg_sec -%>
+reneg-sec <%= @reneg_sec %>
+<% end -%>
 <% if @routes -%>
 <% @routes.each do |route| -%>
 <%= route %>

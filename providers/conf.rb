@@ -32,6 +32,7 @@ action :create do
     :dhcp_domain => new_resource.dhcp_domain,
     :duplicate_cn => new_resource.duplicate_cn,
     :external_auth => new_resource.external_auth,
+    :reneg_sec     => new_resource.reneg_sec,
     :interface_num => new_resource.interface_num,
     :client_subnet_route => new_resource.client_subnet_route,
     :max_clients => new_resource.max_clients,

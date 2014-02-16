@@ -32,6 +32,7 @@ attribute :subnet, :kind_of => String
 attribute :netmask, :kind_of => String
 attribute :user, :kind_of => String
 attribute :group, :kind_of => String
+attribute :reneg_sec, :kind_of => Integer
 attribute :external_auth, :kind_of => String
 attribute :log, :kind_of => String
 attribute :verb, :kind_of => Integer, :default => 1
