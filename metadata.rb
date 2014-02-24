@@ -1,6 +1,6 @@
 name              'openvpn'
-maintainer        'Opscode, Inc.'
-maintainer_email  'cookbooks@opscode.com'
+maintainer        'Xhost Australia'
+maintainer_email  'cookbooks@xhost.com.au'
 license           'Apache 2.0'
 description       'Installs and configures openvpn and includes rake tasks for managing certs.'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
