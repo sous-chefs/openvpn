@@ -4,15 +4,15 @@ openvpn Cookbook
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline, but your site will need probably need to customize.
 
-
 Requirements
 ------------
-OpenSSL 0.9.7 or later and OpenSSL bindings for Ruby
+* Ruby 1.9 or later
+* OpenSSL 0.9.7 or later and OpenSSL bindings for Ruby
 
 ### Platform
 - Debian 6.0
 - Ubuntu 10.04+
-- RHEL 5.x and RHEL 6.x w/ EPEL enabled.
+- RHEL 5.x and RHEL 6.x w/ EPEL enabled
 
 ### Cookbooks
 The `yum` cookbook by Opscode provides `recipe[yum::epel]` that can be used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.

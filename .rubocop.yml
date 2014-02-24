@@ -1,8 +1,9 @@
+AllCops:
+  Includes:
+    - Gemfile
+
 Encoding:
   Enabled: false
 
 LineLength:
-  Max: 200
-
-HashSyntax:
-  EnforcedStyle: hash_rockets
+  Max: 100
