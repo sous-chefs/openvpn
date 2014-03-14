@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-routes = node['openvpn']['routes']
-routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
-node.default['openvpn']['routes'] = routes.flatten
+#routes = node['openvpn']['routes']
+#routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
+#node.default['openvpn']['routes'] = routes.flatten
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)
 node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i
@@ -125,21 +125,9 @@ bash 'openvpn-server-key' do
 end
 
 openvpn_conf 'server' do
-  port node['openvpn']['port']
-  proto node['openvpn']['proto']
-  type node['openvpn']['type']
-  local node['openvpn']['local']
-  routes node['openvpn']['routes']
-  script_security node['openvpn']['script_security']
-  key_dir node['openvpn']['key_dir']
-  key_size node['openvpn']['key']['size']
-  subnet node['openvpn']['subnet']
-  netmask node['openvpn']['netmask']
-  user node['openvpn']['user']
-  group node['openvpn']['group']
-  log node['openvpn']['log']
-  only_if { node['openvpn']['configure_default_server'] }
   notifies :restart, 'service[openvpn]'
+  only_if { node['openvpn']['configure_default_server'] }
+  action :create
 end
 
 service 'openvpn' do
