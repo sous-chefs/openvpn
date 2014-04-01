@@ -72,3 +72,11 @@ verb <%= @verb %>  # don't spam the log with messages.
 mute <%= @mute %>  # suppress identical messages > 10 occurances.
 
 script-security <%= @script_security %>
+
+<% if File.exist?("#{@key_dir}/crl.pem") %>
+<% require "fileutils" %>
+<% FileUtils.cp( "#{@key_dir}/crl.pem", "/etc/openvpn/crl.pem") %>
+# Certificate Revocation List
+crl-verify <%= "/etc/openvpn/crl.pem" %>
+<% end %>
+

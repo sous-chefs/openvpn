@@ -155,6 +155,24 @@ Some of the easy-rsa tools are copied to /etc/openvpn/easy-rsa to provide the mi
 Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake task will generate a tar.gz file with the configuration and certificates for the client.
 
 
+SSL Certificates revoking
+----------------
+To revoke certificate 
+
+    cd /etc/openvpn/easy-rsa
+    source ./vars
+    revoke-full <CLIENT_NAME>
+
+Replace `<CLIENT_NAME>` with your desired values. The revoke-full script will modify index.txt openssl db file and create (update) `node["openvpn"]["key_dir"]/crl.pem` file, which is Certificate Revocation List. This file will be included in config file by default if it exists.
+
+Re-run chef-client to apply the configuration in server config file.
+
+Note the `error 23 at 0 depth lookup:certificate revoked` in the last line. That is what you want to see, as it indicates that a certificate verification of the revoked certificate failed and if crl.pem will be included in server.conf, then client's from this file cannot be connected to server.
+
+Note client certificates usally valid prior to the expiration. Only the Certificate Revocation List can cause the server not to accept a client certificate.
+
+Note The CRL file is not secret, and should be made world-readable so that the OpenVPN daemon can read it after root privileges have been dropped.
+
 Recreating SSL Certificates
 ----------------
 Remove one line of any appropriate certificate issued in the file `node["openvpn"]["key_dir"]/index.txt`.

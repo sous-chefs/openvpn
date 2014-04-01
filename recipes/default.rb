@@ -54,6 +54,15 @@ end
   end
 end
 
+link "/etc/openvpn/easy-rsa/revoke-full" do
+  to "/usr/share/doc/openvpn/examples/easy-rsa/2.0/revoke-full"
+end
+
+#link "/etc/openvpn/crl.pem" do
+#  to "#{key_dir}/crl.pem"
+#  only_if { ::File.exists?("#{key_dir}/crl.pem") }
+#end
+
 template '/etc/openvpn/server.up.sh' do
   source 'server.up.sh.erb'
   owner 'root'
