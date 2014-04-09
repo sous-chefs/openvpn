@@ -1,0 +1,10 @@
+description     "OpenVPN service instance"
+author          "C.c <ccik74@gmail.com>"
+ 
+stop on runlevel [016]
+ 
+respawn
+ 
+instance $CONFIG_FILE
+ 
+exec openvpn --config $CONFIG_FILE

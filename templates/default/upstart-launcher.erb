@@ -1,0 +1,14 @@
+description     "OpenVPN service"
+author          "C.c <ccik74@gmail.com>"
+ 
+start on runlevel [2345] and (starting network-interface or starting networking or openvpn)
+stop on runlevel [016]
+ 
+task
+ 
+script
+	for conf in `ls <%= ::File.join(@conf_dir, "*") %>`
+	do
+		start openvpn-instance CONFIG_FILE=$conf
+	done
+end script
