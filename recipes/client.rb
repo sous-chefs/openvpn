@@ -16,4 +16,4 @@
 #
 
 include_recipe 'openvpn::install'
-include_recipe 'openvpn::services'
+include_recipe 'openvpn::instances-services'
