@@ -20,5 +20,4 @@ actions :create, :delete
 default_action :create
 
 attribute :instance, :kind_of => String, :name_attribute => true
-attribute :conf_file, :kind_of => String
-attribute :conf, :kind_of => String
+attribute :conf, :kind_of => Hash, :required => true

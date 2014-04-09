@@ -21,46 +21,38 @@ use_inline_resources if defined?(use_inline_resources)
 include Chef::DSL::IncludeRecipe
 
 action :create do
-  if new_resource.conf
-    template file_path do
-      source 'client.conf..erb'
-      cookbook 'openvpn'
-      owner 'root'
-      group 'root'
-      mode 0755
-      variables :conf => new_resource.conf
-      notifies :start, 'service[openvpn-launcher]'
-    end
-  elsif new_resource.conf_file
-    file file_path do
-      owner 'root'
-      group 'root'
-      mode 0755
-      content ::File.open(new_resource.conf).read
-      action :create
-      notifies :start, 'service[openvpn-launcher]'
-    end
+  template file_path do
+    source 'client.conf.erb'
+    cookbook 'openvpn'
+    owner 'root'
+    group 'root'
+    mode 0755
+    variables :conf => new_resource.conf
+    notifies :start, service_instance
   end
 end
 
 action :delete do
   file file_path do
     action :delete
-    notifies :stop, "openvpn[#{new_resource.instance}]"
+    notifies :stop, service_instance
   end
 end
 
 def initialize(name, run_context = nil)
   super
   include_recipe 'openvpn::client'
-
-  service "openvpn #{new_resource.instance}" do
-    start_command "service openvpn-instance start CONFIG_FILE=#{file_path}"
-    stop_command "service openvpn-instance stop CONFIG_FILE=#{file_path}"
-    action :nothing
-  end
 end
 
 def file_path
   ::File.join(node['openvpn']['conf_dir'], new_resource.instance)
+end
+
+def service_instance
+  service "openvpn-#{new_resource.instance}" do
+    start_command "service openvpn-instance start CONFIG_FILE=#{new_resource.instance}"
+    stop_command "service openvpn-instance stop CONFIG_FILE=#{new_resource.instance}"
+    action :nothing
+  end
+  return "service[openvpn-#{new_resource.instance}]"
 end

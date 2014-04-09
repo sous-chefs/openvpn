@@ -7,7 +7,7 @@ stop on runlevel [016]
 task
  
 script
-	for conf in `ls <%= ::File.join(@conf_dir, "*") %>`
+	for conf in `ls <%= @conf_dir %>`
 	do
 		start openvpn-instance CONFIG_FILE=$conf
 	done

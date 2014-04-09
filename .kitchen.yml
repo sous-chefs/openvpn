@@ -4,14 +4,21 @@ driver_plugin: vagrant
 platforms:
 - name: centos-5.8
 - name: centos-6.4
-- name: ubuntu-1004
+- name: ubuntu-10.04
   run_list:
   - recipe[apt]
-- name: ubuntu-1204
+- name: ubuntu-12.04
   run_list:
   - recipe[apt]
 
 suites:
   - name: default
     run_list:
-      - recipe[openvpn::default]
+      - recipe[openvpn]
+  - name: server
+    run_list:
+      - recipe[openvpn::server]
+  - name: client
+    run_list:
+      - recipe[openvpn::client]
+      - recipe[openvpn_test]
