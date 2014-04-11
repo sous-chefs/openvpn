@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: openvpn
-# Recipe:: default
+# Recipe:: install_package
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,4 +15,8 @@
 # limitations under the License.
 #
 
-include_recipe 'openvpn::server'
+include_recipe 'yum-epel' if platform_family?('rhel')
+
+package 'openvpn' do
+  action :install
+end

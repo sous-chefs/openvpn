@@ -17,6 +17,11 @@
 # limitations under the License.
 #
 
+default['openvpn']['install_method']  = 'package'
+
+default['openvpn']['conf_dir']        = '/etc/openvpn'
+default['openvpn']['conf_d_dir']      = ::File.join(node['openvpn']['conf_dir'], 'conf.d')
+
 default['openvpn']['local']           = node['ipaddress']
 default['openvpn']['proto']           = 'udp'
 default['openvpn']['port']            = '1194'

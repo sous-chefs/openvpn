@@ -1,0 +1,16 @@
+description     "OpenVPN service"
+ 
+start on runlevel [2345] and (starting network-interface or starting networking or openvpn)
+stop on runlevel [016]
+ 
+task
+
+env CONF_DIR=<%= @conf_dir %>
+ 
+script
+	for conf in `ls $CONF_DIR`
+	do
+		test -f $CONF_DIR/${conf}/autostart || continue
+		start openvpn-instance NAME=${conf}
+	done
+end script

@@ -1,6 +1,8 @@
 #
 # Cookbook Name:: openvpn
-# Recipe:: default
+# Resource:: conf
+#
+# Copyright 2013, Tacit Knowledge, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +15,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-include_recipe 'openvpn::server'
+actions :create, :delete
+default_action :create
+
+attribute :instance, :kind_of => String, :name_attribute => true
+attribute :conf, :kind_of => Hash, :required => true
+attribute :autostart, :kind_of => [TrueClass, FalseClass], :default => true
