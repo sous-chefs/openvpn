@@ -19,7 +19,8 @@
 
 default['openvpn']['install_method']  = 'package'
 
-default['openvpn']['conf_dir']        = '/etc/openvpn/conf.d'
+default['openvpn']['conf_dir']        = '/etc/openvpn'
+default['openvpn']['conf_d_dir']      = ::File.join(node['openvpn']['conf_dir'], 'conf.d')
 
 default['openvpn']['local']           = node['ipaddress']
 default['openvpn']['proto']           = 'udp'

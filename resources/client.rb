@@ -21,3 +21,4 @@ default_action :create
 
 attribute :instance, :kind_of => String, :name_attribute => true
 attribute :conf, :kind_of => Hash, :required => true
+attribute :autostart, :kind_of => [TrueClass, FalseClass], :default => true

@@ -3,7 +3,7 @@ template '/etc/init/openvpn-instance.conf' do
   owner 'root'
   group 'root'
   mode 0644
-  variables :conf_dir => node['openvpn']['conf_dir']
+  variables :conf_dir => node['openvpn']['conf_d_dir']
 end
 
 template '/etc/init/openvpn-launcher.conf' do
@@ -11,10 +11,10 @@ template '/etc/init/openvpn-launcher.conf' do
   owner 'root'
   group 'root'
   mode 0644
-  variables :conf_dir => node['openvpn']['conf_dir']
+  variables :conf_dir => node['openvpn']['conf_d_dir']
 end
 
-directory node['openvpn']['conf_dir'] do
+directory node['openvpn']['conf_d_dir'] do
   owner 'root'
   group 'root'
   mode 0640
