@@ -19,10 +19,6 @@
 use_inline_resources if defined?(use_inline_resources)
 
 action :create do
-  vars = {
-    config: new_resource.config
-  }
-
   template "/etc/openvpn/#{new_resource.name}.conf" do
     source 'server.conf.erb'
     owner 'root'
