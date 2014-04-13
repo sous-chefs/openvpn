@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
-#routes = node['openvpn']['routes']
-#routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
-#node.default['openvpn']['routes'] = routes.flatten
+# TODO: update for use with node['config']
+# routes = node['openvpn']['routes']
+# routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
+# node.default['openvpn']['routes'] = routes.flatten
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)
 node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i
@@ -45,7 +46,7 @@ directory '/etc/openvpn/easy-rsa' do
   mode  '0755'
 end
 
-%w[openssl.cnf pkitool vars Rakefile].each do |f|
+%w(openssl.cnf pkitool vars Rakefile).each do |f|
   template "/etc/openvpn/easy-rsa/#{f}" do
     source "#{f}.erb"
     owner 'root'
