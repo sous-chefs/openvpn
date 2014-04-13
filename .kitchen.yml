@@ -19,4 +19,8 @@ suites:
   - name: server
     run_list:
       - recipe[openvpn::default]
-    attributes: {}
+    attributes:
+      openvpn:
+        config:
+          verb: 1
+          mute: 10
