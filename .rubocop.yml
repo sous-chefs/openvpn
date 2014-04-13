@@ -10,3 +10,6 @@ LineLength:
 
 AlignParameters:
   Enabled: false
+
+SingleSpaceBeforeFirstArg:
+  Enabled: false
