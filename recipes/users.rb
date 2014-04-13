@@ -25,7 +25,8 @@ rescue NameError
 end
 
 if Chef::Config[:solo] && !chef_solo_search_installed?
-  Chef::Log.warn("This recipe uses search. Chef-Solo does not support search unless you install the chef-solo-search cookbook.")
+  Chef::Log.warn("This recipe uses search. Chef-Solo does not support search unless "\
+    "you install the chef-solo-search cookbook.")
 else
   search('users', node['openvpn']['user_query']) do |u|
     execute "generate-openvpn-#{u['id']}" do
