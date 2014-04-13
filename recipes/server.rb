@@ -61,11 +61,11 @@ end
 
 file "#{key_dir}/serial" do
   content '01'
-  not_if { ::File.exists?("#{key_dir}/serial") }
+  not_if { ::File.exist?("#{key_dir}/serial") }
 end
 
 # Use unless instead of not_if otherwise OpenSSL::PKey::DH runs every time.
-unless ::File.exists?("#{key_dir}/dh#{key_size}.pem")
+unless ::File.exist?("#{key_dir}/dh#{key_size}.pem")
   require 'openssl'
   file "#{key_dir}/dh#{key_size}.pem" do
     content OpenSSL::PKey::DH.new(key_size).to_s
@@ -84,7 +84,7 @@ bash 'openvpn-initca' do
       -out #{node['openvpn']['signing_ca_cert']} \
       -config #{key_dir}/openssl.cnf
   EOF
-  not_if { ::File.exists?(node['openvpn']['signing_ca_cert']) }
+  not_if { ::File.exist?(node['openvpn']['signing_ca_cert']) }
 end
 
 bash 'openvpn-server-key' do
@@ -98,7 +98,7 @@ bash 'openvpn-server-key' do
       -out #{key_dir}/server.crt -in #{key_dir}/server.csr \
       -extensions server -md sha1 -config #{key_dir}/openssl.cnf
   EOF
-  not_if { ::File.exists?("#{key_dir}/server.crt") }
+  not_if { ::File.exist?("#{key_dir}/server.crt") }
 end
 
 openvpn_conf 'server' do
