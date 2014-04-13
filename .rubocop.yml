@@ -1,5 +1,5 @@
 AllCops:
-  Includes:
+  Include:
     - Gemfile
 
 Encoding:
@@ -7,3 +7,9 @@ Encoding:
 
 LineLength:
   Max: 100
+
+AlignParameters:
+  Enabled: false
+
+SingleSpaceBeforeFirstArg:
+  Enabled: false
