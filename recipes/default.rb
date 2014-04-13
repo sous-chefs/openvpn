@@ -85,11 +85,11 @@ end
 
 file "#{key_dir}/serial" do
   content '01'
-  not_if { ::File.exists?("#{key_dir}/serial") }
+  not_if { ::File.exist?("#{key_dir}/serial") }
 end
 
 # Use unless instead of not_if otherwise OpenSSL::PKey::DH runs every time.
-unless ::File.exists?("#{key_dir}/dh#{key_size}.pem")
+unless ::File.exist?("#{key_dir}/dh#{key_size}.pem")
   require 'openssl'
   file "#{key_dir}/dh#{key_size}.pem" do
     content OpenSSL::PKey::DH.new(key_size).to_s
