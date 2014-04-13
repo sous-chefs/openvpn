@@ -34,6 +34,7 @@ default['openvpn']['key']['email']     = 'admin@foobar.com'
 default['openvpn']['key_dir']         = '/etc/openvpn/keys'
 default['openvpn']['signing_ca_key']  = "#{node["openvpn"]["key_dir"]}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node["openvpn"]["key_dir"]}/ca.crt"
+default['openvpn']['user_query']      = '*:*'
 
 default['openvpn']['type']            = 'server'
 default['openvpn']['subnet']          = '10.8.0.0'
