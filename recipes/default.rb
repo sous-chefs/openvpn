@@ -37,13 +37,13 @@ end
 directory key_dir do
   owner 'root'
   group 'root'
-  mode  '0700'
+  mode '0700'
 end
 
 directory '/etc/openvpn/easy-rsa' do
   owner 'root'
   group 'root'
-  mode  '0755'
+  mode '0755'
 end
 
 %w(openssl.cnf pkitool vars Rakefile).each do |f|
@@ -51,7 +51,7 @@ end
     source "#{f}.erb"
     owner 'root'
     group 'root'
-    mode  '0755'
+    mode '0755'
   end
 end
 
@@ -59,27 +59,27 @@ template '/etc/openvpn/server.up.sh' do
   source 'server.up.sh.erb'
   owner 'root'
   group 'root'
-  mode  '0755'
+  mode '0755'
   notifies :restart, 'service[openvpn]'
 end
 
 directory '/etc/openvpn/server.up.d' do
   owner 'root'
   group 'root'
-  mode  '0755'
+  mode '0755'
 end
 
 template "#{key_dir}/openssl.cnf" do
   source 'openssl.cnf.erb'
   owner 'root'
   group 'root'
-  mode  '0644'
+  mode '0644'
 end
 
 file "#{key_dir}/index.txt" do
   owner 'root'
   group 'root'
-  mode  '0600'
+  mode '0600'
   action :create
 end
 
