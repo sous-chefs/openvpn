@@ -95,7 +95,7 @@ unless ::File.exist?("#{key_dir}/dh#{key_size}.pem")
     content OpenSSL::PKey::DH.new(key_size).to_s
     owner 'root'
     group 'root'
-    mode  '0600'
+    mode '0600'
   end
 end
 
@@ -108,7 +108,7 @@ bash 'openvpn-initca' do
       -out #{node['openvpn']['signing_ca_cert']} \
       -config #{key_dir}/openssl.cnf
   EOF
-  not_if { ::File.exists?(node['openvpn']['signing_ca_cert']) }
+  not_if { ::File.exist?(node['openvpn']['signing_ca_cert']) }
 end
 
 bash 'openvpn-server-key' do
@@ -122,7 +122,7 @@ bash 'openvpn-server-key' do
       -out #{key_dir}/server.crt -in #{key_dir}/server.csr \
       -extensions server -md sha1 -config #{key_dir}/openssl.cnf
   EOF
-  not_if { ::File.exists?("#{key_dir}/server.crt") }
+  not_if { ::File.exist?("#{key_dir}/server.crt") }
 end
 
 openvpn_conf 'server' do
