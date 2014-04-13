@@ -7,3 +7,6 @@ Encoding:
 
 LineLength:
   Max: 100
+
+AlignParameters:
+  Enabled: false
