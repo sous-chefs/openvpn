@@ -6,16 +6,19 @@
 
 <% node['openvpn']['config'].sort.each do |key, value| %>
 <% next if value.nil? -%>
-<%= key %> <%=
-  case value
-  when String
-    value
-  when TrueClass
-    1
-  when FalseClass
-    0
-  else
-    value
-  end
-%>
+<% case value
+   when String %>
+<%=   key %> <%= value %>
+<% when TrueClass %>
+<%=   key %> 1
+<% when FalseClass %>
+<%=   key %> 0
+<% when Array %>
+<%    value.each do |v| %>
+<%=     v %>
+<%    end %>
+<% else %>
+<%= key %> <%= value %>
 <% end %>
+<% end %>
+
