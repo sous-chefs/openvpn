@@ -9,8 +9,8 @@ instance $NAME
 env CONF_DIR=<%=@conf_dir%>
 
 pre-start script
-	test -f $CONF_DIR/name/conf || { stop ; exit 0; }
+	test -f $CONF_DIR/${NAME}/conf || { stop ; exit 0; }
 end script
 	
  
-exec openvpn --config <%=@conf_dir%>/$NAME/conf
+exec openvpn --config <%=@conf_dir%>/${NAME}/conf
