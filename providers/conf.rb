@@ -20,7 +20,7 @@ use_inline_resources if defined?(use_inline_resources)
 
 action :create do
   template "/etc/openvpn/#{new_resource.name}.conf" do
-    cookbook 'openvpn' if !node['openvpn']['override_template']
+    cookbook 'openvpn' unless node['openvpn']['override_template']
     source 'server.conf.erb'
     owner 'root'
     group 'root'
