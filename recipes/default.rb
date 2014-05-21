@@ -30,9 +30,7 @@ key_size = node['openvpn']['key']['size']
 
 include_recipe 'yum-epel' if platform_family?('rhel')
 
-package 'openvpn' do
-  action :install
-end
+include_recipe "openvpn::install"
 
 directory key_dir do
   owner 'root'
