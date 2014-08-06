@@ -31,6 +31,7 @@ default['openvpn']['key']['org']       = 'Fort Funston'
 default['openvpn']['key']['email']     = 'admin@foobar.com'
 
 # Cookbook attributes
+default['openvpn']['name']            = 'default'
 default['openvpn']['key_dir']         = '/etc/openvpn/keys'
 default['openvpn']['signing_ca_key']  = "#{node["openvpn"]["key_dir"]}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node["openvpn"]["key_dir"]}/ca.crt"
@@ -58,14 +59,19 @@ default['openvpn']['config']['log']             = '/var/log/openvpn.log'
 default['openvpn']['config']['routes']          = nil
 default['openvpn']['config']['script-security'] = 2
 default['openvpn']['config']['server']          = "#{node['openvpn']['subnet']} #{node['openvpn']['netmask']}"
+default['openvpn']['config']['user']            = 'nobody'
+default['openvpn']['config']['group']           = node['openvpn']['group']
+default['openvpn']['config']['ifconfig']        = nil
+default['openvpn']['config']['remote']          = nil
 
 default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_cert']
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
 
+
 if node['openvpn']['type'] == 'server-bridge'
-  default['openvpn']['config']['dev'] = 'tap0'
+  default['openvpn']['config']['dev'] = 'tap'
 else
-  default['openvpn']['config']['dev'] = 'tun0'
+  default['openvpn']['config']['dev'] = 'tun'
 end
