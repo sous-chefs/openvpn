@@ -24,6 +24,7 @@ action :create do
     owner 'root'
     group 'root'
     mode 0644
+    variables config: new_resource.config || node['openvpn']['config']
   end
 end
 
