@@ -25,8 +25,8 @@ rescue NameError
 end
 
 if Chef::Config[:solo] && !chef_solo_search_installed?
-  Chef::Log.warn("This recipe uses search. Chef-Solo does not support search unless "\
-    "you install the chef-solo-search cookbook.")
+  Chef::Log.warn('This recipe uses search. Chef-Solo does not support search unless '\
+    'you install the chef-solo-search cookbook.')
 else
   search('users', node['openvpn']['user_query']) do |u|
     execute "generate-openvpn-#{u['id']}" do
@@ -45,11 +45,11 @@ else
         'KEY_ORG'      => node['openvpn']['key']['org'],
         'KEY_EMAIL'    => node['openvpn']['key']['email']
       )
-      not_if { ::File.exist?("#{node["openvpn"]["key_dir"]}/#{u['id']}.crt") }
+      not_if { ::File.exist?("#{node['openvpn']['key_dir']}/#{u['id']}.crt") }
     end
 
     %w(conf ovpn).each do |ext|
-      template "#{node["openvpn"]["key_dir"]}/#{u['id']}.#{ext}" do
+      template "#{node['openvpn']['key_dir']}/#{u['id']}.#{ext}" do
         source 'client.conf.erb'
         variables(username: u['id'])
       end
@@ -60,7 +60,7 @@ else
       command <<-EOH
         tar zcf #{u['id']}.tar.gz ca.crt #{u['id']}.crt #{u['id']}.key #{u['id']}.conf #{u['id']}.ovpn
       EOH
-      not_if { ::File.exist?("#{node["openvpn"]["key_dir"]}/#{u['id']}.tar.gz") }
+      not_if { ::File.exist?("#{node['openvpn']['key_dir']}/#{u['id']}.tar.gz") }
     end
   end
 end
