@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-# TODO: update for use with node['config']
-# routes = node['openvpn']['routes']
+# TODO: update for use with node['openvpn']['config']
+# routes = node['openvpn']['config']['routes']
 # routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
-# node.default['openvpn']['routes'] = routes.flatten
+# node.default['openvpn']['config']['routes'] = routes.flatten
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)
 node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i
