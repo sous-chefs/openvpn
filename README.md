@@ -34,21 +34,24 @@ Attributes
 ----------
 These attributes are set by the cookbook by default.
 
-* `node["openvpn"]["local"]` - IP to listen on, defaults to node[:ipaddress]
-* `node["openvpn"]["proto"]` - Valid values are 'udp' or 'tcp', defaults to 'udp'.
-* `node["openvpn"]["port"]` - Port to listen on, defaults to '1194'.
 * `node["openvpn"]["type"]` - Valid values are 'server' or 'server-bridge'. Default is 'server' and it will create a routed IP tunnel, and use the 'tun' device. 'server-bridge' will create an ethernet bridge and requires a tap0 device bridged with the ethernet interface, and is beyond the scope of this cookbook.
 * `node["openvpn"]["subnet"]` - Used for server mode to configure a VPN subnet to draw client addresses. Default is 10.8.0.0, which is what the sample OpenVPN config package uses.
 * `node["openvpn"]["netmask"]` - Netmask for the subnet, default is 255.255.0.0.
 * `node["openvpn"]["gateway"]` - FQDN for the VPN gateway server. Default is `node["fqdn"]`.
-* `node["openvpn"]["log"]` - Server log file. Default /var/log/openvpn.log
 * `node["openvpn"]["key_dir"]` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 * `node["openvpn"]["signing_ca_cert"]` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 * `node["openvpn"]["signing_ca_key"]` - CA key for signing, default `/etc/openvpn/keys/ca.key`
-* `node["openvpn"]["routes"]` - Array of routes to add as `push` statements in the server.conf. Default is empty.
-* `node["openvpn"]["script_security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
 * `node["openvpn"]["configure_default_server"]` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
-* `node["openvpn"]["push"]` - DEPRECATED: Use `routes` above. If you're still using this in your roles, the recipe will append to `routes` attribute.
+* `node["openvpn"]["push"]` - DEPRECATED: Use `config.routes` below. If you're still using this in your roles, the recipe will append to `config.routes` attribute.
+
+The following attributes are some of those which are populated into the OpenVPN server.conf file:
+
+* `node["openvpn"]["config"]["local"]` - IP to listen on, defaults to node[:ipaddress]
+* `node["openvpn"]["config"]["proto"]` - Valid values are 'udp' or 'tcp', defaults to 'udp'.
+* `node["openvpn"]["config"]["port"]` - Port to listen on, defaults to '1194'.
+* `node["openvpn"]["config"]["log"]` - Server log file. Default /var/log/openvpn.log
+* `node["openvpn"]["config"]["routes"]` - Array of routes to add as `push` statements in the server.conf. Default is empty.
+* `node["openvpn"]["config"]["script-security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
 
 The following attributes are used to populate the `easy-rsa` vars file. Defaults are the same as the vars file that ships with OpenVPN.
 
@@ -101,12 +104,12 @@ override_attributes(
 
 **Note**: If you are using a Red Hat EL distribution, you may need the EPEL repository enabled to install the openvpn package. You can use Opscode's `recipe[yum::epel]` for this. Either add it to the run list in the openvpn role above, or add to a base role used by all your RHEL-family systems.
 
-To push routes to clients, add `node['openvpn']['routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
+To push routes to clients, add `node['openvpn']['config']['routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
 
 ```ruby
 override_attributes(
   "openvpn" => {
-    "routes => [
+    "routes" => [
       "push 'route 192.168.100.0 255.255.255.0'"
     ]
   }

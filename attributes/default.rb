@@ -32,22 +32,15 @@ default['openvpn']['key']['email']     = 'admin@foobar.com'
 
 # Cookbook attributes
 default['openvpn']['key_dir']         = '/etc/openvpn/keys'
-default['openvpn']['signing_ca_key']  = "#{node["openvpn"]["key_dir"]}/ca.key"
-default['openvpn']['signing_ca_cert'] = "#{node["openvpn"]["key_dir"]}/ca.crt"
+default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
+default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
 default['openvpn']['user_query']      = '*:*'
 
 default['openvpn']['type']            = 'server'
 default['openvpn']['subnet']          = '10.8.0.0'
 default['openvpn']['netmask']         = '255.255.0.0'
-default['openvpn']['user']            = 'nobody'
-default['openvpn']['group']           = case node['platform_family']
-                                        when 'rhel'
-                                          'nobody'
-                                        else
-                                          'nogroup'
-                                        end
 # Client specific
-default['openvpn']['gateway']         = "vpn.#{node["domain"]}"
+default['openvpn']['gateway']         = "vpn.#{node['domain']}"
 
 # Direct configuration file directives (.conf) defaults
 default['openvpn']['config']['local']           = node['ipaddress']
@@ -63,6 +56,13 @@ default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_ce
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
+default['openvpn']['config']['user']            = 'nobody'
+default['openvpn']['config']['group']           = case node['platform_family']
+                                                  when 'rhel'
+                                                    'nobody'
+                                                  else
+                                                    'nogroup'
+                                                  end
 
 if node['openvpn']['type'] == 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'

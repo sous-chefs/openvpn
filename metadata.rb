@@ -18,18 +18,6 @@ supports 'fedora'
 supports 'redhat'
 supports 'ubuntu'
 
-attribute 'openvpn/local',
-          display_name: 'OpenVPN Local',
-          description:  'Local interface (ip) to listen on',
-          default:      'ipaddress',
-          recipes:      ['openvpn']
-
-attribute 'openvpn/proto',
-          display_name: 'OpenVPN Protocol',
-          description:  'UDP or TCP',
-          default:      'udp',
-          recipes:      ['openvpn']
-
 attribute 'openvpn/type',
           display_name: 'OpenVPN Type',
           description:  'Server or server-bridge',
@@ -48,21 +36,9 @@ attribute 'openvpn/netmask',
           default:      '255.255.0.0',
           recipes:      ['openvpn']
 
-attribute 'openvpn/port',
-          display_name: 'OpenVPN Listen Port',
-          description:  'Port to listen on, defaults to 1194',
-          default:      '1194',
-          recipes:      ['openvpn']
-
 attribute 'openvpn/gateway',
           display_name: 'OpenVPN Gateway FQDN',
           description:  'FQDN for the VPN gateway server. Default is vpn.domain',
-          recipes:      ['openvpn']
-
-attribute 'openvpn/log',
-          display_name: 'OpenVPN Log File',
-          description:  'OpenVPN Server log file. Default /var/log/openvpn.log',
-          default:      '/var/log/openvpn.log',
           recipes:      ['openvpn']
 
 attribute 'openvpn/key_dir',
@@ -84,21 +60,6 @@ attribute 'openvpn/signing_ca_key',
           default:      '/etc/openvpn/keys/ca.key',
           recipes:      ['openvpn']
 
-attribute 'openvpn/routes',
-          display_name: 'OpenVPN Routes',
-          description:  'Array of routes to add as push statements in the server.conf. '\
-                        'Default is empty.',
-          type:         'array',
-          recipes:      ['openvpn']
-
-attribute 'openvpn/script_security',
-          display_name: 'OpenVPN Script Security',
-          description:  'Script Security setting to use in server config. '\
-                        'Default is 1. The "up" script will not be included if this is 0 or 1. '\
-                        'Set it to 2 to use the "up" script',
-          default:      '1',
-          recipes:      ['openvpn']
-
 attribute 'openvpn/configure_default_server',
           display_name: 'Configure Default Server',
           description:  'Boolean to determine whether the default recipe will create a "conf" '\
@@ -114,6 +75,45 @@ attribute 'openvpn/configure_default_server',
                         'LWRP to create the conf files.',
           default:      'true',
           recipes:      ['openvpn::default']
+
+attribute 'openvpn/config/local',
+          display_name: 'OpenVPN Local',
+          description:  'Local interface (ip) to listen on',
+          default:      'ipaddress',
+          recipes:      ['openvpn']
+
+attribute 'openvpn/config/log',
+          display_name: 'OpenVPN Log File',
+          description:  'OpenVPN Server log file. Default /var/log/openvpn.log',
+          default:      '/var/log/openvpn.log',
+          recipes:      ['openvpn']
+
+attribute 'openvpn/config/proto',
+          display_name: 'OpenVPN Protocol',
+          description:  'UDP or TCP',
+          default:      'udp',
+          recipes:      ['openvpn']
+
+attribute 'openvpn/config/port',
+          display_name: 'OpenVPN Listen Port',
+          description:  'Port to listen on, defaults to 1194',
+          default:      '1194',
+          recipes:      ['openvpn']
+
+attribute 'openvpn/config/script-security',
+          display_name: 'OpenVPN Script Security',
+          description:  'Script Security setting to use in server config. '\
+                        'Default is 1. The "up" script will not be included if this is 0 or 1. '\
+                        'Set it to 2 to use the "up" script',
+          default:      '1',
+          recipes:      ['openvpn']
+
+attribute 'openvpn/config/routes',
+          display_name: 'OpenVPN Routes',
+          description:  'Array of routes to add as push statements in the server.conf. '\
+                        'Default is empty.',
+          type:         'array',
+          recipes:      ['openvpn']
 
 attribute 'openvpn/key/ca_expire',
           display_name: 'OpenVPN Root CA Expiry',
