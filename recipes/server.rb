@@ -101,6 +101,16 @@ bash 'openvpn-server-key' do
   not_if { ::File.exist?("#{key_dir}/server.crt") }
 end
 
+[ node['openvpn']['signing_ca_key'], "#{key_dir}/server.key" ].each do |key|
+  file key do
+    # Just fixes permissions.
+    action :create
+    owner 'root'
+    group 'root'
+    mode '0600'
+  end
+end
+
 openvpn_conf 'server' do
   notifies :restart, 'service[openvpn]'
   only_if { node['openvpn']['configure_default_server'] }
