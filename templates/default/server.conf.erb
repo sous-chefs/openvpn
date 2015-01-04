@@ -4,7 +4,7 @@
 # Please refer to the OpenVPN documentation for details on
 # configuration settings.
 
-<% node['openvpn']['config'].sort.each do |key, value| %>
+<% @config.sort.each do |key, value| %>
 <% next if value.nil? -%>
 <%= key %> <%=
   case value
