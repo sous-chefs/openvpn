@@ -3,22 +3,20 @@ driver:
   name: vagrant
 driver_config:
   require_chef_omnibus: true
-  
+
 provisioner:
   name: chef_zero
 
 platforms:
+  - name: ubuntu-14.04
   - name: ubuntu-12.04
-    run_list:
-      - recipe[apt::default]
-  - name: centos-6.4
-    run_list:
-      - 'recipe[yum-epel::default]'
+  - name: centos-6.5
+  - name: centos-5.10
 
 suites:
   - name: server
     run_list:
-      - recipe[openvpn::default]
+      - recipe[test]
     attributes:
       openvpn:
         config:
