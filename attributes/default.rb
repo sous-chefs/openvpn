@@ -39,17 +39,17 @@ default['openvpn']['user_query']      = '*:*'
 default['openvpn']['type']            = 'server'
 default['openvpn']['subnet']          = '10.8.0.0'
 default['openvpn']['netmask']         = '255.255.0.0'
-default['openvpn']['user']            = 'nobody'
-default['openvpn']['group']           = case node['platform_family']
-                                        when 'rhel'
-                                          'nobody'
-                                        else
-                                          'nogroup'
-                                        end
+
 # Client specific
 default['openvpn']['gateway']         = "vpn.#{node["domain"]}"
 
 # Direct configuration file directives (.conf) defaults
+default['openvpn']['config']['user']            = 'nobody'
+default['openvpn']['config']['group']           = value_for_platform_family(
+                                                    'rhel' => 'nobody',
+                                                    'default' => 'nogroup'
+                                                  )
+
 default['openvpn']['config']['local']           = node['ipaddress']
 default['openvpn']['config']['proto']           = 'udp'
 default['openvpn']['config']['port']            = '1194'
