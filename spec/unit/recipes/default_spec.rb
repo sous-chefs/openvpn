@@ -5,6 +5,5 @@ describe 'openvpn::default' do
 
   it 'converges' do
     chef_run
-    pending
   end
 end
