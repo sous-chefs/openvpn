@@ -15,7 +15,7 @@ Requirements
 - RHEL 5.x and RHEL 6.x w/ EPEL enabled
 
 ### Cookbooks
-The `yum` cookbook by Opscode provides `recipe[yum::epel]` that can be used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
+The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that can be used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
 
 ### Not Supported
 This cookbook is designed to set up a basic installation of OpenVPN that will work for many common use cases. The following configurations are not supported by default with this cookbook:
@@ -99,7 +99,7 @@ override_attributes(
 )
 ```
 
-**Note**: If you are using a Red Hat EL distribution, you may need the EPEL repository enabled to install the openvpn package. You can use Opscode's `recipe[yum::epel]` for this. Either add it to the run list in the openvpn role above, or add to a base role used by all your RHEL-family systems.
+**Note**: If you are using a Red Hat EL distribution, you may need the EPEL repository enabled to install the openvpn package. You can use Chef's `recipe[yum::epel]` for this. Either add it to the run list in the openvpn role above, or add to a base role used by all your RHEL-family systems.
 
 To push routes to clients, add `node['openvpn']['routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
 
@@ -113,7 +113,7 @@ override_attributes(
 )
 ```
 
-To automatically create new certificates and configurations for users, create data bags for each user. The only content required is the `id`, but this can be used in conjunction with other cookbooks by Opscode such as `users` or `samba`. See __SSL Certificates__ below for more about generating client certificate sets.
+To automatically create new certificates and configurations for users, create data bags for each user. The only content required is the `id`, but this can be used in conjunction with other cookbooks by Chef Software such as `users` or `samba`. See __SSL Certificates__ below for more about generating client certificate sets.
 
 ```javascript
 {
@@ -152,10 +152,10 @@ Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake t
 
 License & Authors
 -----------------
-- Author:: Joshua Timberman (<joshua@opscode.com>)
+- Author:: Joshua Timberman (<joshua@chef.io>)
 
 ```text
-Copyright:: 2009-2010, Opscode, Inc
+Copyright:: 2009-2010, Chef Software, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -28,16 +28,16 @@ v2.0.0
 v1.1.4
 ------
 ### Bug
-- **[COOK-3317](https://tickets.opscode.com/browse/COOK-3317)** - Fix and make `server.up.sh` useful and customizable
+- **[COOK-3317](https://tickets.chef.io/browse/COOK-3317)** - Fix and make `server.up.sh` useful and customizable
 
 ### New Feature
-- **[COOK-3315](https://tickets.opscode.com/browse/COOK-3315)** - Remove hardcoded variables in configuration file
+- **[COOK-3315](https://tickets.chef.io/browse/COOK-3315)** - Remove hardcoded variables in configuration file
 
 
 v1.1.2
 ------
 ### Improvement
-- **[COOK-2820](https://tickets.opscode.com/browse/COOK-2820)** - Update metadata.rb for all attributes and recipes
+- **[COOK-2820](https://tickets.chef.io/browse/COOK-2820)** - Update metadata.rb for all attributes and recipes
 
 v1.1.0
 ------
