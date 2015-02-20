@@ -44,11 +44,10 @@ default['openvpn']['netmask']         = '255.255.0.0'
 default['openvpn']['gateway']         = "vpn.#{node['domain']}"
 
 # Direct configuration file directives (.conf) defaults
-default['openvpn']['config']['user']            = 'nobody'
-default['openvpn']['config']['group']           = value_for_platform_family(
-                                                    'rhel' => 'nobody',
-                                                    'default' => 'nogroup'
-                                                  )
+default['openvpn']['config']['user']  = 'nobody'
+default['openvpn']['config']['group'] = value_for_platform_family(rhel: 'nobody',
+                                                                  default: 'nogroup'
+                                                                  )
 
 default['openvpn']['config']['local']           = node['ipaddress']
 default['openvpn']['config']['proto']           = 'udp'
