@@ -54,7 +54,7 @@ default['openvpn']['config']['proto']           = 'udp'
 default['openvpn']['config']['port']            = '1194'
 default['openvpn']['config']['keepalive']       = '10 120'
 default['openvpn']['config']['log']             = '/var/log/openvpn.log'
-default['openvpn']['config']['push']          = nil
+default['openvpn']['config']['push']            = nil
 default['openvpn']['config']['script-security'] = 2
 default['openvpn']['config']['server']          = "#{node['openvpn']['subnet']} #{node['openvpn']['netmask']}"
 
