@@ -6,7 +6,6 @@ rvm:
   - 2.2.0
   - 2.1.5
   - 2.0.0-p598
-  - 1.9.3-p551
 
 bundler_args: --without development integration
 
