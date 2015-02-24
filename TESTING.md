@@ -51,3 +51,26 @@ Development
 9. Mark the JIRA ticket as "Fix Provided"
 
 For more information, see [Chef's Contribution Guidelines](https://wiki.chef.io/display/chef/How+to+Contribute).
+
+Using the Rake tasks
+--------------------
+
+The Rakefile is a work in progress. To run all tests:
+
+        $ rake test
+
+Rubocop:
+
+  		$ rake style:rubocop
+
+Foodcritic:
+
+		$ rake style:foodcritic
+
+ChefSpec:
+
+		$ rake unit:chefspec
+
+Integration (currently only test-kitchen):
+
+		$ rake integration
