@@ -9,6 +9,7 @@ version           '2.1.1'
 recipe 'openvpn',         'Installs and configures OpenVPN.'
 recipe 'openvpn::users',  'Sets up openvpn cert/configs for users data bag items.'
 
+depends 'apt'
 depends 'yum', '~> 3.0'
 depends 'yum-epel'
 
