@@ -6,10 +6,9 @@
 
 <% @config.sort.each do |key, value| %>
 <% next if value.nil? -%>
+<% next if key.match 'route' -%>
 <%= key %> <%=
   case value
-  when String
-    value
   when TrueClass
     1
   when FalseClass
@@ -18,4 +17,19 @@
     value
   end
 %>
+<% end %>
+
+<% if node.recipe?('openvpn::p2p') -%>
+persist-tun
+persist-key
+persist-local-ip
+
+<%# I don't know how/if other recipes are calling server.up.sh.  -%>
+route-up "/sbin/sysctl -w net.ipv4.ip_forward=1"
+<% end %>
+
+<% unless node['openvpn']['config']['routes'].nil? -%>
+<% node['openvpn']['config']['routes'].each do |net, mask| -%>
+route <%= net %> <%= mask %>
+<% end %>
 <% end %>
