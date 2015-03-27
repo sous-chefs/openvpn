@@ -25,7 +25,10 @@ action :create do
     owner 'root'
     group 'root'
     mode 0644
-    variables config: new_resource.config || node['openvpn']['config']
+    variables(
+      config: new_resource.config || node['openvpn']['config'],
+      push_routes: node['openvpn']['push_routes']
+    )
   end
 end
 

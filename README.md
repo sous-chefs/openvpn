@@ -45,10 +45,9 @@ These attributes are set by the cookbook by default.
 * `node["openvpn"]["key_dir"]` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 * `node["openvpn"]["signing_ca_cert"]` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 * `node["openvpn"]["signing_ca_key"]` - CA key for signing, default `/etc/openvpn/keys/ca.key`
-* `node["openvpn"]["routes"]` - Array of routes to add as `push` statements in the server.conf. Default is empty.
 * `node["openvpn"]["script_security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
 * `node["openvpn"]["configure_default_server"]` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
-* `node["openvpn"]["push"]` - DEPRECATED: Use `routes` above. If you're still using this in your roles, the recipe will append to `routes` attribute.
+* `node["openvpn"]["push_routes"]` - Array of routes to to push to clients (as `push` statements) in the server.conf. Default is empty.
 
 The following attributes are used to populate the `easy-rsa` vars file. Defaults are the same as the vars file that ships with OpenVPN.
 

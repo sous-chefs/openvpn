@@ -16,10 +16,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-# routes = node['openvpn']['routes']
-# routes << node['openvpn']['push'] if node['openvpn'].attribute?('push')
-# node.default['openvpn']['routes'] = routes.flatten
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)
 node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i

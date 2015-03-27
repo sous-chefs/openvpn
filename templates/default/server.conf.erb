@@ -19,3 +19,10 @@
   end
 %>
 <% end %>
+
+<% if @push_routes %>
+# additional routes to push to clients
+  <% @push_routes.each do |route| %>
+push "route <%= route %>"
+  <% end %>
+<% end %>
