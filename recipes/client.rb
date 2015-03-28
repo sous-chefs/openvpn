@@ -18,6 +18,7 @@
 #
 
 include_recipe 'openvpn::install'
+include_recipe 'openvpn::service'
 
 openvpn_conf 'client' do
   notifies :restart, 'service[openvpn]'
