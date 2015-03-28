@@ -152,9 +152,11 @@ Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake t
 License & Authors
 -----------------
 - Author:: Joshua Timberman (<joshua@chef.io>)
+- Author:: Chris Fordham (<chris@fordham-nagy.id.au>)
 
 ```text
-Copyright:: 2009-2010, Chef Software, Inc
+Copyright:: 2009-2015, Chef Software, Inc
+Copyright:: 2014-2015, Xhost Australia
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
