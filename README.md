@@ -9,6 +9,8 @@ Requirements
 * Ruby 1.9 or later
 * OpenSSL 0.9.7 or later and OpenSSL bindings for Ruby
 
+This cookbook is tested and supported with Chef 11 & 12.
+
 ### Platform
 - Debian 6.0
 - Ubuntu 10.04+
