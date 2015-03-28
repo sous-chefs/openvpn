@@ -20,5 +20,5 @@
 include_recipe 'openvpn::install'
 
 service 'openvpn' do
-  action :enable
+  action [:enable, :start]
 end
