@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe 'openvpn::install'
+
 openvpn_conf 'client' do
   notifies :restart, 'service[openvpn]'
   action :create
