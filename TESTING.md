@@ -21,7 +21,7 @@ You must also have Vagrant and VirtualBox installed:
 
 Once installed, you must install the `vagrant-berkshelf` and `vagrant-omnibus` plugins:
 
-    $ vagrant plugin install berkshelf omnibus
+    $ vagrant plugin install vagrant-berkshelf vagrant-omnibus
 
 
 Development
