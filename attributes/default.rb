@@ -60,15 +60,20 @@ default['openvpn']['config']['keepalive']       = '10 120'
 default['openvpn']['config']['log']             = '/var/log/openvpn.log'
 default['openvpn']['config']['push']            = nil
 default['openvpn']['config']['script-security'] = 2
-default['openvpn']['config']['server']          = "#{node['openvpn']['subnet']} #{node['openvpn']['netmask']}"
 
 default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_cert']
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
 
-if node['openvpn']['type'] == 'server-bridge'
-  default['openvpn']['config']['dev'] = 'tap0'
-else
+# interface configuration depending on type
+case node['openvpn']['type']
+when 'client'
+  default['openvpn']['config']['client'] = ''
   default['openvpn']['config']['dev'] = 'tun0'
+when 'server'
+  default['openvpn']['config']['server'] = "#{node['openvpn']['subnet']} #{node['openvpn']['netmask']}"
+  default['openvpn']['config']['dev'] = 'tun0'
+when 'server-bridge'
+  default['openvpn']['config']['dev'] = 'tap0'
 end
