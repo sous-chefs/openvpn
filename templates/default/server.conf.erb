@@ -20,7 +20,7 @@
 %>
 <% end %>
 
-<% if @push_routes %>
+<% unless @push_routes.empty? %>
 # additional routes to push to clients
   <% @push_routes.each do |route| %>
 push "route <%= route %>"
