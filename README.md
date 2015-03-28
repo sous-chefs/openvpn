@@ -34,34 +34,34 @@ Attributes
 ----------
 These attributes are set by the cookbook by default.
 
-* `node["openvpn"]["local"]` - IP to listen on, defaults to node[:ipaddress]
-* `node["openvpn"]["proto"]` - Valid values are 'udp' or 'tcp', defaults to 'udp'.
-* `node["openvpn"]["port"]` - Port to listen on, defaults to '1194'.
-* `node["openvpn"]["type"]` - Valid values are 'server' or 'server-bridge'. Default is 'server' and it will create a routed IP tunnel, and use the 'tun' device. 'server-bridge' will create an ethernet bridge and requires a tap0 device bridged with the ethernet interface, and is beyond the scope of this cookbook.
-* `node["openvpn"]["subnet"]` - Used for server mode to configure a VPN subnet to draw client addresses. Default is 10.8.0.0, which is what the sample OpenVPN config package uses.
-* `node["openvpn"]["netmask"]` - Netmask for the subnet, default is 255.255.0.0.
-* `node["openvpn"]["gateway"]` - FQDN for the VPN gateway server. Default is `node["fqdn"]`.
-* `node["openvpn"]["log"]` - Server log file. Default /var/log/openvpn.log
-* `node["openvpn"]["key_dir"]` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
-* `node["openvpn"]["signing_ca_cert"]` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
-* `node["openvpn"]["signing_ca_key"]` - CA key for signing, default `/etc/openvpn/keys/ca.key`
-* `node["openvpn"]["script_security"]` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
-* `node["openvpn"]["configure_default_server"]` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
-* `node["openvpn"]["push_routes"]` - Array of routes to to push to clients (as `push` statements) in the server.conf. Default is empty.
+* `node['openvpn']['type']` - Valid values are 'client' (currently a work in progress), 'server' or 'server-bridge'. Default is 'server' and it will create a routed IP tunnel, and use the 'tun' device. 'server-bridge' will create an ethernet bridge and requires a tap0 device bridged with the ethernet interface, and is beyond the scope of this cookbook.
+* `node['openvpn']['subnet']` - Used for server mode to configure a VPN subnet to draw client addresses. Default is 10.8.0.0, which is what the sample OpenVPN config package uses.
+* `node['openvpn']['netmask']` - Netmask for the subnet, default is 255.255.0.0.
+* `node['openvpn']['gateway']` - FQDN for the VPN gateway server. Default is `node['fqdn']`.
+* `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf. Default is empty.
+* `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
+* `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
+* `node['openvpn']['signing_ca_cert']` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
+* `node['openvpn']['signing_ca_key']` - CA key for signing, default `/etc/openvpn/keys/ca.key`
+* `node['openvpn']['config']['local']` - IP to listen on, defaults to `node['ipaddress']`
+* `node['openvpn']['config']['proto']` - Valid values are 'udp' or 'tcp', defaults to 'udp'.
+* `node['openvpn']['config']['port']` - Port to listen on, defaults to '1194'.
+* `node['openvpn']['config']['log']` - Server log file. Default /var/log/openvpn.log
+* `node['openvpn']['config']['script-security']` - Script Security setting to use in server config. Default is 1. The "up" script will not be included in the configuration if this is 0 or 1. Set it to 2 to use the "up" script.
 
 The following attributes are used to populate the `easy-rsa` vars file. Defaults are the same as the vars file that ships with OpenVPN.
 
-* `node["openvpn"]["key"]["ca_expire"]` - In how many days should the root CA key expire - `CA_EXPIRE`.
-* `node["openvpn"]["key"]["expire"]` - In how many days should certificates expire - `KEY_EXPIRE`.
-* `node["openvpn"]["key"]["size"]` - Default key size, set to 2048 if paranoid but will slow down TLS negotiation performance - `KEY_SIZE`.
+* `node['openvpn']['key']['ca_expire']` - In how many days should the root CA key expire - `CA_EXPIRE`.
+* `node['openvpn']['key']['expire']` - In how many days should certificates expire - `KEY_EXPIRE`.
+* `node['openvpn']['key"]['size']` - Default key size, set to 2048 if paranoid but will slow down TLS negotiation performance - `KEY_SIZE`.
 
 The following are for the default values for fields place in the certificate from the vars file. Do not leave these blank.
 
-* `node["openvpn"]["key"]["country"]` - `KEY_COUNTRY`
-* `node["openvpn"]["key"]["province"]` - `KEY_PROVINCE`
-* `node["openvpn"]["key"]["city"]` - `KEY_CITY`
-* `node["openvpn"]["key"]["org"]` - `KEY_ORG`
-* `node["openvpn"]["key"]["email"]` - `KEY_EMAIL`
+* `node['openvpn']['key']['country']` - `KEY_COUNTRY`
+* `node['openvpn']['key']['province']` - `KEY_PROVINCE`
+* `node['openvpn']['key']['city']` - `KEY_CITY`
+* `node['openvpn']['key']['org']` - `KEY_ORG`
+* `node['openvpn']['key']['email']` - `KEY_EMAIL`
 
 
 Recipes
@@ -120,7 +120,7 @@ To automatically create new certificates and configurations for users, create da
 }
 ```
 
-This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out). The attribute `node["openvpn"]["script_security"]` must be set to 2 or higher to use this otherwise openvpn server startup will fail.
+This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out). The attribute `node['openvpn']["script_security"]` must be set to 2 or higher to use this otherwise openvpn server startup will fail.
 
 
 Customizing Server Configuration
@@ -135,7 +135,7 @@ The first is the OpenVPN server configuration file. Modify to suit your needs fo
 
 Using the LWRP
 --------------
-To create (possibly multiple) "conf" files on a server, use openvpn_conf "name".  See the conf.rb file in the resources directory to find the supported attributes, or add some of your own.  If you don't want to use the default "server.conf" from the default recipe, set `node["openvpn"]["configure_default_server"]` to false, then use the LWRP to configure as many as you like.
+To create (possibly multiple) "conf" files on a server, use openvpn_conf "name".  See the conf.rb file in the resources directory to find the supported attributes, or add some of your own.  If you don't want to use the default "server.conf" from the default recipe, set `node['openvpn']["configure_default_server"]` to false, then use the LWRP to configure as many as you like.
 
 
 SSL Certificates
