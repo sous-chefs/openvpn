@@ -19,9 +19,9 @@ You must also have Vagrant and VirtualBox installed:
 - [Vagrant](https://vagrantup.com)
 - [VirtualBox](https://virtualbox.org)
 
-Once installed, you must install the `vagrant-berkshelf` plugin:
+Once installed, you must install the `vagrant-berkshelf` and `vagrant-omnibus` plugins:
 
-    $ vagrant plugin install vagrant-berkshelf
+    $ vagrant plugin install berkshelf omnibus
 
 
 Development
