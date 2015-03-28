@@ -22,3 +22,5 @@ suites:
         config:
           verb: 1
           mute: 10
+        push_routes:
+          - 192.168.10.0 255.255.255.0
