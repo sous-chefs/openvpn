@@ -126,6 +126,30 @@ override_attributes(
 )
 ```
 
+To push other options to clients, use the `node['openvpn']['push_options']` attribute and set an array of hashes or strings. For example:
+
+```ruby
+override_attributes(
+  "openvpn" => {
+    "push_options" => {
+      "dhcp-option" => [
+        "DOMAIN domain.local",
+        "DOMAIN-SEARCH domain.local"
+      ],
+      "string-option" => "string value"
+    }
+  }
+)
+```
+
+This will render a config file that looks like:
+
+```
+push "dhcp-option DOMAIN domain.local"
+push "dhcp-option DOMAIN-SEARCH domain.local"
+push "string-option string value"
+```
+
 To automatically create new certificates and configurations for users, create data bags for each user. The only content required is the `id`, but this can be used in conjunction with other cookbooks by Chef Software such as `users` or `samba`. See __SSL Certificates__ below for more about generating client certificate sets.
 
 ```javascript
