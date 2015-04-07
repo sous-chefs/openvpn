@@ -30,7 +30,7 @@ action :create do
       push_routes: node['openvpn']['push_routes']
     )
     helpers do
-      # rubocop:disable Style/MethodLength
+      # rubocop:disable Metrics/MethodLength
       def render_push_options(push_options)
         return [] if push_options.nil?
         push_options.each_with_object([]) do |(option, conf), m|
@@ -44,7 +44,7 @@ action :create do
           end
         end
       end
-      # rubocop:enable Style/MethodLength
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end
