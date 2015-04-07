@@ -69,7 +69,19 @@ The following are for the default values for fields place in the certificate fro
 Recipes
 -------
 ### default
-Sets up an OpenVPN server.
+Installs the OpenVPN package only.
+
+### install
+Installs the OpenVPN package only.
+
+### server 
+Installs and configures OpenVPN as a server.
+
+### client
+Installs and configures OpenVPN as a client.
+
+### service
+Manages the OpenVPN system service (there is no need to use this recipe directly in your run_list).
 
 ### users
 Utilizes a data bag called `users` to generate OpenVPN keys for each user.
