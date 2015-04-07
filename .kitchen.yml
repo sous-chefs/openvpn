@@ -16,7 +16,7 @@ platforms:
 suites:
   - name: server
     run_list:
-      - recipe[test]
+      - recipe[openvpn::server]
     attributes:
       openvpn:
         config:
@@ -24,3 +24,7 @@ suites:
           mute: 10
         push_routes:
           - 192.168.10.0 255.255.255.0
+        push_options:
+          dhcp-option:
+            - 'DOMAIN local'
+            - 'DOMAIN-SEARCH local'
