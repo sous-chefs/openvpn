@@ -1,6 +1,8 @@
 AllCops:
   Include:
     - Gemfile
+  Exclude:
+    - '.bundle/**/*'
 
 Encoding:
   Enabled: false
