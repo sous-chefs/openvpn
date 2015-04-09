@@ -51,7 +51,7 @@ default['openvpn']['push_routes'] = []
 default['openvpn']['config']['user']  = 'nobody'
 default['openvpn']['config']['group'] = value_for_platform_family(rhel: 'nobody',
                                                                   default: 'nogroup'
-                                                                  )
+                                                                 )
 
 default['openvpn']['config']['local']           = node['ipaddress']
 default['openvpn']['config']['proto']           = 'udp'
