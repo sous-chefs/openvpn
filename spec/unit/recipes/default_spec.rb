@@ -8,8 +8,8 @@ describe 'openvpn::default' do
   it 'converges' do
     chef_run
   end
-end
 
-describe package('openvpn') do
-  it { should be_installed }
+  it 'Installs the openvpn package' do
+    expect(chef_run).to install_package('openvpn')
+  end
 end
