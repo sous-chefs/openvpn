@@ -14,10 +14,10 @@ This cookbook is tested and supported with Chef 11 & 12.
 ### Platform
 - Debian 6.0
 - Ubuntu 10.04+
-- RHEL 5.x and RHEL 6.x w/ EPEL enabled
+- RHEL 5.x and RHEL 6.x w/ (EPEL is enabled as required)
 
 ### Cookbooks
-The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that can be used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
+The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
 
 ### Not Supported
 This cookbook is designed to set up a basic installation of OpenVPN that will work for many common use cases. The following configurations are not supported by default with this cookbook:
@@ -112,7 +112,7 @@ override_attributes(
 )
 ```
 
-**Note**: If you are using a Red Hat EL distribution, you may need the EPEL repository enabled to install the openvpn package. You can use Chef's `recipe[yum::epel]` for this. Either add it to the run list in the openvpn role above, or add to a base role used by all your RHEL-family systems.
+**Note**: If you are using a Red Hat EL distribution, the EPEL repository is automatically enabled by Chef's `recipe[yum::epel]` to install the openvpn package.
 
 To push routes to clients, add `node['openvpn']['routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
 
