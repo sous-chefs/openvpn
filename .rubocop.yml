@@ -3,6 +3,7 @@ AllCops:
     - '**/Gemfile'
   Exclude:
     - '.bundle/**/*'
+    - 'vendor/bundle/**/*'
 
 Encoding:
   Enabled: false
