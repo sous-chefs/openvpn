@@ -26,3 +26,7 @@
 push "route <%= route %>"
   <% end %>
 <% end %>
+
+<% render_push_options(node['openvpn']['push_options']).each do |line| -%>
+<%= line %>
+<% end -%>
