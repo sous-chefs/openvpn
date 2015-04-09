@@ -16,6 +16,7 @@ before_script:
   - bundle exec berks install
 
 script:
-  - bundle exec foodcritic -f any . --tags ~FC005
+  - bundle exec foodcritic -f any .
+  - bundle exec rubocop --version
   - bundle exec rubocop
   - bundle exec rspec --color --format progress
