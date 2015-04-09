@@ -10,3 +10,7 @@ context 'Config' do
     end
   end
 end
+
+describe package('openvpn') do
+  it { is_expected.to be_installed }
+end
