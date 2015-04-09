@@ -43,6 +43,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['netmask']` - Netmask for the subnet, default is 255.255.0.0.
 * `node['openvpn']['gateway']` - FQDN for the VPN gateway server. Default is `node['fqdn']`.
 * `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf. Default is empty.
+* `node['openvpn']['push_options']` - Array of options to to push to clients in the server.conf. Default is empty.
 * `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
 * `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 * `node['openvpn']['signing_ca_cert']` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
