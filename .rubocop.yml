@@ -1,6 +1,6 @@
 AllCops:
   Include:
-    - Gemfile
+    - '**/Gemfile'
   Exclude:
     - '.bundle/**/*'
 
