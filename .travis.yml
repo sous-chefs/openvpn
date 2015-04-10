@@ -7,7 +7,7 @@ rvm:
   - 2.1.5
   - 2.0.0-p598
 
-bundler_args: --without development integration
+bundler_args: travis_wait --without development integration
 
 before_install:
   - "echo 'gem: --no-document' > ~/.gemrc"
