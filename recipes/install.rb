@@ -22,6 +22,6 @@ if platform_family?('debian')
   include_recipe 'apt'
 end
 
-include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
+include_recipe 'yum-epel' if platform_family?('rhel')
 
 package 'openvpn'
