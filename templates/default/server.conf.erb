@@ -4,8 +4,9 @@
 # Please refer to the OpenVPN documentation for details on
 # configuration settings.
 
-<% @config.sort.each do |key, value| %>
-<% next if value.nil? -%>
+<%- @config.sort.each do |key, values| -%>
+<%- [*values].each do |value| -%>
+<%- next if value.nil? -%>
 <%= key %> <%=
   case value
   when String
@@ -18,7 +19,8 @@
     value
   end
 %>
-<% end %>
+<%- end -%>
+<%- end -%>
 
 <% unless @push_routes.empty? %>
 # additional routes to push to clients
