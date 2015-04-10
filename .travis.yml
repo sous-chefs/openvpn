@@ -7,13 +7,10 @@ rvm:
   - 2.1.5
   - 2.0.0-p598
 
-bundler_args: travis_wait --without development integration
-
 before_install:
   - "echo 'gem: --no-document' > ~/.gemrc"
 
-before_script:
-  - bundle exec berks install
+install: travis_wait bundle install --without development integration
 
 script:
   - bundle exec foodcritic -f any .
