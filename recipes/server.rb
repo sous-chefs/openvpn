@@ -26,8 +26,6 @@ node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i
 key_dir  = node['openvpn']['key_dir']
 key_size = node['openvpn']['key']['size']
 
-include_recipe 'yum-epel' if platform_family?('rhel')
-
 directory key_dir do
   owner 'root'
   group 'root'
