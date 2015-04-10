@@ -27,7 +27,8 @@ action :create do
     mode 0644
     variables(
       config: new_resource.config || node['openvpn']['config'],
-      push_routes: node['openvpn']['push_routes']
+      push_routes: node['openvpn']['push_routes'],
+      push_options: node['openvpn']['push_options']
     )
     helpers do
       # rubocop:disable Metrics/MethodLength
