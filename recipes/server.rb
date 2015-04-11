@@ -18,7 +18,6 @@
 # limitations under the License.
 
 include_recipe 'openvpn::install'
-include_recipe 'openvpn::service'
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)
 node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i
@@ -132,3 +131,5 @@ openvpn_conf 'server' do
   only_if { node['openvpn']['configure_default_server'] }
   action :create
 end
+
+include_recipe 'openvpn::service'
