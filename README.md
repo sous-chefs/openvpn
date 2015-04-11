@@ -14,9 +14,9 @@ Requirements
 This cookbook is tested and supported with Chef 11 & 12.
 
 ### Platform
-- Debian 6.0
+- Debian 7.x and 6.x
 - Ubuntu 10.04+
-- RHEL 5.x and RHEL 6.x w/ (EPEL is enabled as required)
+- RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
 
 ### Cookbooks
 The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
