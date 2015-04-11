@@ -5,7 +5,7 @@ gem 'chefspec',   '~> 4.2'
 gem 'foodcritic', '~> 4.0'
 gem 'rubocop'
 gem 'serverspec'
-gem "codeclimate-test-reporter", group: :test, require: nil
+gem 'codeclimate-test-reporter', group: :test, require: nil
 
 group :integration do
   gem 'test-kitchen', '~> 1.2'
