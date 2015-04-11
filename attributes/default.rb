@@ -47,10 +47,19 @@ default['openvpn']['gateway']         = "vpn.#{node['domain']}"
 # client 'push routes', attribute is treated as a helper
 default['openvpn']['push_routes'] = []
 
+# client 'push options', attribute is treated as a helper
+default['openvpn']['push_options'] = []
+
 # Direct configuration file directives (.conf) defaults
 default['openvpn']['config']['user']  = 'nobody'
+
+# the default follows Linux Standard Base Core Specification (ISO/IEC 23360 Part 1:2007(E)):
+# Table 21-2 Optional User & Group Names
 default['openvpn']['config']['group'] = value_for_platform_family(rhel: 'nobody',
-                                                                  default: 'nogroup'
+                                                                  arch: 'nobody',
+                                                                  debian: 'nogroup',
+                                                                  mac_os_x: 'nogroup',
+                                                                  default: 'nobody'
                                                                  )
 
 default['openvpn']['config']['local']           = node['ipaddress']
