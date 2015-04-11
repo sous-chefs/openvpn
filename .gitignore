@@ -20,3 +20,7 @@ bin/
 tmp/
 vendor/
 /metadata.json
+
+# ChefSpec coverage reports
+*.*.json
+*.*.json.lock
