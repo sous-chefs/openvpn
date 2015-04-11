@@ -7,7 +7,7 @@ openvpn Cookbook
 [![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline, but your site will need probably need to customize.
+Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see __Customizing Server Configuration__ below).
 
 Requirements
 ------------
