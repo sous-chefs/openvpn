@@ -23,6 +23,9 @@ include_recipe 'openvpn::install'
 case node['platform_family']
 when 'rhel'
   if node['platform_version'] >= '7'
+    link '/etc/systemd/system/multi-user.target.wants/openvpn@server.service' do
+      to '/usr/lib/systemd/system/openvpn@.service'
+    end
     service_name = 'openvpn@server.service'
   else
     service_name = 'openvpn'
