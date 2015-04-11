@@ -17,3 +17,7 @@ script:
   - bundle exec rubocop --version
   - bundle exec rubocop
   - bundle exec rspec --color --format progress
+
+addons:
+  code_climate:
+    repo_token: 06b32509640865e956afee48a6e8d61bb7678c6789af34
