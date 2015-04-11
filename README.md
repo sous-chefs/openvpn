@@ -2,6 +2,7 @@ openvpn Cookbook
 ================
 [![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
+[![Dependency Status](https://gemnasium.com/flaccid/openvpn.svg)](https://gemnasium.com/flaccid/openvpn)
 [![Code Climate](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/gpa.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
 [![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
