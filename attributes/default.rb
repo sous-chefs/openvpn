@@ -69,6 +69,8 @@ default['openvpn']['config']['keepalive']       = '10 120'
 default['openvpn']['config']['log']             = '/var/log/openvpn.log'
 default['openvpn']['config']['push']            = nil
 default['openvpn']['config']['script-security'] = 2
+default['openvpn']['config']['persist-key']     = ''
+default['openvpn']['config']['persist-tun']     = ''
 
 default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_cert']
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
