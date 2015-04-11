@@ -19,5 +19,6 @@
 actions :create, :delete
 default_action :create
 
+attribute :cookbook, kind_of: String, default: 'openvpn'
 attribute :config,
           kind_of: Hash
