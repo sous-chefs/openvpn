@@ -15,7 +15,7 @@ end
 
 group :style do
   gem 'foodcritic', '~> 4.0'
-  gem 'rubocop',    '~> 0.30'
+  gem 'rubocop',    '~> 0.31'
 end
 
 group :unit do
@@ -26,7 +26,7 @@ end
 group :integration do
   gem 'vagrant-wrapper', '~> 2.0'
   gem 'test-kitchen',    '~> 1.4'
-  gem 'kitchen-vagrant', '~> 0.17'
+  gem 'kitchen-vagrant', '~> 0.18'
 end
 
 group :integration, :integration_cloud do
