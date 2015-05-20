@@ -47,8 +47,8 @@ task :client do
     conf = <<EOF
 client
 dev tun
-proto udp
-remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['port'] %>
+proto <%= node['openvpn']['config']['proto'] %>
+remote #{gateway} <%= node['openvpn']['port'] %>
 resolv-retry infinite
 nobind
 persist-key
