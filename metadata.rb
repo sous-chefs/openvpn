@@ -17,28 +17,31 @@ depends 'apt'
 depends 'yum', '~> 3.0'
 depends 'yum-epel'
 
+supports 'arch'
 supports 'centos'
 supports 'debian'
 supports 'fedora'
 supports 'redhat'
 supports 'ubuntu'
 
-attribute 'openvpn/local',
+attribute 'openvpn/config/local',
           display_name: 'OpenVPN Local',
           description:  'Local interface (ip) to listen on',
-          default:      'ipaddress',
+          default:      nil,
           recipes:      ['openvpn::default', 'openvpn::server']
 
-attribute 'openvpn/proto',
+attribute 'openvpn/config/proto',
           display_name: 'OpenVPN Protocol',
-          description:  'UDP or TCP',
+          description:  'The transport protocol to use for OpenVPN (UDP or TCP)',
           default:      'udp',
+          choice:       ['udp', 'tcp'],
           recipes:      ['openvpn::default', 'openvpn::server', 'openvpn::client']
 
 attribute 'openvpn/type',
           display_name: 'OpenVPN Type',
           description:  'Server or server-bridge',
           default:      'server',
+          choice:       ['server', 'server-bridge'],
           recipes:      ['openvpn::default', 'openvpn::server']
 
 attribute 'openvpn/subnet',
@@ -53,10 +56,11 @@ attribute 'openvpn/netmask',
           default:      '255.255.0.0',
           recipes:      ['openvpn::default', 'openvpn::server']
 
-attribute 'openvpn/port',
+attribute 'openvpn/config/port',
           display_name: 'OpenVPN Listen Port',
           description:  'Port to listen on, defaults to 1194',
           default:      '1194',
+          choice:       ['1194', '443', '80', '1024'],
           recipes:      ['openvpn::default', 'openvpn::server']
 
 attribute 'openvpn/gateway',
@@ -64,7 +68,7 @@ attribute 'openvpn/gateway',
           description:  'FQDN for the VPN gateway server. Default is vpn.domain',
           recipes:      ['openvpn::default', 'openvpn::client']
 
-attribute 'openvpn/log',
+attribute 'openvpn/config/log',
           display_name: 'OpenVPN Log File',
           description:  'OpenVPN Server log file. Default /var/log/openvpn.log',
           default:      '/var/log/openvpn.log',
