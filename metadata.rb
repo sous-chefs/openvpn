@@ -34,7 +34,7 @@ attribute 'openvpn/config/proto',
           display_name: 'OpenVPN Protocol',
           description:  'The transport protocol to use for OpenVPN (UDP or TCP)',
           default:      'udp',
-          choice:       ['udp', 'tcp'],
+          choice:       %w(udp tcp),
           recipes:      ['openvpn::default', 'openvpn::server', 'openvpn::client']
 
 attribute 'openvpn/type',
@@ -60,7 +60,7 @@ attribute 'openvpn/config/port',
           display_name: 'OpenVPN Listen Port',
           description:  'Port to listen on, defaults to 1194',
           default:      '1194',
-          choice:       ['1194', '443', '80', '1024'],
+          choice:       %w(1194 443 80 1024),
           recipes:      ['openvpn::default', 'openvpn::server']
 
 attribute 'openvpn/gateway',
