@@ -141,7 +141,7 @@ attribute 'openvpn/key/province',
           display_name: 'OpenVPN Certificate Province',
           description:  'The province for the TLS certificate',
           default:      'CA',
-          recipes:      ['openvpn', 'openvpn::users', 'openvpn::server']
+          recipes:      ['openvpn::default', 'openvpn::users', 'openvpn::server']
 
 attribute 'openvpn/key/city',
           display_name: 'OpenVPN Certificate City',
