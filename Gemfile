@@ -15,7 +15,7 @@ end
 
 group :style do
   gem 'foodcritic', '~> 4.0'
-  gem 'rubocop',    '~> 0.31'
+  gem 'rubocop',    '~> 0.32'
 end
 
 group :unit do
@@ -30,7 +30,7 @@ group :integration do
 end
 
 group :integration, :integration_cloud do
-  gem 'kitchen-ec2',          '~> 0.8'
+  gem 'kitchen-ec2',          '~> 0.9'
   gem 'kitchen-digitalocean', '~> 0.8'
   gem 'serverspec',           '~> 2.0'
 end
