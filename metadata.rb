@@ -93,7 +93,7 @@ attribute 'openvpn/signing_ca_key',
           default:      '/etc/openvpn/keys/ca.key',
           recipes:      ['openvpn::default', 'openvpn::server']
 
-attribute 'openvpn/push_routes',
+attribute 'openvpn/push_options',
           display_name: 'OpenVPN Push DHCP Options',
           description:  'An array of DHCP options to push to clients from the server.conf. '\
                         'Default is empty.',
