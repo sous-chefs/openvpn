@@ -87,6 +87,7 @@ unless ::File.exist?("#{key_dir}/dh#{key_size}.pem")
     owner 'root'
     group 'root'
     mode  '0600'
+    not_if { ::File.exist?("#{key_dir}/dh#{key_size}.pem") }
   end
 end
 
