@@ -3,6 +3,10 @@ openvpn Cookbook CHANGELOG
 This file is used to list changes made in each version of the openvpn cookbook.
 
 
+v2.1.2
+------
+Added a not_if on the dh1024.pem file resource
+
 v2.1.0
 ------
 Updating to use cookbook yum ~> 3.0
