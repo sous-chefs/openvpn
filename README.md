@@ -46,7 +46,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['subnet']` - Used for server mode to configure a VPN subnet to draw client addresses. Default is 10.8.0.0, which is what the sample OpenVPN config package uses.
 * `node['openvpn']['netmask']` - Netmask for the subnet, default is 255.255.0.0.
 * `node['openvpn']['gateway']` - FQDN for the VPN gateway server. Default is `node['fqdn']`.
-* `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf. Default is empty.
+* `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf, e.g. '192.168.0.0 255.255.255.0'. Default is empty.
 * `node['openvpn']['push_options']` - Array of options to to push to clients in the server.conf. Default is empty.
 * `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
 * `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
@@ -121,13 +121,13 @@ override_attributes(
 
 **Note**: If you are using a Red Hat EL distribution, the EPEL repository is automatically enabled by Chef's `recipe[yum::epel]` to install the openvpn package.
 
-To push routes to clients, add `node['openvpn']['routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
+To push routes to clients, add `node['openvpn']['push_routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
 
 ```ruby
 override_attributes(
   "openvpn" => {
-    "routes => [
-      "push 'route 192.168.100.0 255.255.255.0'"
+    "push_routes => [
+      "192.168.100.0 255.255.255.0"
     ]
   }
 )
