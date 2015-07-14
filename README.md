@@ -126,8 +126,8 @@ To push routes to clients, add `node['openvpn']['push_routes]` as an array attri
 ```ruby
 override_attributes(
   "openvpn" => {
-    "push_routes => [
-      "push 'route 192.168.100.0 255.255.255.0'"
+    "push_routes" => [
+      "192.168.100.0 255.255.255.0'"
     ]
   }
 )
