@@ -121,12 +121,12 @@ override_attributes(
 
 **Note**: If you are using a Red Hat EL distribution, the EPEL repository is automatically enabled by Chef's `recipe[yum::epel]` to install the openvpn package.
 
-To push routes to clients, add `node['openvpn']['routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
+To push routes to clients, add `node['openvpn']['push_routes]` as an array attribute, e.g. if the internal network is 192.168.100.0/24:
 
 ```ruby
 override_attributes(
   "openvpn" => {
-    "routes => [
+    "push_routes => [
       "push 'route 192.168.100.0 255.255.255.0'"
     ]
   }
