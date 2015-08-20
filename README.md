@@ -102,7 +102,7 @@ Create a role for the OpenVPN server. See above for attributes that can be enter
 ```ruby
 name "openvpn"
 description "The server that runs OpenVPN"
-run_list("recipe[openvpn]")
+run_list("recipe[openvpn::server]")
 override_attributes(
   "openvpn" => {
     "gateway" => "vpn.example.com",
