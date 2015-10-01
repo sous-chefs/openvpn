@@ -28,6 +28,7 @@ key_size = node['openvpn']['key']['size']
 directory key_dir do
   owner 'root'
   group 'root'
+  recursive true
   mode  '0700'
 end
 
