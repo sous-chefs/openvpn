@@ -19,6 +19,8 @@ bin/
 tmp/
 vendor/
 /metadata.json
+roles/
+data_bags/
 
 # ChefSpec coverage reports
 *.*.json
