@@ -18,6 +18,7 @@
 # limitations under the License.
 
 include_recipe 'openvpn::enable_ip_forwarding'
+include_recipe 'openvpn::install_bridge_utils' if node['openvpn']['type'] == 'bridge'
 include_recipe 'openvpn::install'
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)

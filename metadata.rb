@@ -12,7 +12,8 @@ recipe 'openvpn::server',               'Installs and configures OpenVPN as a se
 recipe 'openvpn::client',               'Installs and configures OpenVPN as a client.'
 recipe 'openvpn::service',              'Manages the OpenVPN system service.'
 recipe 'openvpn::users',                'Sets up openvpn cert/configs for users data bag items.'
-recipe 'openvpn::enable_ip_forwarding'  'Enables IP forwarding on the system.'
+recipe 'openvpn::enable_ip_forwarding', 'Enables IP forwarding on the system.'
+recipe 'openvpn::install_bridge_utils', 'Installs bridge uitilies for Linux.'
 
 depends 'apt'
 depends 'sysctl'
