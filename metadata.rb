@@ -6,14 +6,16 @@ description       'Installs and configures openvpn and includes rake tasks for m
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           '2.1.1'
 
-recipe 'openvpn::default',         'Installs OpenVPN only (no configuration).'
-recipe 'openvpn::install',         'Installs OpenVPN only (no configuration).'
-recipe 'openvpn::server',          'Installs and configures OpenVPN as a server.'
-recipe 'openvpn::client',          'Installs and configures OpenVPN as a client.'
-recipe 'openvpn::service',         'Manages the OpenVPN system service.'
-recipe 'openvpn::users',           'Sets up openvpn cert/configs for users data bag items.'
+recipe 'openvpn::default',              'Installs OpenVPN only (no configuration).'
+recipe 'openvpn::install',              'Installs OpenVPN only (no configuration).'
+recipe 'openvpn::server',               'Installs and configures OpenVPN as a server.'
+recipe 'openvpn::client',               'Installs and configures OpenVPN as a client.'
+recipe 'openvpn::service',              'Manages the OpenVPN system service.'
+recipe 'openvpn::users',                'Sets up openvpn cert/configs for users data bag items.'
+recipe 'openvpn::enable_ip_forwarding'  'Enables IP forwarding on the system.'
 
 depends 'apt'
+depends 'sysctl'
 depends 'yum', '~> 3.0'
 depends 'yum-epel'
 
