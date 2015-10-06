@@ -12,6 +12,13 @@ Vagrant.configure('2') do |config|
 
   config.ssh.insert_key = false
 
+  # create the test user data bag if not existing
+  unless File.exist?('data_bags/users/test.json')
+    require 'fileutils'
+    FileUtils.mkpath('data_bags/users')
+    IO.write('data_bags/users/test.json', '{ "id": "test" }')
+  end
+
   config.vm.define 'server', primary: true do |server|
     server.vm.hostname = 'openvpn-server'
     server.vm.network 'private_network', ip: '172.19.18.8'
