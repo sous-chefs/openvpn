@@ -26,6 +26,7 @@ node.override['openvpn']['key']['size'] = node['openvpn']['key']['size'].to_i
 
 key_dir  = node['openvpn']['key_dir']
 key_size = node['openvpn']['key']['size']
+message_digest = node['openvpn']['key']['message_digest']
 
 directory key_dir do
   owner 'root'
@@ -97,7 +98,7 @@ bash 'openvpn-initca' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
   code <<-EOF
     openssl req -batch -days #{node['openvpn']['key']['ca_expire']} \
-      -nodes -new -newkey rsa:#{key_size} -sha1 -x509 \
+      -nodes -new -newkey rsa:#{key_size} -#{message_digest} -x509 \
       -keyout #{node['openvpn']['signing_ca_key']} \
       -out #{node['openvpn']['signing_ca_cert']} \
       -config #{key_dir}/openssl.cnf
@@ -114,7 +115,7 @@ bash 'openvpn-server-key' do
       -config #{key_dir}/openssl.cnf && \
     openssl ca -batch -days #{node['openvpn']['key']['ca_expire']} \
       -out #{key_dir}/server.crt -in #{key_dir}/server.csr \
-      -extensions server -md sha1 -config #{key_dir}/openssl.cnf
+      -extensions server -md #{message_digest} -config #{key_dir}/openssl.cnf
   EOF
   not_if { ::File.exist?("#{key_dir}/server.crt") }
 end

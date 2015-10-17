@@ -29,6 +29,7 @@ default['openvpn']['key']['province']  = 'CA'
 default['openvpn']['key']['city']      = 'San Francisco'
 default['openvpn']['key']['org']       = 'Fort Funston'
 default['openvpn']['key']['email']     = 'admin@foobar.com'
+default['openvpn']['key']['message_digest'] = 'sha1'
 
 # Cookbook attributes
 default['openvpn']['key_dir']         = '/etc/openvpn/keys'
