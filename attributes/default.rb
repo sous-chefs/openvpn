@@ -90,3 +90,26 @@ when 'server'
 when 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'
 end
+
+# Duo
+default['openvpn']['duo']['source']['git_commit_hash']      = '4d3727c'
+default['openvpn']['duo']['source']['url']                  = "https://github.com/duosecurity/duo_openvpn/tarball/#{node['openvpn']['duo']['source']['git_commit_hash']}"
+default['openvpn']['duo']['source']['checksum']             = 'b1319c42b2791cb6637d1693943f7a72ffa5a74ecf4b9a96373d73ef16f6ca9f'
+
+# ldap
+default['openvpn']['ldap']['config']['auth_dir']            = '/etc/openvpn/auth'
+default['openvpn']['ldap']['config']['timeout']             = 15
+# NOTE: search_filter cannot be blank or nil, openvpn ldap will segfault!
+default['openvpn']['ldap']['config']['search_filter']       = '(&(sAMAccountName=%u))'
+default['openvpn']['ldap']['config']['require_group']       = false
+
+# openvpn-auth-ldap
+default['openvpn']['ldap']['source']['git_commit_hash']     = '193071e'
+default['openvpn']['ldap']['source']['url']                 = "https://github.com/threerings/openvpn-auth-ldap/tarball/#{node['openvpn']['ldap']['source']['git_commit_hash']}"
+default['openvpn']['ldap']['source']['checksum']            = 'f81cdd2ee9d9d102421c6616f4d8818027e0b0193c040b7fcf52441deadd251b'
+
+# install from source for openvpn-auth-ldap
+default['openvpn']['install_from_source']                   = false
+default['openvpn']['source']['version']                     = '2.3.8'
+default['openvpn']['source']['url']                         = "https://swupdate.openvpn.org/community/releases/openvpn-#{node['openvpn']['source']['version']}.tar.gz"
+default['openvpn']['source']['checksum']                    = '532435eff61c14b44a583f27b72f93e7864e96c95fe51134ec0ad4b1b1107c51'

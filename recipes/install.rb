@@ -24,4 +24,20 @@ end
 
 include_recipe 'yum-epel' if platform_family?('rhel')
 
-package 'openvpn'
+# ldap requires building from source
+if node['openvpn']['install_from_source'] || node['openvpn']['ldap']['config']['server']
+  include_recipe 'openvpn::source'
+else
+  package 'openvpn'
+end
+
+if node['openvpn']['duo']['config']['ikey'] &&
+   node['openvpn']['duo']['config']['skey'] &&
+   node['openvpn']['duo']['config']['host']
+
+  include_recipe 'openvpn::duo'
+end
+
+if node['openvpn']['ldap']['config']['server']
+  include_recipe 'openvpn::ldap'
+end

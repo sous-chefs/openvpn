@@ -1,0 +1,19 @@
+<LDAP>
+# LDAP server URL
+URL           ldap://<%= node['openvpn']['ldap']['config']['server'] %>
+# Bind DN (If your LDAP server doesn't support anonymous binds)
+BindDN        <%= node['openvpn']['ldap']['config']['bind_dn'] %>
+# Bind Password cn=vmail password
+Password      "<%= node['openvpn']['ldap']['config']['password'] %>"
+# Network timeout (in seconds)
+Timeout       <%= node['openvpn']['ldap']['config']['timeout'] %>
+</LDAP>
+
+<Authorization>
+# Base DN
+BaseDN          "<%= node['openvpn']['ldap']['config']['base_dn'] %>"
+# User Search Filter
+SearchFilter    "<%= node['openvpn']['ldap']['config']['search_filter'] %>"
+# Require Group Membership
+RequireGroup    <%= node['openvpn']['ldap']['config']['require_group'] ? 'true' : 'false' %>
+</Authorization>

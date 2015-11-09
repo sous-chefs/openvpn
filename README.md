@@ -73,7 +73,25 @@ The following are for the default values for fields place in the certificate fro
 * `node['openvpn']['key']['email']` - `KEY_EMAIL`
 
 The following lets you specify the message digest used for generating certificates by OpenVPN
+
 * `node['openvpn']['key']['message_digest'] - `sha1` . Recommend using sha256 or higher for security.
+
+To install duo security set all:
+
+* `node['openvpn']['duo']['config']['ikey']`
+* `node['openvpn']['duo']['config']['skey']`
+* `node['openvpn']['duo']['config']['host']`
+
+To install ldap set:
+
+* required
+  * `node['openvpn']['ldap']['config']['server']` - for example: `ourdomaincontroller.rad-domain.com`
+  * `node['openvpn']['ldap']['config']['bind_dn']` - for example: `CN=openvpnusername,OU=openvpnusersgroup,DC=rad-domain,DC=com`
+  * `node['openvpn']['ldap']['config']['base_dn']` - for example: `DC=rad-domain,DC=com`
+  * `node['openvpn']['ldap']['config']['password']` - for example: `areallylongandsuperstrongpasswordfortheopenvpnusername`
+
+* optional
+  * `node['openvpn']['ldap']['config']['search_filter']` - default value: `(&(sAMAccountName=%u))`
 
 
 Recipes
