@@ -174,3 +174,10 @@ attribute 'openvpn/key/email',
           description:  'The email address for the TLS certificate',
           default:      'me@example.com',
           recipes:      ['openvpn::default', 'openvpn::users', 'openvpn::server']
+
+attribute 'openvpn/key/message_digest',
+          display_name: 'OpenVPN Message Digest',
+          description:  'The message digest used for generating certificates by OpenVPN',
+          default:      'sha256',
+          choice:       %w(sha256 sha1),
+          recipes:      ['openvpn::default', 'openvpn::server']
