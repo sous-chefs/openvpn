@@ -41,7 +41,7 @@ action :create do
           when String
             m << "push \"#{option} #{conf}\""
           else
-            fail "Push option data type #{conf.class} not supported"
+            raise "Push option data type #{conf.class} not supported"
           end
         end
       end
