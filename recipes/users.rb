@@ -51,7 +51,7 @@ else
     %w(conf ovpn).each do |ext|
       template "#{node['openvpn']['key_dir']}/#{u['id']}.#{ext}" do
         source 'client.conf.erb'
-        variables(username: u['id'])
+        variables(client_cn: u['id'])
       end
     end
 
