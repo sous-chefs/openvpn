@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# ensure inclusion of client recipe sets the correct type
+node.override['openvpn']['type'] = 'client'
+
 include_recipe 'openvpn::install'
 include_recipe 'openvpn::service'
 
