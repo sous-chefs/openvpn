@@ -13,7 +13,7 @@ nobind
 persist-key
 persist-tun
 ca ca.crt
-cert <%= @username %>.crt
-key <%= @username %>.key
+cert <%= @client_cn %>.crt
+key <%= @client_cn %>.key
 comp-lzo
 verb 3

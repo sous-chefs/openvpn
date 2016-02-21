@@ -43,6 +43,7 @@ default['openvpn']['netmask']         = '255.255.0.0'
 
 # Client specific
 default['openvpn']['gateway']         = "vpn.#{node['domain']}"
+default['openvpn']['client_cn']       = 'client'
 
 # Server specific
 # client 'push routes', attribute is treated as a helper

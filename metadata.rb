@@ -27,6 +27,14 @@ supports 'fedora'
 supports 'redhat'
 supports 'ubuntu'
 
+attribute 'openvpn/client_cn',
+          display_name: 'OpenVPN Client CN',
+          description:  "The client's Common Name used with the "\
+                        'openvpn::client recipe (essentially a standalone recipe) '\
+                        'for the client certificate and key.',
+          default:      'client',
+          recipes:      ['openvpn::client']
+
 attribute 'openvpn/config/local',
           display_name: 'OpenVPN Local',
           description:  'Local interface (ip) to listen on',
