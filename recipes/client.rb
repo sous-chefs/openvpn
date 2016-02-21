@@ -21,9 +21,10 @@
 node.override['openvpn']['type'] = 'client'
 
 include_recipe 'openvpn::install'
-include_recipe 'openvpn::service'
 
 openvpn_conf 'client' do
   notifies :restart, 'service[openvpn]'
   action :create
 end
+
+include_recipe 'openvpn::service'
