@@ -73,7 +73,7 @@ The following are for the default values for fields place in the certificate fro
 * `node['openvpn']['key']['email']` - `KEY_EMAIL`
 
 The following lets you specify the message digest used for generating certificates by OpenVPN
-* `node['openvpn']['key']['message_digest'] - Default is `sha256` for a high level of security.
+* `node['openvpn']['key']['message_digest']` - Default is `sha256` for a high-level of security.
 
 
 Recipes
