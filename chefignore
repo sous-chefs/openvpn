@@ -88,7 +88,7 @@ Strainerfile
 ###########
 .vagrant
 Vagrantfile
-vagrant-scripts/*
+vagrant/*
 
 # Travis #
 ##########

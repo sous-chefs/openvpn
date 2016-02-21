@@ -19,8 +19,9 @@ bin/
 tmp/
 vendor/
 /metadata.json
-roles/
-data_bags/
+/vagrant/chef_zero/data_bags/users/*.json
+/vagrant/chef_zero/nodes/*.json
+/vagrant/chef_zero/roles/*.json
 
 # ChefSpec coverage reports
 *.*.json
