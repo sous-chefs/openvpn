@@ -28,7 +28,8 @@ action :create do
     variables(
       config: new_resource.config || node['openvpn']['config'],
       push_routes: node['openvpn']['push_routes'],
-      push_options: node['openvpn']['push_options']
+      push_options: node['openvpn']['push_options'],
+      client_cn: node['openvpn']['client_cn']
     )
     helpers do
       # rubocop:disable Metrics/MethodLength
@@ -41,7 +42,7 @@ action :create do
           when String
             m << "push \"#{option} #{conf}\""
           else
-            fail "Push option data type #{conf.class} not supported"
+            raise "Push option data type #{conf.class} not supported"
           end
         end
       end

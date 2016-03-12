@@ -9,4 +9,11 @@ context 'Config' do
       it { is_expected.to include 'push "dhcp-option DOMAIN-SEARCH local"' }
     end
   end
+
+  describe file('/etc/openvpn/easy-rsa/pkitool') do
+    describe '#content' do
+      subject { super().content }
+      it { is_expected.to include '-md sha256' }
+    end
+  end
 end

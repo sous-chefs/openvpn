@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: openvpn
-# Recipe:: service
+# Recipe:: install_bridge_utils
 #
 # Copyright 2009-2013, Chef Software, Inc.
 # Copyright 2015, Chef Software, Inc. <legal@chef.io>
@@ -17,26 +17,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'openvpn::install'
-
-# systemd platforms use an instance service
-case node['platform_family']
-when 'rhel'
-  if node['platform_version'] >= '7'
-    link "/etc/systemd/system/multi-user.target.wants/openvpn@#{node['openvpn']['type']}.service" do
-      to '/usr/lib/systemd/system/openvpn@.service'
-    end
-    service_name = "openvpn@#{node['openvpn']['type']}.service"
-  else
-    service_name = 'openvpn'
-  end
-when 'arch'
-  service_name = "openvpn@#{node['openvpn']['type']}.service"
-else
-  service_name = 'openvpn'
+p = package 'bridge-utils' do
+  action :nothing
 end
 
-service 'openvpn' do
-  service_name service_name
-  action [:enable, :start]
-end
+p.run_action(:install)

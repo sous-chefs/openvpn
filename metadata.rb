@@ -6,14 +6,17 @@ description       'Installs and configures openvpn and includes rake tasks for m
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           '2.1.1'
 
-recipe 'openvpn::default',         'Installs OpenVPN only (no configuration).'
-recipe 'openvpn::install',         'Installs OpenVPN only (no configuration).'
-recipe 'openvpn::server',          'Installs and configures OpenVPN as a server.'
-recipe 'openvpn::client',          'Installs and configures OpenVPN as a client.'
-recipe 'openvpn::service',         'Manages the OpenVPN system service.'
-recipe 'openvpn::users',           'Sets up openvpn cert/configs for users data bag items.'
+recipe 'openvpn::default',              'Installs OpenVPN only (no configuration).'
+recipe 'openvpn::install',              'Installs OpenVPN only (no configuration).'
+recipe 'openvpn::server',               'Installs and configures OpenVPN as a server.'
+recipe 'openvpn::client',               'Installs and configures OpenVPN as a client.'
+recipe 'openvpn::service',              'Manages the OpenVPN system service.'
+recipe 'openvpn::users',                'Sets up openvpn cert/configs for users data bag items.'
+recipe 'openvpn::enable_ip_forwarding', 'Enables IP forwarding on the system.'
+recipe 'openvpn::install_bridge_utils', 'Installs bridge uitilies for Linux.'
 
 depends 'apt'
+depends 'sysctl'
 depends 'yum', '~> 3.0'
 depends 'yum-epel'
 
@@ -23,6 +26,14 @@ supports 'debian'
 supports 'fedora'
 supports 'redhat'
 supports 'ubuntu'
+
+attribute 'openvpn/client_cn',
+          display_name: 'OpenVPN Client CN',
+          description:  "The client's Common Name used with the "\
+                        'openvpn::client recipe (essentially a standalone recipe) '\
+                        'for the client certificate and key.',
+          default:      'client',
+          recipes:      ['openvpn::client']
 
 attribute 'openvpn/config/local',
           display_name: 'OpenVPN Local',
@@ -171,3 +182,10 @@ attribute 'openvpn/key/email',
           description:  'The email address for the TLS certificate',
           default:      'me@example.com',
           recipes:      ['openvpn::default', 'openvpn::users', 'openvpn::server']
+
+attribute 'openvpn/key/message_digest',
+          display_name: 'OpenVPN Message Digest',
+          description:  'The message digest used for generating certificates by OpenVPN',
+          default:      'sha256',
+          choice:       %w(sha256 sha1),
+          recipes:      ['openvpn::default', 'openvpn::server']

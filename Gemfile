@@ -8,19 +8,19 @@ chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : nil
 
 group :test do
   gem 'rake'
-  gem 'rspec',      '~> 3.0'
-  gem 'berkshelf',  '~> 3.2'
+  gem 'rspec',      '~> 3.4'
+  gem 'berkshelf',  '~> 4.1'
   gem 'codeclimate-test-reporter', group: :test, require: nil
 end
 
 group :style do
-  gem 'foodcritic', '~> 4.0'
-  gem 'rubocop',    '~> 0.32'
+  gem 'foodcritic', '~> 6.0'
+  gem 'rubocop',    '~> 0.37'
 end
 
 group :unit do
   gem 'chef', chef_version unless chef_version.nil? # Ruby 1.9.3 support
-  gem 'chefspec',   '~> 4.2'
+  gem 'chefspec', '~> 4.2'
 end
 
 group :integration do
