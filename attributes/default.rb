@@ -80,6 +80,7 @@ default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_ce
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
+default['openvpn']['config']['crl-verify']      = '/etc/openvpn/crl.pem'
 
 # interface configuration depending on type
 case node['openvpn']['type']
