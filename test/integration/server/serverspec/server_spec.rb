@@ -2,6 +2,11 @@
 require 'spec_helper'
 
 context 'Config' do
+  describe service('openvpn') do
+    it { is_expected.to be_enabled }
+    it { is_expected.to be_running }
+  end
+
   describe file('/etc/openvpn/server.conf') do
     describe '#content' do
       subject { super().content }
