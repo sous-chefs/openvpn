@@ -130,6 +130,22 @@ end
   end
 end
 
+execute 'gencrl' do
+  environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
+  command 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl ' \
+          "-keyfile #{node['openvpn']['key_dir']}/server.key " \
+          "-cert #{node['openvpn']['key_dir']}/server.crt " \
+          "-out #{node['openvpn']['key_dir']}/crl.pem"
+  creates "#{node['openvpn']['key_dir']}/crl.pem"
+  action  :run
+end
+
+# Make a world readable copy of the CRL
+remote_file '/etc/openvpn/crl.pem' do
+  mode   0644
+  source "file://#{node['openvpn']['key_dir']}/crl.pem"
+end
+
 openvpn_conf 'server' do
   notifies :restart, 'service[openvpn]'
   only_if { node['openvpn']['configure_default_server'] }
