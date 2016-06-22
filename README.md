@@ -53,6 +53,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf, e.g. '192.168.0.0 255.255.255.0'. Default is empty.
 * `node['openvpn']['push_options']` - Array of options to to push to clients in the server.conf. Default is empty.
 * `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
+* `node['openvpn']['client_prefix'] - String. Name of the config that is created for clients. When imported into most vpn clients, this is the name that will be displayed for the connection. Default is 'vpn-prod'.
 * `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 * `node['openvpn']['signing_ca_cert']` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 * `node['openvpn']['signing_ca_key']` - CA key for signing, default `/etc/openvpn/keys/ca.key`

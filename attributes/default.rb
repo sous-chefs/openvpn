@@ -32,6 +32,7 @@ default['openvpn']['key']['email']          = 'admin@foobar.com'
 default['openvpn']['key']['message_digest'] = 'sha256'
 
 # Cookbook attributes
+default['openvpn']['client_prefix']   = 'vpn-prod'
 default['openvpn']['key_dir']         = '/etc/openvpn/keys'
 default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
