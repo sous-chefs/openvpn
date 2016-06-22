@@ -93,3 +93,10 @@ when 'server'
 when 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'
 end
+default['openvpn']['client_config']['reneg-sec'] = 0
+default['openvpn']['client_config']['comp-lzo'] = nil
+default['openvpn']['client_config']['persist-key'] = nil
+default['openvpn']['client_config']['persist-tun'] = nil
+default['openvpn']['client_config']['nobind'] = nil
+default['openvpn']['client_config']['resolv-retry'] = 'infinite'
+default['openvpn']['client_config']['verb'] = 3
