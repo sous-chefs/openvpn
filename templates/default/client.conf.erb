@@ -10,9 +10,12 @@ remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['config']['port'] %
 ca ca.crt
 cert <%= @client_cn %>.crt
 key <%= @client_cn %>.key
+<%- @flags.sort.each do |flag| -%>
+<%= flag %>
+<%- end -%>
 <%- @config.sort.each do |key, values| -%>
   <%- [*values].each do |value| -%>
-    <%= key %> <%=
+<%= key %> <%=
     case value
     when String
       value
@@ -25,6 +28,6 @@ key <%= @client_cn %>.key
     else
       value
     end
-  %>
-<%- end -%>
+%>
+  <%- end -%>
 <%- end -%>
