@@ -67,4 +67,6 @@ if node['openvpn']['type'] == 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'
 else
   default['openvpn']['config']['dev'] = 'tun0'
+  default['openvpn']['config']['push-option']['dhcp-option']['DNS']	=	'10.64.6.18'
+  default['openvpn']['config']['push-option']['dhcp-option']['DNS']	=	'10.64.6.22'
 end
