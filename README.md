@@ -102,6 +102,8 @@ Manages the OpenVPN system service (there is no need to use this recipe directly
 Utilizes a data bag called `users` to generate OpenVPN keys for each user.
 [chef-solo-search](https://github.com/edelight/chef-solo-search) is required in order to use this recipe with Chef-Solo, although it is not a dependency of this cookbook.
 
+#### `openvpn::easy_rsa`
+Installs the easy-rsa package (a CLI utility to build and manage a PKI CA).
 
 Usage
 -----
