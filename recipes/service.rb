@@ -31,14 +31,10 @@ when 'rhel'
     service_name = 'openvpn'
   end
 when 'fedora'
-  if node['platform_version'] >= '22'
     link "/etc/systemd/system/multi-user.target.wants/openvpn@#{node['openvpn']['type']}.service" do
       to '/usr/lib/systemd/system/openvpn@.service'
     end
     service_name = "openvpn@#{node['openvpn']['type']}.service"
-  else
-    service_name = 'openvpn'
-  end
 when 'arch'
   service_name = "openvpn@#{node['openvpn']['type']}.service"
 else
