@@ -7,14 +7,14 @@ driver_config:
 provisioner:
   name: chef_zero
 
+# currently only support 2 last major revs of distros
 platforms:
-  - name: debian-7.8
-  - name: debian-6.0.10
+  - name: debian-8.4
+  - name: debian-7.9
+  - name: ubuntu-16.04
   - name: ubuntu-14.04
-  - name: ubuntu-12.04
-  - name: centos-7.1
-  - name: centos-6.5
-  - name: centos-5.10
+  - name: centos-7.2
+  - name: centos-6.7
 
 suites:
   - name: server

@@ -32,6 +32,7 @@ default['openvpn']['key']['email']          = 'admin@foobar.com'
 default['openvpn']['key']['message_digest'] = 'sha256'
 
 # Cookbook attributes
+default['openvpn']['client_prefix']   = 'vpn-prod'
 default['openvpn']['key_dir']         = '/etc/openvpn/keys'
 default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
@@ -80,6 +81,7 @@ default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_ce
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
+default['openvpn']['config']['crl-verify']      = '/etc/openvpn/crl.pem'
 
 # interface configuration depending on type
 case node['openvpn']['type']

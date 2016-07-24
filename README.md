@@ -17,10 +17,13 @@ Requirements
 This cookbook is tested and supported with Chef 11 & 12.
 
 ### Platform
-- Debian 7.x and 6.x
+- Debian 8.x, 7.x and 6.x
 - Ubuntu 10.04+
 - RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
 - Arch Linux
+
+Note: we currently only test the latest minor release for the last 2 major
+releases of each distro using test-kitchen.
 
 ### Cookbooks
 The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
@@ -50,6 +53,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf, e.g. '192.168.0.0 255.255.255.0'. Default is empty.
 * `node['openvpn']['push_options']` - Array of options to to push to clients in the server.conf. Default is empty.
 * `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
+* `node['openvpn']['client_prefix'] - String. Name of the config that is created for clients. When imported into most vpn clients, this is the name that will be displayed for the connection. Default is 'vpn-prod'.
 * `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 * `node['openvpn']['signing_ca_cert']` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 * `node['openvpn']['signing_ca_key']` - CA key for signing, default `/etc/openvpn/keys/ca.key`
@@ -98,6 +102,8 @@ Manages the OpenVPN system service (there is no need to use this recipe directly
 Utilizes a data bag called `users` to generate OpenVPN keys for each user.
 [chef-solo-search](https://github.com/edelight/chef-solo-search) is required in order to use this recipe with Chef-Solo, although it is not a dependency of this cookbook.
 
+#### `openvpn::easy_rsa`
+Installs the easy-rsa package (a CLI utility to build and manage a PKI CA).
 
 Usage
 -----

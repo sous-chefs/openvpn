@@ -1,10 +1,12 @@
 name              'openvpn'
+version           '3.0.0'
 maintainer        'Xhost Australia'
 maintainer_email  'cookbooks@xhost.com.au'
 license           'Apache 2.0'
 description       'Installs and configures openvpn and includes rake tasks for managing certs.'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           '2.1.1'
+source_url        'https://github.com/xhost-cookbooks/openvpn'
+issues_url        'https://github.com/xhost-cookbooks/openvpn/issues'
 
 recipe 'openvpn::default',              'Installs OpenVPN only (no configuration).'
 recipe 'openvpn::install',              'Installs OpenVPN only (no configuration).'
@@ -14,6 +16,7 @@ recipe 'openvpn::service',              'Manages the OpenVPN system service.'
 recipe 'openvpn::users',                'Sets up openvpn cert/configs for users data bag items.'
 recipe 'openvpn::enable_ip_forwarding', 'Enables IP forwarding on the system.'
 recipe 'openvpn::install_bridge_utils', 'Installs bridge uitilies for Linux.'
+recipe 'openvpn::easy_rsa',             'Installs easy-rsa.'
 
 depends 'apt'
 depends 'sysctl'
