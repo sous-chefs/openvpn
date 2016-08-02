@@ -35,6 +35,10 @@ when 'fedora'
     to '/usr/lib/systemd/system/openvpn@.service'
   end
   service_name = "openvpn@#{node['openvpn']['type']}.service"
+when 'debian'
+  if node['platform_version'] >= '8'
+    service_name = "openvpn@#{node['openvpn']['type']}.service"
+  end
 when 'arch'
   service_name = "openvpn@#{node['openvpn']['type']}.service"
 else
