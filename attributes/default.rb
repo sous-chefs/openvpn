@@ -94,3 +94,16 @@ when 'server'
 when 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'
 end
+
+# Client config flags
+default['openvpn']['client_flags'] = [
+  'comp-lzo',
+  'persist-key',
+  'persist-tun',
+  'nobind'
+]
+
+# Client config parameters with values
+default['openvpn']['client_config']['dev']          = 'tun'
+default['openvpn']['client_config']['resolv-retry'] = 'infinite'
+default['openvpn']['client_config']['verb']         = 3

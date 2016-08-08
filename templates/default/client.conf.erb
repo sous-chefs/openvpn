@@ -5,15 +5,29 @@
 # configuration settings.
 
 client
-dev tun
 proto <%= node['openvpn']['config']['proto'] %>
 remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['config']['port'] %>
-resolv-retry infinite
-nobind
-persist-key
-persist-tun
 ca ca.crt
 cert <%= @client_cn %>.crt
 key <%= @client_cn %>.key
-comp-lzo
-verb 3
+<%- @flags.sort.each do |flag| -%>
+<%= flag %>
+<%- end -%>
+<%- @config.sort.each do |key, values| -%>
+  <%- [*values].each do |value| -%>
+<%= key %> <%=
+    case value
+    when String
+      value
+    when TrueClass
+      1
+    when FalseClass
+      0
+    when nil
+      ''
+    else
+      value
+    end
+%>
+  <%- end -%>
+<%- end -%>
