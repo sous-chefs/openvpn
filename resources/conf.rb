@@ -22,3 +22,7 @@ default_action :create
 attribute :cookbook, kind_of: String, default: 'openvpn'
 attribute :config,
           kind_of: Hash
+attribute :push_routes,
+          kind_of: Hash
+attribute :push_options,
+          kind_of: Hash
