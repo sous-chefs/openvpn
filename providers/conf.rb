@@ -27,8 +27,8 @@ action :create do
     mode 0644
     variables(
       config: new_resource.config || node['openvpn']['config'],
-      push_routes: node['openvpn']['push_routes'],
-      push_options: node['openvpn']['push_options'],
+      push_routes: new_resource.push_routes || node['openvpn']['push_routes'],
+      push_options: new_resource.push_options || node['openvpn']['push_options'],
       client_cn: node['openvpn']['client_cn']
     )
     helpers do
