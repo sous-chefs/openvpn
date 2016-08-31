@@ -51,6 +51,7 @@ else
     %w(conf ovpn).each do |ext|
       template "#{node['openvpn']['key_dir']}/#{node['openvpn']['client_prefix']}-#{u['id']}.#{ext}" do
         source 'client.conf.erb'
+        cookbook node['openvpn']['cookbook_user_conf']
         variables(client_cn: u['id'])
       end
     end
