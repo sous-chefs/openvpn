@@ -4,15 +4,6 @@
 # Please refer to the OpenVPN documentation for details on
 # configuration settings.
 
-client
-proto <%= node['openvpn']['config']['proto'] %>
-remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['config']['port'] %>
-ca ca.crt
-cert <%= @client_cn %>.crt
-key <%= @client_cn %>.key
-<%- @flags.sort.each do |flag| -%>
-<%= flag %>
-<%- end -%>
 <%- @config.sort.each do |key, values| -%>
   <%- [*values].each do |value| -%>
 <%= key %> <%=

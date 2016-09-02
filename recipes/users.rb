@@ -48,13 +48,14 @@ else
       not_if { ::File.exist?("#{node['openvpn']['key_dir']}/#{u['id']}.crt") }
     end
 
+    node.set['openvpn']['client_config']['cert'] = "#{u['id']}.crt"
+    node.set['openvpn']['client_config']['key']  = "#{u['id']}.key"
+
     %w(conf ovpn).each do |ext|
       template "#{node['openvpn']['key_dir']}/#{u['id']}.#{ext}" do
         source 'client.conf.erb'
         variables(
-          client_cn: u['id'],
-          config:    node['openvpn']['client_config'],
-          flags:     node['openvpn']['client_flags']
+          config:    node['openvpn']['client_config']
         )
       end
     end

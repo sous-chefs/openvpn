@@ -32,28 +32,30 @@ default['openvpn']['key']['email']          = 'admin@foobar.com'
 default['openvpn']['key']['message_digest'] = 'sha256'
 
 # Cookbook attributes
-default['openvpn']['key_dir']         = '/etc/openvpn/keys'
-default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
-default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
-default['openvpn']['user_query']      = '*:*'
+default['openvpn']['key_dir']          = '/etc/openvpn/keys'
+default['openvpn']['ca_key_filename']  = 'ca.key'
+default['openvpn']['signing_ca_key']   = "#{node['openvpn']['key_dir']}/#{node['openvpn']['ca_key_filename']}"
+default['openvpn']['ca_cert_filename'] = "ca.crt"
+default['openvpn']['signing_ca_cert']  = "#{node['openvpn']['key_dir']}/#{node['openvpn']['ca_cert_filename']}"
+default['openvpn']['user_query']       = '*:*'
 
-default['openvpn']['type']            = 'server'
-default['openvpn']['subnet']          = '10.8.0.0'
-default['openvpn']['netmask']         = '255.255.0.0'
+default['openvpn']['type']             = 'server'
+default['openvpn']['subnet']           = '10.8.0.0'
+default['openvpn']['netmask']          = '255.255.0.0'
 
 # Client specific
-default['openvpn']['gateway']         = "vpn.#{node['domain']}"
-default['openvpn']['client_cn']       = 'client'
+default['openvpn']['gateway']          = "vpn.#{node['domain']}"
+default['openvpn']['client_cn']        = 'client'
 
 # Server specific
 # client 'push routes', attribute is treated as a helper
-default['openvpn']['push_routes'] = []
+default['openvpn']['push_routes']      = []
 
 # client 'push options', attribute is treated as a helper
-default['openvpn']['push_options'] = []
+default['openvpn']['push_options']     = []
 
 # Direct configuration file directives (.conf) defaults
-default['openvpn']['config']['user']  = 'nobody'
+default['openvpn']['config']['user']   = 'nobody'
 
 # the default follows Linux Standard Base Core Specification (ISO/IEC 23360 Part 1:2007(E)):
 # Table 21-2 Optional User & Group Names
@@ -75,8 +77,9 @@ default['openvpn']['config']['up']              = '/etc/openvpn/server.up.sh'
 default['openvpn']['config']['persist-key']     = ''
 default['openvpn']['config']['persist-tun']     = ''
 default['openvpn']['config']['comp-lzo']        = ''
+default['openvpn']['config']['nobind']          = ''
 
-default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_cert']
+default['openvpn']['config']['ca']              = "#{node['openvpn']['signing_ca_cert']}/#{node['openvpn']['ca_cert_filename']}"
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
@@ -94,15 +97,16 @@ when 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'
 end
 
-# Client config flags
-default['openvpn']['client_flags'] = [
-  'comp-lzo',
-  'persist-key',
-  'persist-tun',
-  'nobind'
-]
-
-# Client config parameters with values
+# Client config parameters
+# For a parameter like 'nobind' simply set to an empty value
+default['openvpn']['client_config']['client']       = ''
+default['openvpn']['client_config']['remote']       = "#{node['openvpn']['gateway']} #{node['openvpn']['config']['port']}"
+default['openvpn']['client_config']['ca']           = "#{node['openvpn']['ca_cert_filename']}"
 default['openvpn']['client_config']['dev']          = 'tun'
 default['openvpn']['client_config']['resolv-retry'] = 'infinite'
 default['openvpn']['client_config']['verb']         = 3
+default['openvpn']['client_config']['comp-lzo']     = ''
+default['openvpn']['client_config']['persist-key']  = ''
+default['openvpn']['client_config']['persist-tun']  = ''
+default['openvpn']['client_config']['nobind']       = ''
+default['openvpn']['client_config']['proto']        = node['openvpn']['config']['proto']
