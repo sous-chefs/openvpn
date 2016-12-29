@@ -36,8 +36,15 @@ when 'fedora'
   end
   service_name = "openvpn@#{node['openvpn']['type']}.service"
 when 'debian'
-  if node['platform_version'] >= '8'
-    service_name = "openvpn@#{node['openvpn']['type']}.service"
+  service_name = 'openvpn'
+  if node['platform'] == 'debian'
+    if node['platform_version'] >= '8'
+      service_name = "openvpn@#{node['openvpn']['type']}.service"
+    end
+  elsif node['platform'] == 'ubuntu'
+    if node['platform_version'] >= '15.04'
+      service_name = "openvpn@#{node['openvpn']['type']}.service"
+    end
   end
 when 'arch'
   service_name = "openvpn@#{node['openvpn']['type']}.service"
