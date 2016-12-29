@@ -3,8 +3,6 @@ openvpn Cookbook
 [![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
 [![Dependency Status](https://gemnasium.com/xhost-cookbooks/openvpn.svg)](https://gemnasium.com/xhost-cookbooks/openvpn)
-[![Code Climate](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/gpa.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
-[![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see __Customizing Server Configuration__ below).
@@ -20,10 +18,14 @@ This cookbook is tested and supported with Chef 11 & 12.
 - Debian 8.x, 7.x and 6.x
 - Ubuntu 10.04+
 - RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
+- CentOS 6.x, 7.x
+- Fedora 24+
+- OpenSUSE 13.x (partial support/WIP)
 - Arch Linux
+- FreeBSD 10+ (partial support/WIP)
 
 Note: we currently only test the latest minor release for the last 2 major
-releases of each distro using test-kitchen.
+releases of each OS/distribution using Test Kitchen.
 
 ### Cookbooks
 The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
@@ -207,12 +209,12 @@ Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake t
 
 License & Authors
 -----------------
-- Author:: Joshua Timberman (<joshua@chef.io>)
 - Author:: Chris Fordham (<chris@fordham-nagy.id.au>)
+- Author:: Joshua Timberman (<joshua@chef.io>)
 
 ```text
-Copyright:: 2009-2015, Chef Software, Inc
-Copyright:: 2014-2015, Xhost Australia
+Copyright:: 2009-2016, Chef Software, Inc
+Copyright:: 2014-2016, Xhost Australia
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
