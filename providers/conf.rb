@@ -18,8 +18,6 @@
 
 use_inline_resources if defined?(use_inline_resources)
 
-
-
 action :create do
   # FreeBSD service uses openvpn.conf
   if new_resource.name == 'openvpn'
