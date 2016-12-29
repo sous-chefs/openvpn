@@ -152,11 +152,11 @@ remote_file [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join do
 end
 
 # the FreeBSD service expects openvpn.conf
-if node['platform'] == 'freebsd'
-  conf_name = 'openvpn'
-else
-  conf_name = 'server'
-end
+conf_name = if node['platform'] == 'freebsd'
+              'openvpn'
+            else
+              'server'
+            end
 
 openvpn_conf conf_name do
   notifies :restart, 'service[openvpn]'
