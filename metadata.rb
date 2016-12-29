@@ -153,7 +153,7 @@ attribute 'openvpn/key/size',
           display_name: 'OpenVPN Key Size',
           description:  'Default key size, set to 2048 if paranoid but will slow down '\
                         'TLS negotiation performance',
-          choice:       ['4096', '2048', '1024'],
+          choice:       %w(4096 2048 1024),
           default:      '2048',
           recipes:      ['openvpn::default', 'openvpn::users', 'openvpn::server']
 

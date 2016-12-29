@@ -41,14 +41,14 @@ directory key_dir do
   mode  '0700'
 end
 
-directory [node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa'].join() do
+directory [node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa'].join do
   owner 'root'
   group node['openvpn']['root_group']
   mode  '0755'
 end
 
 %w(openssl.cnf pkitool vars Rakefile).each do |f|
-  template [node['openvpn']['fs_prefix'], "/etc/openvpn/easy-rsa/#{f}"].join() do
+  template [node['openvpn']['fs_prefix'], "/etc/openvpn/easy-rsa/#{f}"].join do
     source "#{f}.erb"
     owner 'root'
     group node['openvpn']['root_group']
@@ -56,7 +56,7 @@ end
   end
 end
 
-template [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join() do
+template [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join do
   source 'server.up.sh.erb'
   owner 'root'
   group node['openvpn']['root_group']
@@ -64,7 +64,7 @@ template [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join() do
   notifies :restart, 'service[openvpn]'
 end
 
-directory [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.d'].join() do
+directory [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.d'].join do
   owner 'root'
   group node['openvpn']['root_group']
   mode  '0755'
@@ -137,7 +137,7 @@ end
 
 execute 'gencrl' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
-  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join()} -gencrl " \
+  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} -gencrl " \
           "-keyfile #{node['openvpn']['key_dir']}/server.key " \
           "-cert #{node['openvpn']['key_dir']}/server.crt " \
           "-out #{node['openvpn']['key_dir']}/crl.pem"
@@ -146,7 +146,7 @@ execute 'gencrl' do
 end
 
 # Make a world readable copy of the CRL
-remote_file [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join() do
+remote_file [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join do
   mode   0644
   source "file://#{node['openvpn']['key_dir']}/crl.pem"
 end

@@ -43,7 +43,7 @@ default['openvpn']['key']['message_digest'] = 'sha256'
 
 # Cookbook attributes
 default['openvpn']['client_prefix']   = 'vpn-prod'
-default['openvpn']['key_dir']         = [node['openvpn']['fs_prefix'], '/etc/openvpn/keys'].join()
+default['openvpn']['key_dir']         = [node['openvpn']['fs_prefix'], '/etc/openvpn/keys'].join
 default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
 default['openvpn']['user_query']      = '*:*'
@@ -83,7 +83,7 @@ default['openvpn']['config']['keepalive']       = '10 120'
 default['openvpn']['config']['log']             = '/var/log/openvpn.log'
 default['openvpn']['config']['push']            = nil
 default['openvpn']['config']['script-security'] = 2
-default['openvpn']['config']['up']              = [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join()
+default['openvpn']['config']['up']              = [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join
 default['openvpn']['config']['persist-key']     = ''
 default['openvpn']['config']['persist-tun']     = ''
 default['openvpn']['config']['comp-lzo']        = ''
@@ -92,7 +92,7 @@ default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_ce
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
-default['openvpn']['config']['crl-verify']      = [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join()
+default['openvpn']['config']['crl-verify']      = [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join
 
 # interface configuration depending on type
 case node['openvpn']['type']
