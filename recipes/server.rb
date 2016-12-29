@@ -23,8 +23,8 @@ include_recipe 'openvpn::install'
 
 # this recipe currently uses the bash resource, ensure it is installed
 p = package 'bash' do
-      action :nothing
-    end
+  action :nothing
+end
 p.run_action(:install)
 
 # in the case the key size is provided as string, no integer support in metadata (CHEF-4075)
