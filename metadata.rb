@@ -19,8 +19,8 @@ recipe 'openvpn::install_bridge_utils', 'Installs bridge uitilies for Linux.'
 recipe 'openvpn::easy_rsa',             'Installs easy-rsa.'
 
 depends 'apt'
-depends 'sysctl'
-depends 'yum', '~> 3.0'
+depends 'sysctl',   '~> 0.8'
+depends 'yum',      '~> 3.0'
 depends 'yum-epel'
 
 supports 'arch'
@@ -153,7 +153,8 @@ attribute 'openvpn/key/size',
           display_name: 'OpenVPN Key Size',
           description:  'Default key size, set to 2048 if paranoid but will slow down '\
                         'TLS negotiation performance',
-          default:      '1024',
+          choice:       ['4096', '2048', '1024'],
+          default:      '2048',
           recipes:      ['openvpn::default', 'openvpn::users', 'openvpn::server']
 
 attribute 'openvpn/key/country',
