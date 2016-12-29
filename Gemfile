@@ -20,7 +20,6 @@ end
 
 group :unit do
   gem 'chef', chef_version unless chef_version.nil? # Ruby 1.9.3 support
-  gem 'chefspec', '~> 4.2'
 end
 
 group :integration do
