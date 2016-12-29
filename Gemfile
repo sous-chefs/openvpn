@@ -8,9 +8,9 @@ chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : nil
 
 group :test do
   gem 'rake'
+  gem 'chefspec'
   gem 'rspec',      '~> 3.4'
   gem 'berkshelf',  '~> 4.1'
-  gem 'codeclimate-test-reporter', group: :test, require: nil
 end
 
 group :style do
