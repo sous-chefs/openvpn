@@ -19,10 +19,16 @@
 
 include_recipe 'sysctl::default'
 
-sysctl_param 'net.ipv4.conf.all.forwarding' do
-  value 1
-end
+if node['platform'] == 'freebsd'
+  sysctl_param 'net.inet.ip.forwarding' do
+    value 1
+  end
+else
+  sysctl_param 'net.ipv4.conf.all.forwarding' do
+    value 1
+  end
 
-sysctl_param 'net.ipv6.conf.all.forwarding' do
-  value 1
+  sysctl_param 'net.ipv6.conf.all.forwarding' do
+    value 1
+  end
 end

@@ -18,12 +18,21 @@
 
 use_inline_resources if defined?(use_inline_resources)
 
+
+
 action :create do
-  template "/etc/openvpn/#{new_resource.name}.conf" do
+  # FreeBSD service uses openvpn.conf
+  if new_resource.name == 'openvpn'
+    template_source = 'server.conf.erb'
+  else
+    template_source = "#{new_resource.name}.conf.erb"
+  end
+
+  template [node['openvpn']['fs_prefix'], "/etc/openvpn/#{new_resource.name}.conf"].join do
     cookbook new_resource.cookbook
-    source "#{new_resource.name}.conf.erb"
+    source template_source
     owner 'root'
-    group 'root'
+    group node['openvpn']['root_group']
     mode 0644
     variables(
       config: new_resource.config || node['openvpn']['config'],
@@ -52,7 +61,7 @@ action :create do
 end
 
 action :delete do
-  file "/etc/openvpn/#{new_resource.name}.conf" do
+  file [node['openvpn']['fs_prefix'], "/etc/openvpn/#{new_resource.name}.conf"].join do
     action :delete
   end
 end

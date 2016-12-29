@@ -2,9 +2,61 @@
 require 'spec_helper'
 
 context 'Config' do
-  describe service('openvpn') do
-    it { is_expected.to be_enabled }
-    it { is_expected.to be_running }
+  # this is done in a similar fashion to
+  # https://github.com/xhost-cookbooks/openvpn/blob/master/recipes/service.rb
+  # ServerSpec docs are lax in terms of possible output values for os[:family]
+  # https://github.com/mizzy/specinfra/tree/master/lib/specinfra/helper/detect_os
+  case os[:family]
+  when 'redhat'
+    if os[:release] >= '7'
+      describe service('openvpn@server') do
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
+        it { should be_running.under('systemd') }
+      end
+    else
+      describe service('openvpn') do
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
+      end
+    end
+  when 'debian'
+    if os[:release] >= '8'
+      describe service('openvpn@server') do
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
+        it { should be_running.under('systemd') }
+      end
+    else
+      describe service('openvpn') do
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
+      end
+    end
+  when 'ubuntu'
+    if os[:release] >= '15.04'
+      describe service('openvpn@server') do
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
+        it { should be_running.under('systemd') }
+      end
+    else
+      describe service('openvpn') do
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
+      end
+    end
+  when 'fedora'
+    describe service('openvpn@server') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+      it { should be_running.under('systemd') }
+    end
+  else
+    describe service('openvpn') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
   end
 
   describe file('/etc/openvpn/server.conf') do
@@ -12,6 +64,8 @@ context 'Config' do
       subject { super().content }
       it { is_expected.to include 'push "dhcp-option DOMAIN local"' }
       it { is_expected.to include 'push "dhcp-option DOMAIN-SEARCH local"' }
+      it { is_expected.to include 'push "route 192.168.10.0 255.255.255.0"' }
+      it { is_expected.to include 'push "route 10.12.10.0 255.255.255.0"' }
     end
   end
 
