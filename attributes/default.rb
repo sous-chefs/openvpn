@@ -30,6 +30,9 @@ end
 # Set this to false if you want to just use the lwrp
 default['openvpn']['configure_default_server'] = true
 
+# whether to use the openvpn-git package (archlinux only)
+default['openvpn']['git_package'] = false
+
 # Used by helper library to generate certificates/keys
 default['openvpn']['key']['ca_expire']      = 3650
 default['openvpn']['key']['expire']         = 3650

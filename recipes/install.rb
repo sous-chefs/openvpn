@@ -34,4 +34,8 @@ if node['platform_family'] == 'fedora' && node['platform_version'] >= '22'
   p.run_action(:run)
 end
 
-package 'openvpn'
+if node['openvpn']['git_package'] == true
+  package 'openvpn-git'
+else
+  package 'openvpn'
+end
