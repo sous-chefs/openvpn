@@ -9,16 +9,22 @@ provisioner:
 
 # currently only support 2 last major revs of distros (at the most)
 platforms:
+  # debian 8.6 box missing
+  # - name: debian-8.6
   - name: debian-8.5
   - name: debian-7.11
   - name: ubuntu-16.04
   - name: ubuntu-14.04
+  # centos 7.3 box missing
+  # - name: centos-7.3
   - name: centos-7.2
   - name: centos-6.8
+  # fedora 25 box missing
+  # - name: fedora-25
   - name: fedora-24
-# not fully supported yet
+  # freebsd 11.0 box missing
+  # - name: freebsd-11.0
   - name: freebsd-10.3
-# not fully supported yet
   - name: opensuse-13.2
 
 suites:
