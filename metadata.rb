@@ -19,8 +19,8 @@ recipe 'openvpn::install_bridge_utils', 'Installs bridge uitilies for Linux.'
 recipe 'openvpn::easy_rsa',             'Installs easy-rsa.'
 
 depends 'apt'
-depends 'sysctl',   '~> 0.8'
-depends 'yum',      '~> 3.0'
+depends 'sysctl'
+depends 'yum'
 depends 'yum-epel'
 
 supports 'arch'
@@ -28,6 +28,7 @@ supports 'centos'
 supports 'debian'
 supports 'fedora'
 supports 'redhat'
+supports 'suse'
 supports 'ubuntu'
 
 attribute 'openvpn/client_cn',
