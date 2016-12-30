@@ -3,7 +3,7 @@
 
 # http://docs.vagrantup.com/v2/multi-machine/
 
-ENV['VAGRANT_VM_BOX'] = 'ubuntu-14.04' unless ENV['VAGRANT_VM_BOX']
+ENV['VAGRANT_VM_BOX'] = 'ubuntu-16.04' unless ENV['VAGRANT_VM_BOX']
 
 Vagrant.configure('2') do |config|
   config.vm.box = ENV['VAGRANT_VM_BOX']
