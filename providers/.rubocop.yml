@@ -3,3 +3,6 @@ Metrics/ModuleLength:
 
 Metrics/BlockLength:
   Enabled: false
+
+LineLength:
+  Max: 100
