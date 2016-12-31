@@ -16,3 +16,6 @@ AlignParameters:
 
 SpaceBeforeFirstArg:
   Enabled: false
+
+Metrics/BlockLength:
+  Max: 90
