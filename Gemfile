@@ -10,7 +10,7 @@ chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : nil
 gem 'activesupport', '~> 4.2'
 gem 'nio4r',         '~> 1.2'
 gem 'rack',          '~> 1.6'
-gem 'fauxhai',       '~> 3.9'
+gem 'fauxhai',       '= 3.9'
 
 group :test do
   gem 'rake'
