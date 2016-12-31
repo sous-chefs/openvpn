@@ -192,7 +192,7 @@ GEM
       net-ssh (>= 2.6.5)
       net-ssh-gateway (>= 1.2.0)
     net-telnet (0.1.1)
-    nio4r (2.0.0)
+    nio4r (1.2.1)
     nokogiri (1.7.0)
       mini_portile2 (~> 2.1.0)
     octokit (4.6.2)
@@ -329,6 +329,7 @@ DEPENDENCIES
   kitchen-digitalocean (~> 0.8)
   kitchen-ec2 (~> 0.9)
   kitchen-vagrant (~> 0.20)
+  nio4r (~> 1.2)
   rake
   rspec (~> 3.4)
   rubocop (~> 0.37)

@@ -6,7 +6,9 @@ source 'https://rubygems.org'
 
 chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : nil
 
+# travis ci does not yet support ruby >= 2.2.2
 gem 'activesupport', '~> 4.2'
+gem 'nio4r',         '~> 1.2'
 
 group :test do
   gem 'rake'
