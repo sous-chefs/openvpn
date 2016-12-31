@@ -9,7 +9,7 @@ cache: bundler
 before_install:
   - "echo 'gem: --no-document' > ~/.gemrc"
 
-install: travis_wait bundle install --without development integration
+install: travis_wait bundle update --without development integration
 
 script:
   - bundle exec foodcritic -f any .
