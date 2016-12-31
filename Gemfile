@@ -6,6 +6,8 @@ source 'https://rubygems.org'
 
 chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : nil
 
+gem 'activesupport', '~> 4.2'
+
 group :test do
   gem 'rake'
   gem 'chefspec'
