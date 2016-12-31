@@ -76,8 +76,7 @@ default['openvpn']['config']['group'] = value_for_platform_family(rhel: 'nobody'
                                                                   arch: 'nobody',
                                                                   debian: 'nogroup',
                                                                   mac_os_x: 'nogroup',
-                                                                  default: 'nobody'
-                                                                 )
+                                                                  default: 'nobody')
 
 default['openvpn']['config']['local']           = node['ipaddress']
 default['openvpn']['config']['proto']           = 'udp'
