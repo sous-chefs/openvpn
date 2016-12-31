@@ -13,10 +13,10 @@ gem 'nio4r',         '~> 1.2'
 gem 'rack',          '~> 1.6'
 
 group :test do
-  gem 'berkshelf',  '~> 4.1'
+  gem 'berkshelf', '~> 4.1'
   gem 'chefspec'
   gem 'rake'
-  gem 'rspec',      '~> 3.4'
+  gem 'rspec', '~> 3.4'
 end
 
 group :style do
