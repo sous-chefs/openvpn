@@ -45,7 +45,7 @@ describe 'openvpn::server' do
 
   it 'creates a world readable CRL file' do
     expect(chef_run).to create_remote_file('/etc/openvpn/crl.pem').with(
-      mode: 0644,
+      mode: 0o644,
       source: 'file:///etc/openvpn/keys/crl.pem'
     )
   end

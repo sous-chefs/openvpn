@@ -17,4 +17,4 @@ puts 'Writing insecure key to /home/vagrant/.ssh/id_rsa'
 
 IO.write('/home/vagrant/.ssh/id_rsa', pk)
 FileUtils.chown 'vagrant', 'root', '/home/vagrant/.ssh/id_rsa'
-FileUtils.chmod 0400, '/home/vagrant/.ssh/id_rsa'
+FileUtils.chmod 0o400, '/home/vagrant/.ssh/id_rsa'

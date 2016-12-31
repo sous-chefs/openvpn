@@ -31,7 +31,7 @@ action :create do
     source template_source
     owner 'root'
     group node['openvpn']['root_group']
-    mode 0644
+    mode 0o644
     variables(
       config: new_resource.config || node['openvpn']['config'],
       push_routes: new_resource.push_routes || node['openvpn']['push_routes'],
