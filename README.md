@@ -10,12 +10,12 @@ Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very
 
 ### Platforms
 
-- Debian 8.x, 7.x and 6.x
-- Ubuntu 10.04+
-- RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
+- Debian 8.x and 7.x
+- Ubuntu 14.04+
+- RHEL 6.x and 7.x w/ (EPEL is enabled as required)
 - CentOS 6.x, 7.x
 - Fedora 24+
-- OpenSUSE 13.x (partial support/WIP)
+- OpenSUSE 42+ (partial support/WIP)
 - Arch Linux
 - FreeBSD 10+ (partial support/WIP)
 
