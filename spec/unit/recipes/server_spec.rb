@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe 'openvpn::server' do
-  let(:chef_run) do
+  cached(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: ['openvpn_conf']) do |node|
-      node.set['openvpn']['push_options'] = {
+      node.override['openvpn']['push_options'] = {
         'dhcp-options' => ['DOMAIN local',
                            'DOMAIN-SEARCH local'],
       }
-      node.set['openvpn']['push_routes'] = [
+      node.override['openvpn']['push_routes'] = [
         '192.168.10.0 255.255.255.0', '10.12.10.0 255.255.255.0'
       ]
       # node.set['openvpn']['key']['org'] = 'testorg'
@@ -45,7 +45,7 @@ describe 'openvpn::server' do
 
   it 'creates a world readable CRL file' do
     expect(chef_run).to create_remote_file('/etc/openvpn/crl.pem').with(
-      mode: 0o644,
+      mode: '644',
       source: 'file:///etc/openvpn/keys/crl.pem'
     )
   end
