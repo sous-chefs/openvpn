@@ -1,19 +1,15 @@
-openvpn Cookbook
-================
-[![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
+# openvpn Cookbook
+
+[![Build Status](https://travis-ci.org/sous-chefs/openvpn.svg?branch=master)](https://travis-ci.org/sous-chefs/openvpn)
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see __Customizing Server Configuration__ below).
 
-Requirements
-------------
-* Ruby 1.9 or later
-* OpenSSL 0.9.7 or later and OpenSSL bindings for Ruby
+## Requirements
 
-This cookbook is tested and supported with Chef 11 & 12.
+### Platforms
 
-### Platform
 - Debian 8.x, 7.x and 6.x
 - Ubuntu 10.04+
 - RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
