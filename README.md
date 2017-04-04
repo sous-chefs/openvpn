@@ -2,7 +2,6 @@ openvpn Cookbook
 ================
 [![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
-[![Dependency Status](https://gemnasium.com/xhost-cookbooks/openvpn.svg)](https://gemnasium.com/xhost-cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see __Customizing Server Configuration__ below).
