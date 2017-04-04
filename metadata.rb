@@ -29,6 +29,8 @@ supports 'debian'
 supports 'fedora'
 supports 'redhat'
 supports 'suse'
+supports 'opensuse'
+supports 'opensuseleap'
 supports 'ubuntu'
 
 attribute 'openvpn/client_cn',
