@@ -5,7 +5,7 @@ describe 'openvpn::server' do
     ChefSpec::SoloRunner.new(step_into: ['openvpn_conf']) do |node|
       node.set['openvpn']['push_options'] = {
         'dhcp-options' => ['DOMAIN local',
-                           'DOMAIN-SEARCH local']
+                           'DOMAIN-SEARCH local'],
       }
       node.set['openvpn']['push_routes'] = [
         '192.168.10.0 255.255.255.0', '10.12.10.0 255.255.255.0'
