@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Recipe:: install
 #
-# Copyright 2014, Xhost Australia
+# Copyright:: 2014, Xhost Australia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,16 +23,6 @@ if platform_family?('debian')
 end
 
 include_recipe 'yum-epel' if platform_family?('rhel')
-
-# fedora >= 22 workaround
-# dnf provider for fedora not yet in chef
-# https://github.com/chef/chef/issues/3201
-if node['platform_family'] == 'fedora' && node['platform_version'] >= '22'
-  p = execute 'dnf -y install yum' do
-    action :nothing
-  end
-  p.run_action(:run)
-end
 
 if node['openvpn']['git_package'] == true
   package 'openvpn-git'

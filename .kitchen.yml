@@ -1,8 +1,5 @@
----
 driver:
   name: vagrant
-driver_config:
-  require_chef_omnibus: latest
 
 provisioner:
   name: chef_zero
@@ -19,7 +16,7 @@ platforms:
   - name: fedora-24
   - name: freebsd-11.0
   - name: freebsd-10.3
-  - name: opensuse-13.2
+  - name: opensuse-leap-42.2
 
 suites:
   - name: server

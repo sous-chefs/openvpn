@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Recipe:: server
 #
-# Copyright 2009-2013, Chef Software, Inc.
-# Copyright 2015, Chef Software, Inc. <legal@chef.io>
+# Copyright:: 2009-2013, Chef Software, Inc.
+# Copyright:: 2015, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -147,7 +147,7 @@ end
 
 # Make a world readable copy of the CRL
 remote_file [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join do
-  mode   0o644
+  mode   '644'
   source "file://#{node['openvpn']['key_dir']}/crl.pem"
 end
 

@@ -1,26 +1,21 @@
-openvpn Cookbook
-================
-[![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
+# openvpn Cookbook
+
+[![Build Status](https://travis-ci.org/sous-chefs/openvpn.svg?branch=master)](https://travis-ci.org/sous-chefs/openvpn)
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
-[![Dependency Status](https://gemnasium.com/xhost-cookbooks/openvpn.svg)](https://gemnasium.com/xhost-cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see __Customizing Server Configuration__ below).
 
-Requirements
-------------
-* Ruby 1.9 or later
-* OpenSSL 0.9.7 or later and OpenSSL bindings for Ruby
+## Requirements
 
-This cookbook is tested and supported with Chef 11 & 12.
+### Platforms
 
-### Platform
-- Debian 8.x, 7.x and 6.x
-- Ubuntu 10.04+
-- RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
+- Debian 8.x and 7.x
+- Ubuntu 14.04+
+- RHEL 6.x and 7.x w/ (EPEL is enabled as required)
 - CentOS 6.x, 7.x
 - Fedora 24+
-- OpenSUSE 13.x (partial support/WIP)
+- OpenSUSE 42+ (partial support/WIP)
 - Arch Linux
 - FreeBSD 10+ (partial support/WIP)
 
@@ -28,9 +23,13 @@ Note: we currently only test the latest minor release for the last 2 major
 releases of each OS/distribution using Test Kitchen.
 
 ### Cookbooks
-The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
+
+- sysctl
+- apt
+- yum-epel
 
 ### Not Supported
+
 This cookbook is designed to set up a basic installation of OpenVPN that will work for many common use cases. The following configurations are not supported by default with this cookbook:
 
 - setting up routers and other network devices

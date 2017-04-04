@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Provider:: conf
 #
-# Copyright 2013, Tacit Knowledge, Inc.
+# Copyright:: 2013, Tacit Knowledge, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-use_inline_resources if defined?(use_inline_resources)
+use_inline_resources
 
 action :create do
   # FreeBSD service uses openvpn.conf
@@ -31,7 +31,7 @@ action :create do
     source template_source
     owner 'root'
     group node['openvpn']['root_group']
-    mode 0o644
+    mode '644'
     variables(
       config: new_resource.config || node['openvpn']['config'],
       push_routes: new_resource.push_routes || node['openvpn']['push_routes'],
@@ -39,7 +39,6 @@ action :create do
       client_cn: node['openvpn']['client_cn']
     )
     helpers do
-      # rubocop:disable Metrics/MethodLength
       def render_push_options(push_options)
         return [] if push_options.nil?
         push_options.each_with_object([]) do |(option, conf), m|
