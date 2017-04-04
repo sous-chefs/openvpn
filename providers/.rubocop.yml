@@ -1,8 +1,0 @@
-Metrics/ModuleLength:
-  Enabled: false
-
-Metrics/BlockLength:
-  Enabled: false
-
-LineLength:
-  Max: 100
