@@ -21,7 +21,6 @@ recipe 'openvpn::easy_rsa',             'Installs easy-rsa.'
 
 depends 'apt'
 depends 'sysctl'
-depends 'yum'
 depends 'yum-epel'
 
 supports 'arch'

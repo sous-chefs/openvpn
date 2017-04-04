@@ -23,9 +23,13 @@ Note: we currently only test the latest minor release for the last 2 major
 releases of each OS/distribution using Test Kitchen.
 
 ### Cookbooks
-The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
+
+- sysctl
+- apt
+- yum-epel
 
 ### Not Supported
+
 This cookbook is designed to set up a basic installation of OpenVPN that will work for many common use cases. The following configurations are not supported by default with this cookbook:
 
 - setting up routers and other network devices
