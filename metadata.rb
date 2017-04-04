@@ -7,6 +7,7 @@ description       'Installs and configures openvpn and includes rake tasks for m
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url        'https://github.com/xhost-cookbooks/openvpn'
 issues_url        'https://github.com/xhost-cookbooks/openvpn/issues'
+chef_version      '>= 12.1'
 
 recipe 'openvpn::default',              'Installs OpenVPN only (no configuration).'
 recipe 'openvpn::install',              'Installs OpenVPN only (no configuration).'
