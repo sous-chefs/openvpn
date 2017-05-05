@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Recipe:: service
 #
-# Copyright 2009-2013, Chef Software, Inc.
-# Copyright 2015, Chef Software, Inc. <legal@chef.io>
+# Copyright:: 2009-2013, Chef Software, Inc.
+# Copyright:: 2015, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,11 +36,25 @@ when 'fedora'
   end
   service_name = "openvpn@#{node['openvpn']['type']}.service"
 when 'debian'
-  if node['platform_version'] >= '8'
-    service_name = "openvpn@#{node['openvpn']['type']}.service"
+  service_name = 'openvpn'
+  if node['platform'] == 'debian'
+    if node['platform_version'] >= '8'
+      service_name = "openvpn@#{node['openvpn']['type']}.service"
+    end
+  elsif node['platform'] == 'ubuntu'
+    if node['platform_version'] >= '15.04'
+      service_name = "openvpn@#{node['openvpn']['type']}.service"
+    end
   end
 when 'arch'
-  service_name = "openvpn@#{node['openvpn']['type']}.service"
+  if node['openvpn']['git_package']
+    link "#{node['openvpn']['fs_prefix']}/etc/openvpn/#{node['openvpn']['type']}/#{node['openvpn']['type']}.conf" do
+      to "#{node['openvpn']['fs_prefix']}/etc/openvpn/#{node['openvpn']['type']}.conf"
+    end
+    service_name = "openvpn-#{node['openvpn']['type']}@#{node['openvpn']['type']}.service"
+  else
+    service_name = "openvpn@#{node['openvpn']['type']}.service"
+  end
 else
   service_name = 'openvpn'
 end

@@ -1,34 +1,35 @@
-openvpn Cookbook
-================
-[![Build Status](https://secure.travis-ci.org/xhost-cookbooks/openvpn.png?branch=master)](http://travis-ci.org/xhost-cookbooks/openvpn)
+# openvpn Cookbook
+
+[![Build Status](https://travis-ci.org/sous-chefs/openvpn.svg?branch=master)](https://travis-ci.org/sous-chefs/openvpn)
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
-[![Dependency Status](https://gemnasium.com/xhost-cookbooks/openvpn.svg)](https://gemnasium.com/xhost-cookbooks/openvpn)
-[![Code Climate](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/gpa.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
-[![Test Coverage](https://codeclimate.com/github/xhost-cookbooks/openvpn/badges/coverage.svg)](https://codeclimate.com/github/xhost-cookbooks/openvpn)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see __Customizing Server Configuration__ below).
 
-Requirements
-------------
-* Ruby 1.9 or later
-* OpenSSL 0.9.7 or later and OpenSSL bindings for Ruby
+## Requirements
 
-This cookbook is tested and supported with Chef 11 & 12.
+### Platforms
 
-### Platform
-- Debian 8.x, 7.x and 6.x
-- Ubuntu 10.04+
-- RHEL 5.x, 6.x and 7.x w/ (EPEL is enabled as required)
+- Debian 8.x and 7.x
+- Ubuntu 14.04+
+- RHEL 6.x and 7.x w/ (EPEL is enabled as required)
+- CentOS 6.x, 7.x
+- Fedora 24+
+- OpenSUSE 42+ (partial support/WIP)
 - Arch Linux
+- FreeBSD 10+ (partial support/WIP)
 
 Note: we currently only test the latest minor release for the last 2 major
-releases of each distro using test-kitchen.
+releases of each OS/distribution using Test Kitchen.
 
 ### Cookbooks
-The `yum` cookbook by Chef Software provides `recipe[yum::epel]` that is used on RHEL-family systems to enable the EPEL repository containing the openvpn RPM. See __Usage__ below.
+
+- sysctl
+- apt
+- yum-epel
 
 ### Not Supported
+
 This cookbook is designed to set up a basic installation of OpenVPN that will work for many common use cases. The following configurations are not supported by default with this cookbook:
 
 - setting up routers and other network devices
@@ -53,6 +54,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf, e.g. '192.168.0.0 255.255.255.0'. Default is empty.
 * `node['openvpn']['push_options']` - Array of options to to push to clients in the server.conf. Default is empty.
 * `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
+* `node['openvpn']['git_package']` - Boolean. Whether to use the `openvpn-git` package (Arch Linux only, default false).
 * `node['openvpn']['client_prefix']` - String. Name of the config that is created for clients. When imported into most vpn clients, this is the name that will be displayed for the connection. Default is 'vpn-prod'.
 * `node['openvpn']['cookbook_user_conf']` - String. The cookbook used by the `openvpn::users` recipe for the `client.conf.erb` template. You can override this to your own, such as your wrapper cookbook. Default is `'openvpn'`.
 * `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
@@ -207,12 +209,12 @@ Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake t
 
 License & Authors
 -----------------
-- Author:: Joshua Timberman (<joshua@chef.io>)
 - Author:: Chris Fordham (<chris@fordham-nagy.id.au>)
+- Author:: Joshua Timberman (<joshua@chef.io>)
 
 ```text
-Copyright:: 2009-2015, Chef Software, Inc
-Copyright:: 2014-2015, Xhost Australia
+Copyright:: 2009-2016, Chef Software, Inc
+Copyright:: 2014-2016, Xhost Australia
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

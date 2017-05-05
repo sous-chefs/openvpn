@@ -1,20 +1,22 @@
----
 driver:
   name: vagrant
-driver_config:
-  require_chef_omnibus: latest
 
 provisioner:
   name: chef_zero
 
-# currently only support 2 last major revs of distros
+# currently only support 2 last major revs of distros (at the most)
 platforms:
-  - name: debian-8.4
-  - name: debian-7.9
+  - name: debian-8.6
+  - name: debian-7.11
   - name: ubuntu-16.04
   - name: ubuntu-14.04
-  - name: centos-7.2
-  - name: centos-6.7
+  - name: centos-7.3
+  - name: centos-6.8
+  - name: fedora-25
+  - name: fedora-24
+  - name: freebsd-11.0
+  - name: freebsd-10.3
+  - name: opensuse-leap-42.2
 
 suites:
   - name: server

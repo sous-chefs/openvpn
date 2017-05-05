@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Recipe:: enable_ip_forwarding
 #
-# Copyright 2009-2013, Chef Software, Inc.
-# Copyright 2015, Chef Software, Inc. <legal@chef.io>
+# Copyright:: 2009-2013, Chef Software, Inc.
+# Copyright:: 2015, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,10 +19,16 @@
 
 include_recipe 'sysctl::default'
 
-sysctl_param 'net.ipv4.conf.all.forwarding' do
-  value 1
-end
+if node['platform'] == 'freebsd'
+  sysctl_param 'net.inet.ip.forwarding' do
+    value 1
+  end
+else
+  sysctl_param 'net.ipv4.conf.all.forwarding' do
+    value 1
+  end
 
-sysctl_param 'net.ipv6.conf.all.forwarding' do
-  value 1
+  sysctl_param 'net.ipv6.conf.all.forwarding' do
+    value 1
+  end
 end

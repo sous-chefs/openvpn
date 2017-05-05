@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Recipe:: install
 #
-# Copyright 2014, Xhost Australia
+# Copyright:: 2014, Xhost Australia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,4 +24,8 @@ end
 
 include_recipe 'yum-epel' if platform_family?('rhel')
 
-package 'openvpn'
+if node['openvpn']['git_package'] == true
+  package 'openvpn-git'
+else
+  package 'openvpn'
+end

@@ -1,23 +1,26 @@
+# Use Travis's cointainer based infrastructure
 sudo: false
+addons:
+  apt:
+    sources:
+      - chef-current-precise
+    packages:
+      - chefdk
 
-language: ruby
+# Don't `bundle install`
+install: echo "skip bundle install"
 
-rvm:
-  - 2.2.0
-  - 2.1.5
-  - 2.0.0-p598
+branches:
+  only:
+    - master
 
-before_install:
-  - "echo 'gem: --no-document' > ~/.gemrc"
-
-install: travis_wait bundle install --without development integration
+# Ensure we make ChefDK's Ruby the default
+before_script:
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
 
 script:
-  - bundle exec foodcritic -f any .
-  - bundle exec rubocop --version
-  - bundle exec rubocop
-  - bundle exec rspec --color --format progress
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+  - /opt/chefdk/bin/chef exec delivery local all
 
-addons:
-  code_climate:
-    repo_token: 06b32509640865e956afee48a6e8d61bb7678c6789af34

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: openvpn
+# Cookbook:: openvpn
 # Attributes:: openvpn
 #
-# Copyright 2009-2013, Chef Software, Inc.
+# Copyright:: 2009-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +17,26 @@
 # limitations under the License.
 #
 
+# FreeBSD typically uses the 'wheel' group, no 'root' group exists;
+# the service from the package uses /usr/local prefix
+if node['platform'] == 'freebsd'
+  default['openvpn']['root_group'] = 'wheel'
+  default['openvpn']['fs_prefix'] = '/usr/local'
+else
+  default['openvpn']['root_group'] = 'root'
+  default['openvpn']['fs_prefix'] = ''
+end
+
 # Set this to false if you want to just use the lwrp
 default['openvpn']['configure_default_server'] = true
+
+# whether to use the openvpn-git package (archlinux only)
+default['openvpn']['git_package'] = false
 
 # Used by helper library to generate certificates/keys
 default['openvpn']['key']['ca_expire']      = 3650
 default['openvpn']['key']['expire']         = 3650
-default['openvpn']['key']['size']           = 1024
+default['openvpn']['key']['size']           = 2048
 default['openvpn']['key']['country']        = 'US'
 default['openvpn']['key']['province']       = 'CA'
 default['openvpn']['key']['city']           = 'San Francisco'
@@ -33,7 +46,7 @@ default['openvpn']['key']['message_digest'] = 'sha256'
 
 # Cookbook attributes
 default['openvpn']['client_prefix']   = 'vpn-prod'
-default['openvpn']['key_dir']         = '/etc/openvpn/keys'
+default['openvpn']['key_dir']         = [node['openvpn']['fs_prefix'], '/etc/openvpn/keys'].join
 default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
 default['openvpn']['user_query']      = 'NOT action:remove'
@@ -66,8 +79,7 @@ default['openvpn']['config']['group'] = value_for_platform_family(rhel: 'nobody'
                                                                   arch: 'nobody',
                                                                   debian: 'nogroup',
                                                                   mac_os_x: 'nogroup',
-                                                                  default: 'nobody'
-                                                                 )
+                                                                  default: 'nobody')
 
 default['openvpn']['config']['local']           = node['ipaddress']
 default['openvpn']['config']['proto']           = 'udp'
@@ -76,7 +88,7 @@ default['openvpn']['config']['keepalive']       = '10 120'
 default['openvpn']['config']['log']             = '/var/log/openvpn.log'
 default['openvpn']['config']['push']            = nil
 default['openvpn']['config']['script-security'] = 2
-default['openvpn']['config']['up']              = '/etc/openvpn/server.up.sh'
+default['openvpn']['config']['up']              = [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join
 default['openvpn']['config']['persist-key']     = ''
 default['openvpn']['config']['persist-tun']     = ''
 default['openvpn']['config']['comp-lzo']        = ''
@@ -85,7 +97,7 @@ default['openvpn']['config']['ca']              = node['openvpn']['signing_ca_ce
 default['openvpn']['config']['key']             = "#{node['openvpn']['key_dir']}/server.key"
 default['openvpn']['config']['cert']            = "#{node['openvpn']['key_dir']}/server.crt"
 default['openvpn']['config']['dh']              = "#{node['openvpn']['key_dir']}/dh#{node['openvpn']['key']['size']}.pem"
-default['openvpn']['config']['crl-verify']      = '/etc/openvpn/crl.pem'
+default['openvpn']['config']['crl-verify']      = [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join
 
 # interface configuration depending on type
 case node['openvpn']['type']
