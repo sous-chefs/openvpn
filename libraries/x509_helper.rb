@@ -3,7 +3,6 @@ require 'openssl'
 # OpenVPN
 module OpenVPN
   # Helpers for OpenVPN
-  # rubocop:disable Style/Documentation
   module Helper
     # Checks that the certificate is valid (not revoked, etc.)
     def self.cert_valid?(keydir, cert)

@@ -87,7 +87,7 @@ context 'Config' do
     its(:stdout) do
       is_expected.to eq(
         'issuer=/C=US/ST=CA/L=San Francisco/O=Fort Funston/OU=OpenVPN ' \
-        "Server/CN=Fort Funston CA/emailAddress=admin@foobar.com\n"
+        "Server/CN=server/emailAddress=admin@foobar.com\n"
       )
     end
   end
