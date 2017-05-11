@@ -1,6 +1,6 @@
 #
 # Cookbook:: openvpn
-# Resource:: user
+# Resource:: user_bundle
 #
 
 property :client_name, String, name_property: true
@@ -12,11 +12,11 @@ property :destination, String
 action :create do
   key_dir = node['openvpn']['key_dir']
   cert_path = ::File.join(key_dir, "#{client_name}.crt")
-  client_file_basename = [node['openvpn']['client_prefix'], name].join('-')
+  client_file_basename = [node['openvpn']['client_prefix'], client_name].join('-')
   bundle_filename = "#{client_name}.tar.gz"
 
-  bundle_full_path = ::File.expand_path("#{key_dir}/bundle_filename")
-  destination_file = File.expand_path(destination || bundle_full_path)
+  bundle_full_path = ::File.expand_path(::File.join(key_dir, bundle_filename))
+  destination_file = ::File.expand_path(destination || bundle_full_path)
 
   execute "generate-openvpn-#{client_name}" do
     command "./pkitool #{client_name}"
@@ -44,7 +44,7 @@ action :create do
     template filename do
       source 'client.conf.erb'
       cookbook node['openvpn']['cookbook_user_conf']
-      variables(client_cn: name)
+      variables(client_cn: client_name)
 
       notifies :delete, "file[#{cleanup_name}]", :immediately
     end
@@ -73,7 +73,7 @@ action :create do
 
   execute "move-bundle-to-destination-#{client_name}" do
     command <<-EOH
-      mv #{bundle_filename_real} #{destination_file}
+      mv #{bundle_full_path} #{destination_file}
     EOH
 
     not_if do
