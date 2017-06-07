@@ -60,6 +60,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 * `node['openvpn']['signing_ca_cert']` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 * `node['openvpn']['signing_ca_key']` - CA key for signing, default `/etc/openvpn/keys/ca.key`
+* `node['openvpn']['server_verification']` - Server certificate verification directive, can be anything mentioned [in official doc](https://openvpn.net/index.php/open-source/documentation/howto.html#mitm). By default `nil`.
 * `node['openvpn']['config']['local']` - IP to listen on, defaults to `node['ipaddress']`
 * `node['openvpn']['config']['proto']` - Valid values are 'udp' or 'tcp', defaults to 'udp'.
 * `node['openvpn']['config']['port']` - Port to listen on, defaults to '1194'.
