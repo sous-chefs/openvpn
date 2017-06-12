@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+
 include_recipe 'openvpn::server'
 
 openvpn_users 'users' do
