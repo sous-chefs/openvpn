@@ -32,15 +32,35 @@ describe 'openvpn::server' do
       .with_content('push "route 10.12.10.0 255.255.255.0"')
   end
 
-  it 'executes gencrl with correction parameters' do
-    expect(chef_run).to run_execute('gencrl').with(
-      environment: { 'KEY_CN' => 'Fort Funston CA' },
-      command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl ' \
-               '-keyfile /etc/openvpn/keys/server.key ' \
-               '-cert /etc/openvpn/keys/server.crt ' \
-               '-out /etc/openvpn/keys/crl.pem',
-      creates: '/etc/openvpn/keys/crl.pem'
-    )
+  context 'crl is older than index.txt' do
+    before(:each) do
+      allow(::FileUtils).to receive(:uptodate?).and_return(false)
+    end
+
+    it 'executes gencrl with correction parameters' do
+      expect(chef_run).to run_execute('gencrl').with(
+        environment: { 'KEY_CN' => 'server' },
+        command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl ' \
+                 '-keyfile /etc/openvpn/keys/ca.key ' \
+                 '-cert /etc/openvpn/keys/ca.crt ' \
+                 '-out /etc/openvpn/keys/crl.pem'
+      )
+    end
+  end
+
+  context 'crl is newer than index.txt' do
+    before(:each) do
+      allow(::FileUtils).to receive(:uptodate?).and_return(true)
+    end
+
+    it 'does not execute gencrl' do
+      expect(chef_run).to_not run_execute('gencrl')
+    end
+  end
+
+  it 'gencrl notifies remote_file[/etc/openvpn/crl.pem]' do
+    expect(chef_run.execute('gencrl'))
+      .to notify('remote_file[/etc/openvpn/crl.pem]').to(:create).delayed
   end
 
   it 'creates a world readable CRL file' do

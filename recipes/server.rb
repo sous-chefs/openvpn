@@ -141,8 +141,9 @@ execute 'gencrl' do
           "-keyfile #{node['openvpn']['key_dir']}/server.key " \
           "-cert #{node['openvpn']['key_dir']}/server.crt " \
           "-out #{node['openvpn']['key_dir']}/crl.pem"
-  creates "#{node['openvpn']['key_dir']}/crl.pem"
-  action  :run
+  not_if { ::FileUtils.uptodate?("#{node['openvpn']['key_dir']}/crl.pem", ["#{node['openvpn']['key_dir']}/index.txt"]) }
+  action :run
+  notifies :create, 'remote_file[/etc/openvpn/crl.pem]', :delayed
 end
 
 # Make a world readable copy of the CRL

@@ -1,8 +1,6 @@
 #
-# Cookbook:: openvpn
-# Recipe:: users
-#
-# Copyright:: 2010-2013, Chef Software, Inc.
+# Cookbook Name:: openvpn
+# Resource:: users
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,12 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
+actions :create, :remove
+default_action :create
 
-include_recipe 'openvpn::server'
-
-openvpn_users 'users' do
-  action [:remove, :create]
-  data_bag node['openvpn']['users_data_bag']
-end
+attribute :cookbook, kind_of: String, default: 'openvpn'
+attribute :data_bag, kind_of: String, default: 'users'

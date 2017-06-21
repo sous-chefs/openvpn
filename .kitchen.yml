@@ -21,8 +21,10 @@ platforms:
 
 suites:
   - name: server
+    data_bags_path: "test/integration/data_bags"
     run_list:
       - recipe[openvpn::server]
+      - recipe[openvpn::users]
     attributes:
       openvpn:
         config:
