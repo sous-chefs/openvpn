@@ -17,3 +17,6 @@ cert <%= @client_cn %>.crt
 key <%= @client_cn %>.key
 comp-lzo
 verb 3
+<% if node['openvpn']['server_verification'] %>
+<%= node['openvpn']['server_verification'] %>
+<% end %>

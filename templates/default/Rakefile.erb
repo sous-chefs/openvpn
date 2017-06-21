@@ -58,6 +58,9 @@ cert #{usercn}.crt
 key #{usercn}.key
 comp-lzo
 verb 3
+<% if node['openvpn']['server_verification'] %>
+<%= node['openvpn']['server_verification'] %>
+<% end %>
 EOF
 
   puts "* Generate certificate for #{usercn}."
