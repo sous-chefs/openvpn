@@ -45,7 +45,7 @@ else
         'KEY_ORG'      => node['openvpn']['key']['org'],
         'KEY_EMAIL'    => node['openvpn']['key']['email']
       )
-      not_if { ::File.exist?("#{node['openvpn']['key_dir']}/#{u['id']}.crt") }
+      creates "#{node['openvpn']['key_dir']}/#{u['id']}.crt"
     end
 
     %w(conf ovpn).each do |ext|
@@ -61,7 +61,7 @@ else
       command <<-EOH
         tar zcf #{u['id']}.tar.gz ca.crt #{u['id']}.crt #{u['id']}.key #{node['openvpn']['client_prefix']}-#{u['id']}.conf #{node['openvpn']['client_prefix']}-#{u['id']}.ovpn
       EOH
-      not_if { ::File.exist?("#{node['openvpn']['key_dir']}/#{u['id']}.tar.gz") }
+      creates "#{node['openvpn']['key_dir']}/#{u['id']}.tar.gz"
     end
   end
 end
