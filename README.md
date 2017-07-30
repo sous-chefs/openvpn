@@ -52,7 +52,7 @@ These attributes are set by the cookbook by default.
 * `node['openvpn']['netmask']` - Netmask for the subnet, default is 255.255.0.0.
 * `node['openvpn']['gateway']` - FQDN for the VPN gateway server. Default is `node['fqdn']`.
 * `node['openvpn']['push_routes']` - Array of routes to to push to clients (as `push` statements) in the server.conf, e.g. '192.168.0.0 255.255.255.0'. Default is empty.
-* `node['openvpn']['push_options']` - Array of options to to push to clients in the server.conf. Default is empty.
+* `node['openvpn']['push_options']` - Array of options to push to clients in the server.conf, e.g. [["dhcp-option DNS", ["8.8.8.8"]]]. Default is empty.
 * `node['openvpn']['configure_default_server']` - Boolean.  Set this to false if you want to create all of your "conf" files with the LWRP.
 * `node['openvpn']['git_package']` - Boolean. Whether to use the `openvpn-git` package (Arch Linux only, default false).
 * `node['openvpn']['client_prefix']` - String. Name of the config that is created for clients. When imported into most vpn clients, this is the name that will be displayed for the connection. Default is 'vpn-prod'.
