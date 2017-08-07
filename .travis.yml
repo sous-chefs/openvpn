@@ -22,7 +22,6 @@ env:
   - INSTANCE=server-centos-7
   - INSTANCE=server-debian-8
   - INSTANCE=server-debian-9
-  - INSTANCE=server-fedora-latest
   - INSTANCE=server-ubuntu-1404
   - INSTANCE=server-ubuntu-1604
 
