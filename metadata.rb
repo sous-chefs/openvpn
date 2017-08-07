@@ -5,9 +5,9 @@ maintainer_email  'help@sous-chefs.org'
 license           'Apache-2.0'
 description       'Installs and configures openvpn and includes rake tasks for managing certs.'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-source_url        'https://github.com/xhost-cookbooks/openvpn'
-issues_url        'https://github.com/xhost-cookbooks/openvpn/issues'
-chef_version      '>= 12.1'
+source_url        'https://github.com/sous-chefs/openvpn'
+issues_url        'https://github.com/sous-chefs/openvpn/issues'
+chef_version      '>= 12.1' if respond_to?(:chef_version)
 
 recipe 'openvpn::default',              'Installs OpenVPN only (no configuration).'
 recipe 'openvpn::install',              'Installs OpenVPN only (no configuration).'
