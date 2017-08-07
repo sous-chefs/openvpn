@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :cookbook, kind_of: String, default: 'openvpn'
+property :cookbook, String, default: 'openvpn'
 property :config, Hash
 property :push_routes, Array
 property :push_options, Array
