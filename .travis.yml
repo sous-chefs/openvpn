@@ -1,9 +1,10 @@
 # Use Travis's cointainer based infrastructure
+dist: trusty
 sudo: false
 addons:
   apt:
     sources:
-      - chef-current-precise
+      - chef-current-trusty
     packages:
       - chefdk
 
