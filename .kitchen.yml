@@ -6,11 +6,15 @@ provisioner:
   require_chef_omnibus: <%= ENV['CHEF_VERSION'] || 'latest' %>
   data_bags_path: "test/fixtures/data_bags"
 
+verifier:
+  name: inspec
+
 # currently only support 2 last major revs of distros (at the most)
 platforms:
   - name: amazonlinux
     driver_config:
       box: mvbcoding/awslinux
+  - name: centos-6.9
   - name: centos-7.3
   - name: debian-8.9
   - name: debian-9.0
