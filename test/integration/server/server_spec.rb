@@ -63,10 +63,7 @@ describe file('/etc/openvpn/easy-rsa/pkitool') do
 end
 
 describe command('openssl crl -in /etc/openvpn/keys/crl.pem -noout -issuer') do
-  its(:stdout) do
-    is_expected.to eq(
-      'issuer=/C=US/ST=CA/L=San Francisco/O=Fort Funston/OU=OpenVPN ' \
-      "Server/CN=server/emailAddress=admin@foobar.com\n"
-    )
+  its('stdout') do
+    should match(/O.*=.*Fort Funston.*OU.*=.*OpenVPN Server.*emailAddress.*=.*admin@foobar.com/)
   end
 end
