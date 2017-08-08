@@ -10,7 +10,6 @@ describe 'openvpn::server' do
       node.override['openvpn']['push_routes'] = [
         '192.168.10.0 255.255.255.0', '10.12.10.0 255.255.255.0'
       ]
-      # node.set['openvpn']['key']['org'] = 'testorg'
     end.converge(described_recipe)
   end
 

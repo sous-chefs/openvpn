@@ -52,27 +52,14 @@ else
 end
 
 describe file('/etc/openvpn/server.conf') do
-  describe '#content' do
-    subject { super().content }
-    it { is_expected.to include 'push "dhcp-option DOMAIN local"' }
-    it { is_expected.to include 'push "dhcp-option DOMAIN-SEARCH local"' }
-    it { is_expected.to include 'push "route 192.168.10.0 255.255.255.0"' }
-    it { is_expected.to include 'push "route 10.12.10.0 255.255.255.0"' }
-  end
+  its('content') { should include 'push "dhcp-option DOMAIN local"' }
+  its('content') { should include 'push "dhcp-option DOMAIN-SEARCH local"' }
+  its('content') { should include 'push "route 192.168.10.0 255.255.255.0"' }
+  its('content') { should include 'push "route 10.12.10.0 255.255.255.0"' }
 end
 
 describe file('/etc/openvpn/easy-rsa/pkitool') do
-  describe '#content' do
-    subject { super().content }
-    it { is_expected.to include '-md sha256' }
-  end
-end
-
-describe file('/etc/openvpn/keys/crl.pem') do
-  describe '#content' do
-    subject { super().content }
-  end
-  it { is_expected.to be_file }
+  its('content') { should include '-md sha256' }
 end
 
 describe command('openssl crl -in /etc/openvpn/keys/crl.pem -noout -issuer') do
