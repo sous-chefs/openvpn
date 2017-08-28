@@ -5,6 +5,7 @@
 
 property :client_name, String, name_property: true
 property :destination, String
+property :additional_vars, Hash
 
 action :create do
   key_dir = node['openvpn']['key_dir']
@@ -50,7 +51,7 @@ action :create do
           ca: IO.read(ca_cert_path),
           cert: IO.read(cert_path),
           key: IO.read(key_path)
-        }
+        }.merge(additional_vars){|key, oldval, newval| oldval}
       end
     )
   end
