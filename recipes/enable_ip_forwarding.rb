@@ -30,5 +30,6 @@ else
 
   sysctl_param 'net.ipv6.conf.all.forwarding' do
     value 1
+    only_if { Dir.exist? '/proc/sys/net/ipv6' }
   end
 end
