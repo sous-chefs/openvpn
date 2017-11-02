@@ -1,6 +1,6 @@
 #
 # Cookbook:: openvpn
-# Resource:: user_bundle
+# Resource:: user_inline
 #
 
 property :client_name, String, name_property: true
@@ -10,10 +10,9 @@ property :additional_vars, Hash
 action :create do
   key_dir = node['openvpn']['key_dir']
 
-  ca_cert_path = ::File.join(key_dir, "ca.crt")
+  ca_cert_path = ::File.join(key_dir, 'ca.crt')
   cert_path = ::File.join(key_dir, "#{client_name}.crt")
   key_path = ::File.join(key_dir, "#{client_name}.key")
-
 
   filename = "#{client_name}.ovpn"
   full_path = ::File.expand_path(::File.join(key_dir, filename))
@@ -35,11 +34,11 @@ action :create do
       'KEY_ORG'      => node['openvpn']['key']['org'],
       'KEY_EMAIL'    => node['openvpn']['key']['email']
     )
-    not_if { ::File.exist?(cert_path) }
+    creates cert_path
   end
 
   template destination_file do
-    source "client-inline.conf.erb"
+    source 'client-inline.conf.erb'
     cookbook node['openvpn']['cookbook_user_inline_conf']
 
     sensitive true
@@ -47,11 +46,10 @@ action :create do
       lazy do
         {
           client_cn: client_name,
-
           ca: IO.read(ca_cert_path),
           cert: IO.read(cert_path),
-          key: IO.read(key_path)
-        }.merge(additional_vars){|key, oldval, newval| oldval}
+          key: IO.read(key_path),
+        }.merge(additional_vars) { |key, oldval, newval| oldval } # rubocop:disable Lint/UnusedBlockArgument
       end
     )
   end

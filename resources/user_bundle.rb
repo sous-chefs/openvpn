@@ -34,7 +34,7 @@ action :create do
       'KEY_ORG'      => node['openvpn']['key']['org'],
       'KEY_EMAIL'    => node['openvpn']['key']['email']
     )
-    not_if { ::File.exist?(cert_path) }
+    creates cert_path
   end
 
   cleanup_name = "cleanup-old-bundle-#{client_name}"
@@ -65,11 +65,8 @@ action :create do
         #{client_file_basename}.conf \
         #{client_file_basename}.ovpn
     EOH
-
-    not_if { !force && ::File.exist?(destination_file) }
+    creates destination_file unless force
   end
-
-
 
   execute "move-bundle-to-destination-#{client_name}" do
     command <<-EOH
