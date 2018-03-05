@@ -1,8 +1,8 @@
-name              'openvpn'
+name              'openvpn' # ~FC072
 version           '3.0.0'
 maintainer        'Xhost Australia'
 maintainer_email  'cookbooks@xhost.com.au'
-license           'Apache 2.0'
+license           'Apache-2.0'
 description       'Installs and configures openvpn and includes rake tasks for managing certs.'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url        'https://github.com/xhost-cookbooks/openvpn'
