@@ -5,7 +5,7 @@
 # configuration settings.
 
 client
-dev tun
+dev <%= node['openvpn']['config']['dev'].chomp('0') %>
 proto <%= node['openvpn']['config']['proto'] %>
 remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['config']['port'] %>
 resolv-retry infinite

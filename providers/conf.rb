@@ -20,7 +20,7 @@ use_inline_resources
 
 action :create do
   # FreeBSD service uses openvpn.conf
-  template_source = if new_resource.name == 'openvpn'
+  template_source = if new_resource.name == 'openvpn' || new_resource.name == 'server-bridge'
                       'server.conf.erb'
                     else
                       "#{new_resource.name}.conf.erb"

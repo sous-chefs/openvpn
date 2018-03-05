@@ -46,7 +46,7 @@ task :client do
 
     conf = <<EOF
 client
-dev tun
+dev <%= node['openvpn']['config']['dev'].chomp('0') %>
 proto <%= node['openvpn']['config']['proto'] %>
 remote #{gateway} <%= node['openvpn']['config']['port'] %>
 resolv-retry infinite
