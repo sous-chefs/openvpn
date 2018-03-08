@@ -5,7 +5,6 @@ driver:
 provisioner:
   name: chef_zero
   require_chef_omnibus: <%= ENV['CHEF_VERSION'] || 'latest' %>
-  data_bags_path: "test/fixtures/data_bags"
 
 verifier:
   name: inspec
