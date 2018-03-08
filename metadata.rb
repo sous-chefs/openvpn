@@ -20,5 +20,5 @@ supports 'opensuseleap'
 supports 'ubuntu'
 
 depends 'apt'
-depends 'sysctl'
+depends 'sysctl', '>= 1.0'
 depends 'yum-epel'

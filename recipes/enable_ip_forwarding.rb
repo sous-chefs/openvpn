@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'sysctl::default'
-
 if node['platform'] == 'freebsd'
   sysctl_param 'net.inet.ip.forwarding' do
     value 1
