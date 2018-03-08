@@ -2,6 +2,7 @@
 # https://github.com/xhost-cookbooks/openvpn/blob/master/recipes/service.rb
 
 if (os[:name] == 'redhat' && os[:release] >= '7') ||
+   (os[:name] == 'centos' && os[:release] >= '7') ||
    (os[:name] == 'debian' && os[:release] >= '8') ||
    (os[:name] == 'ubuntu' && os[:release] >= '15.04') ||
    (os[:name] == 'fedora')
