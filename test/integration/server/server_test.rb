@@ -10,6 +10,13 @@ if (os[:name] == 'redhat' && os[:release] >= '7') ||
     it { is_expected.to be_enabled }
     it { is_expected.to be_running }
   end
+elsif os[:name] == 'ubuntu' && os[:release] <= '14.04'
+  describe sysv_service('openvpn') do
+    # README: Ubuntu 14.04 fails to properly detect the service is enabled,
+    # owing to openvpn being a SysV service
+    # it { is_expected.to be_enabled }
+    it { is_expected.to be_running }
+  end
 else
   describe service('openvpn') do
     it { is_expected.to be_enabled }
