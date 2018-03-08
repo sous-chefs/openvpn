@@ -1,3 +1,4 @@
+---
 driver:
   name: vagrant
 
@@ -35,14 +36,14 @@ suites:
           verb: 1
           mute: 10
           route:
-           - '192.168.4.0 255.255.255.0'
+            - '192.168.4.0 255.255.255.0'
         push_routes:
           - 192.168.10.0 255.255.255.0
           - 10.12.10.0 255.255.255.0
         push_options:
           dhcp-option:
-          - 'DOMAIN local'
-          - 'DOMAIN-SEARCH local'
+            - 'DOMAIN local'
+            - 'DOMAIN-SEARCH local'
   - name: server_verification
     run_list:
       - recipe[openvpn::server]
