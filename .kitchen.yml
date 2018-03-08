@@ -17,11 +17,6 @@ verifier:
 
 # currently only support 2 last major revs of distros (at the most)
 platforms:
-  - name: amazonlinux
-    driver:
-      image: dokken/amazonlinux
-      pid_one_command: /sbin/init
-
   - name: debian-8
     driver:
       image: dokken/debian-8
