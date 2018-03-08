@@ -14,8 +14,8 @@ describe 'openvpn::server' do
       end.converge(described_recipe)
     end
 
-    it 'converges' do
-      chef_run
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
     end
 
     it 'makes a server.conf from template with dhcp options' do
