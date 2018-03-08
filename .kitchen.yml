@@ -60,11 +60,6 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
 
-  - name: opensuse-leap
-    driver:
-      image: dokken/opensuse-leap
-      pid_one_command: /bin/systemd
-
 suites:
   - name: server
     run_list:
