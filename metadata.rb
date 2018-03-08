@@ -9,20 +9,6 @@ source_url        'https://github.com/sous-chefs/openvpn'
 issues_url        'https://github.com/sous-chefs/openvpn/issues'
 chef_version      '>= 12.7' if respond_to?(:chef_version)
 
-recipe 'openvpn::default',              'Installs OpenVPN only (no configuration).'
-recipe 'openvpn::install',              'Installs OpenVPN only (no configuration).'
-recipe 'openvpn::server',               'Installs and configures OpenVPN as a server.'
-recipe 'openvpn::client',               'Installs and configures OpenVPN as a client.'
-recipe 'openvpn::service',              'Manages the OpenVPN system service.'
-recipe 'openvpn::users',                'Sets up openvpn cert/configs for users data bag items.'
-recipe 'openvpn::enable_ip_forwarding', 'Enables IP forwarding on the system.'
-recipe 'openvpn::install_bridge_utils', 'Installs bridge uitilies for Linux.'
-recipe 'openvpn::easy_rsa',             'Installs easy-rsa.'
-
-depends 'apt'
-depends 'sysctl'
-depends 'yum-epel'
-
 supports 'arch'
 supports 'centos'
 supports 'debian'
@@ -32,3 +18,7 @@ supports 'suse'
 supports 'opensuse'
 supports 'opensuseleap'
 supports 'ubuntu'
+
+depends 'apt'
+depends 'sysctl'
+depends 'yum-epel'
