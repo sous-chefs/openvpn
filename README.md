@@ -42,8 +42,8 @@ For further modification of the cookbook see __Usage__ below.
 For more information about OpenVPN, see the [official site](http://openvpn.net/).
 
 
-Attributes
-----------
+## Attributes
+
 These attributes are set by the cookbook by default.
 
 * `node['openvpn']['client_cn']` - The client's Common Name used with the `openvpn::client` recipe (essentially a standalone recipe) for the client certificate and key.
@@ -85,32 +85,39 @@ The following lets you specify the message digest used for generating certificat
 * `node['openvpn']['key']['message_digest']` - Default is `sha256` for a high-level of security.
 
 
-Recipes
--------
+## Recipes
+
 #### `openvpn::default`
+
 Installs the OpenVPN package only.
 
 #### `openvpn::install`
+
 Installs the OpenVPN package only.
 
 #### `openvpn::server`
+
 Installs and configures OpenVPN as a server.
 
 #### `openvpn::client`
+
 Installs and configures OpenVPN as a client.
 
 #### `openvpn::service`
+
 Manages the OpenVPN system service (there is no need to use this recipe directly in your run_list).
 
 #### `openvpn::users`
+
 Utilizes a data bag called `users` to generate OpenVPN keys for each user.
 [chef-solo-search](https://github.com/edelight/chef-solo-search) is required in order to use this recipe with Chef-Solo, although it is not a dependency of this cookbook.
 
 #### `openvpn::easy_rsa`
+
 Installs the easy-rsa package (a CLI utility to build and manage a PKI CA).
 
-Usage
------
+### Usage
+
 Create a role for the OpenVPN server. See above for attributes that can be entered here.
 
 ```ruby
@@ -182,8 +189,8 @@ To automatically create new certificates and configurations for users, create da
 This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out). The attribute `node['openvpn']["script_security"]` must be set to 2 or higher to use this otherwise openvpn server startup will fail.
 
 
-Customizing Server Configuration
---------------------------------
+## Customizing Server Configuration
+
 To further customize the server configuration, there are two templates that can be modified in this cookbook.
 
 * templates/default/server.conf.erb
@@ -192,13 +199,13 @@ To further customize the server configuration, there are two templates that can 
 The first is the OpenVPN server configuration file. Modify to suit your needs for more advanced features of [OpenVPN](http://openvpn.net). The second is an `up` script run when OpenVPN starts. This is where you can add firewall rules, enable IP forwarding and other OS network settings required for OpenVPN. Attributes in the cookbook are provided as defaults, you can add more via the openvpn role if you need them.
 
 
-Using the LWRP
---------------
+## Using the LWRP
+
 To create (possibly multiple) "conf" files on a server, use openvpn_conf "name".  See the conf.rb file in the resources directory to find the supported attributes, or add some of your own.  If you don't want to use the default "server.conf" from the default recipe, set `node['openvpn']["configure_default_server"]` to false, then use the LWRP to configure as many as you like.
 
 
-SSL Certificates
-----------------
+## SSL Certificates
+
 Some of the easy-rsa tools are copied to /etc/openvpn/easy-rsa to provide the minimum to generate the certificates using the default and users recipes. We provide a Rakefile to make it easier to generate client certificate sets if you're not using the data bags above. To generate new client certificates you will need `rake` installed (either as a gem or a package), then run:
 
     cd /etc/openvpn/easy-rsa
@@ -208,8 +215,8 @@ Some of the easy-rsa tools are copied to /etc/openvpn/easy-rsa to provide the mi
 Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake task will generate a tar.gz file with the configuration and certificates for the client.
 
 
-License & Authors
------------------
+## License & Authors
+
 - Author:: Chris Fordham (<chris@fordham-nagy.id.au>)
 - Author:: Joshua Timberman (<joshua@chef.io>)
 
