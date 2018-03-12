@@ -11,15 +11,15 @@ property :destination, String
 #       changed. Requires manual intervention.
 action :create do
   key_dir = node['openvpn']['key_dir']
-  cert_path = ::File.join(key_dir, "#{client_name}.crt")
-  client_file_basename = [node['openvpn']['client_prefix'], client_name].join('-')
-  bundle_filename = "#{client_name}.tar.gz"
+  cert_path = ::File.join(key_dir, "#{new_resource.client_name}.crt")
+  client_file_basename = [node['openvpn']['client_prefix'], new_resource.client_name].join('-')
+  bundle_filename = "#{new_resource.client_name}.tar.gz"
 
   bundle_full_path = ::File.expand_path(::File.join(key_dir, bundle_filename))
-  destination_file = ::File.expand_path(destination || bundle_full_path)
+  destination_file = ::File.expand_path(new_resource.destination || bundle_full_path)
 
-  execute "generate-openvpn-#{client_name}" do
-    command "./pkitool #{client_name}"
+  execute "generate-openvpn-#{new_resource.client_name}" do
+    command "./pkitool #{new_resource.client_name}"
     cwd '/etc/openvpn/easy-rsa'
     environment(
       'EASY_RSA'     => '/etc/openvpn/easy-rsa',
@@ -37,14 +37,14 @@ action :create do
     creates cert_path
   end
 
-  cleanup_name = "cleanup-old-bundle-#{client_name}"
+  cleanup_name = "cleanup-old-bundle-#{new_resource.client_name}"
 
   %w(conf ovpn).each do |ext|
     filename = "#{key_dir}/#{client_file_basename}.#{ext}"
     template filename do
       source 'client.conf.erb'
       cookbook node['openvpn']['cookbook_user_conf']
-      variables(client_cn: client_name)
+      variables(client_cn: new_resource.client_name)
 
       notifies :delete, "file[#{cleanup_name}]", :immediately
     end
@@ -56,26 +56,26 @@ action :create do
     path destination_file
   end
 
-  execute "create-openvpn-tar-#{client_name}" do
+  execute "create-openvpn-tar-#{new_resource.client_name}" do
     cwd key_dir
     command <<-EOH
       tar zcf #{bundle_filename} \
-        ca.crt #{client_name}.crt \
-        #{client_name}.key \
+        ca.crt #{new_resource.client_name}.crt \
+        #{new_resource.client_name}.key \
         #{client_file_basename}.conf \
         #{client_file_basename}.ovpn
     EOH
-    creates destination_file unless force
+    creates destination_file unless new_resource.force
   end
 
-  execute "move-bundle-to-destination-#{client_name}" do
+  execute "move-bundle-to-destination-#{new_resource.client_name}" do
     command <<-EOH
       mv #{bundle_full_path} #{destination_file}
     EOH
 
     not_if do
       bundle_full_path != destination_file ||
-        (!force && ::File.exist?(destination_file))
+        (!new_resource.force && ::File.exist?(destination_file))
     end
   end
 end

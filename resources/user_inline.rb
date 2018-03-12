@@ -11,15 +11,15 @@ action :create do
   key_dir = node['openvpn']['key_dir']
 
   ca_cert_path = ::File.join(key_dir, 'ca.crt')
-  cert_path = ::File.join(key_dir, "#{client_name}.crt")
-  key_path = ::File.join(key_dir, "#{client_name}.key")
+  cert_path = ::File.join(key_dir, "#{new_resource.client_name}.crt")
+  key_path = ::File.join(key_dir, "#{new_resource.client_name}.key")
 
-  filename = "#{client_name}.ovpn"
+  filename = "#{new_resource.client_name}.ovpn"
   full_path = ::File.expand_path(::File.join(key_dir, filename))
-  destination_file = ::File.expand_path(destination || full_path)
+  destination_file = ::File.expand_path(new_resource.destination || full_path)
 
-  execute "generate-openvpn-#{client_name}" do
-    command "./pkitool #{client_name}"
+  execute "generate-openvpn-#{new_resource.client_name}" do
+    command "./pkitool #{new_resource.client_name}"
     cwd '/etc/openvpn/easy-rsa'
     environment(
       'EASY_RSA'     => '/etc/openvpn/easy-rsa',
@@ -45,11 +45,11 @@ action :create do
     variables(
       lazy do
         {
-          client_cn: client_name,
+          client_cn: new_resource.client_name,
           ca: IO.read(ca_cert_path),
           cert: IO.read(cert_path),
           key: IO.read(key_path),
-        }.merge(additional_vars) { |key, oldval, newval| oldval } # rubocop:disable Lint/UnusedBlockArgument
+        }.merge(new_resource.additional_vars) { |key, oldval, newval| oldval } # rubocop:disable Lint/UnusedBlockArgument
       end
     )
   end
@@ -58,9 +58,9 @@ end
 action :delete do
   key_dir = node['openvpn']['key_dir']
 
-  filename = "#{client_name}.ovpn"
+  filename = "#{new_resource.client_name}.ovpn"
   full_path = ::File.expand_path(::File.join(key_dir, filename))
-  destination_file = ::File.expand_path(destination || full_path)
+  destination_file = ::File.expand_path(new_resource.destination || full_path)
 
   file destination_file do
     action :delete
