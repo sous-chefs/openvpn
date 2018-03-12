@@ -81,3 +81,12 @@ suites:
       openvpn:
         server_verification: "remote-cert-tls server"
     includes: ubuntu-16.04
+  - name: server_verify_no_databag
+    run_list:
+      - recipe[openvpn::server]
+      - recipe[openvpn::users]
+    attributes:
+      openvpn:
+        server_verification: "remote-cert-tls server"
+        use_databag: false
+    includes: ubuntu-16.04

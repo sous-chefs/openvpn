@@ -7,7 +7,7 @@ property :client_name, String, name_property: true
 property :create_bundle, [true, false], default: true
 property :force, [true, false]
 property :destination, String
-property :additional_vars, Hash
+property :additional_vars, Hash, default: {}
 
 # TODO: this action will not recreate if the client configuration data has
 #       changed. Requires manual intervention.
@@ -81,13 +81,9 @@ action :create do
 
   execute "create-openvpn-tar-#{new_resource.client_name}" do
     cwd destination_path
-    command <<-EOH
-      tar zcf #{bundle_filename} \
-        ca.crt #{new_resource.client_name}.crt \
-        #{new_resource.client_name}.key \
-        #{client_file_basename}.conf \
-        #{client_file_basename}.ovpn
-    EOH
+    filelist = "ca.crt #{new_resource.client_name}.crt #{new_resource.client_name}.key #{client_file_basename}.ovpn"
+    filelist += " #{client_file_basename}.conf" if new_resource.create_bundle
+    command "tar zcf #{bundle_filename} #{filelist}"
     creates bundle_full_path unless new_resource.force
   end
 end

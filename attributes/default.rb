@@ -49,6 +49,7 @@ default['openvpn']['client_prefix']   = 'vpn-prod'
 default['openvpn']['key_dir']         = [node['openvpn']['fs_prefix'], '/etc/openvpn/keys'].join
 default['openvpn']['signing_ca_key']  = "#{node['openvpn']['key_dir']}/ca.key"
 default['openvpn']['signing_ca_cert'] = "#{node['openvpn']['key_dir']}/ca.crt"
+default['openvpn']['use_databag']     = true
 default['openvpn']['user_query']      = '*:*'
 default['openvpn']['cookbook_user_conf'] = 'openvpn'
 default['openvpn']['user_databag']    = 'users'
