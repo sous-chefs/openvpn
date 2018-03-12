@@ -29,39 +29,8 @@ if Chef::Config[:solo] && !chef_solo_search_installed?
     'you install the chef-solo-search cookbook.')
 else
   search(node['openvpn']['user_databag'], node['openvpn']['user_query']) do |u|
-    execute "generate-openvpn-#{u['id']}" do
-      command "./pkitool #{u['id']}"
-      cwd '/etc/openvpn/easy-rsa'
-      environment(
-        'EASY_RSA'     => '/etc/openvpn/easy-rsa',
-        'KEY_CONFIG'   => '/etc/openvpn/easy-rsa/openssl.cnf',
-        'KEY_DIR'      => node['openvpn']['key_dir'],
-        'CA_EXPIRE'    => node['openvpn']['key']['ca_expire'].to_s,
-        'KEY_EXPIRE'   => node['openvpn']['key']['expire'].to_s,
-        'KEY_SIZE'     => node['openvpn']['key']['size'].to_s,
-        'KEY_COUNTRY'  => node['openvpn']['key']['country'],
-        'KEY_PROVINCE' => node['openvpn']['key']['province'],
-        'KEY_CITY'     => node['openvpn']['key']['city'],
-        'KEY_ORG'      => node['openvpn']['key']['org'],
-        'KEY_EMAIL'    => node['openvpn']['key']['email']
-      )
-      creates "#{node['openvpn']['key_dir']}/#{u['id']}.crt"
-    end
-
-    %w(conf ovpn).each do |ext|
-      template "#{node['openvpn']['key_dir']}/#{node['openvpn']['client_prefix']}-#{u['id']}.#{ext}" do
-        source 'client.conf.erb'
-        cookbook node['openvpn']['cookbook_user_conf']
-        variables(client_cn: u['id'])
-      end
-    end
-
-    execute "create-openvpn-tar-#{u['id']}" do
-      cwd node['openvpn']['key_dir']
-      command <<-EOH
-        tar zcf #{u['id']}.tar.gz ca.crt #{u['id']}.crt #{u['id']}.key #{node['openvpn']['client_prefix']}-#{u['id']}.conf #{node['openvpn']['client_prefix']}-#{u['id']}.ovpn
-      EOH
-      creates "#{node['openvpn']['key_dir']}/#{u['id']}.tar.gz"
+    openvpn_user_bundle u['id'] do
+      action :create
     end
   end
 end
