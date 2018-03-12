@@ -4,10 +4,25 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## v3.0.0
 
-For a full list of changes please see the [github-diff](https://github.com/sous-chefs/openvpn/compare/v2.1.0...master)
-
-- Updated testing suites
-- A lot of minor bug fixes
+- [Chef-13 compatibility](https://github.com/sous-chefs/openvpn/issues/102)
+- [Use local delivery for testing](https://github.com/sous-chefs/openvpn/issues/83)
+- [Fix file existence check](https://github.com/sous-chefs/openvpn/pull/112)
+- [Fix port attribute in Rakefile](https://github.com/sous-chefs/openvpn/pull/107)
+- [Archlinux openvpn-git support](https://github.com/sous-chefs/openvpn/issues/97)
+- [Lazy evaluation for key generation](https://github.com/sous-chefs/openvpn/issues/100)
+- [User configuration template can now be set to a user defined template](https://github.com/sous-chefs/openvpn/pull/95)
+- [Allow Override of global push settings](https://github.com/sous-chefs/openvpn/pull/94)
+- [Fix Debian 8 service](https://github.com/sous-chefs/openvpn/pull/92)
+- [Fix Fedora service](https://github.com/sous-chefs/openvpn/pull/91)
+- [EasyRSA recipe added](https://github.com/sous-chefs/openvpn/issues/90)
+- [Added ability to name configuration import file](https://github.com/sous-chefs/openvpn/pull/86)
+- [Generate CRL](https://github.com/sous-chefs/openvpn/pull/82)
+- [Don't set username in configuration template](https://github.com/sous-chefs/openvpn/issues/75)
+- [Enable 'up' script in server config](https://github.com/sous-chefs/openvpn/pull/74)
+- [Fix OpenVPN startup on Centos-7](https://github.com/sous-chefs/openvpn/issues/73)
+- [Enable Message digest configuration](https://github.com/sous-chefs/openvpn/pull/69)
+- [Install bridge utils when using server-bridge](https://github.com/sous-chefs/openvpn/issues/59)
+- [Add a method to configure and enable `ip_forwarding`](https://github.com/sous-chefs/openvpn/issues/60)
 
 ## v2.1.0
 
