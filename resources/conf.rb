@@ -2,7 +2,7 @@
 # Cookbook:: openvpn
 # Resource:: conf
 #
-# Copyright:: 2013, Tacit Knowledge, Inc.
+# Copyright:: 2013-2018, Tacit Knowledge, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

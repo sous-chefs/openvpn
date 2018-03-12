@@ -221,8 +221,8 @@ Replace `CLIENT_NAME` and `vpn.example.com` with your desired values. The rake t
 - Author:: Joshua Timberman (<joshua@chef.io>)
 
 ```text
-Copyright:: 2009-2016, Chef Software, Inc
-Copyright:: 2014-2016, Xhost Australia
+Copyright:: 2009-2018, Chef Software, Inc
+Copyright:: 2018-2018, Xhost Australia
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -2,7 +2,7 @@
 # Cookbook:: openvpn
 # Recipe:: install
 #
-# Copyright:: 2014, Xhost Australia
+# Copyright:: 2014-2018, Xhost Australia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
