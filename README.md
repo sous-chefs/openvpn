@@ -191,9 +191,9 @@ This cookbook also provides an 'up' script that runs when OpenVPN is started. Th
 Resources
 ---------
 
-openvpn_user_bundle
+openvpn_user
 ============
-Implements a resource for creation of user bundles.
+Implements a resource for creation of users and bundles.
 
 ## Customizing Server Configuration
 
