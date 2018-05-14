@@ -84,7 +84,7 @@ action :remove do
       )
       only_if do
         ::File.exist?("#{new_resource.key_dir}/#{user_result['id']}.crt") &&
-        cert_valid?(new_resource.key_dir, "#{user_result['id']}.crt")
+          cert_valid?(new_resource.key_dir, "#{user_result['id']}.crt")
       end
       notifies :run, 'execute[gencrl]', :immediately
     end

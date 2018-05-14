@@ -12,4 +12,5 @@ module OpenVPN
 
       store.verify(OpenSSL::X509::Certificate.new(File.open(File.join(keydir, cert))))
     end
+  end
 end
