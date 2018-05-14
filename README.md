@@ -182,6 +182,13 @@ To automatically create new certificates and configurations for users, create da
 
 This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out). The attribute `node['openvpn']["script_security"]` must be set to 2 or higher to use this otherwise openvpn server startup will fail.
 
+Resources
+---------
+
+openvpn_user
+============
+Implements a resource for creation of users and bundles.
+
 ## Customizing Server Configuration
 
 To further customize the server configuration, there are two templates that can be modified in this cookbook.
