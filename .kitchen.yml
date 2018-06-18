@@ -55,6 +55,13 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
 
+  - name: ubuntu-18.04
+    driver:
+      image: dokken/ubuntu-18.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+
 suites:
   - name: server
     run_list:
@@ -80,4 +87,13 @@ suites:
     attributes:
       openvpn:
         server_verification: "remote-cert-tls server"
+    includes: ubuntu-16.04
+  - name: server_verify_no_databag
+    run_list:
+      - recipe[openvpn::server]
+      - recipe[openvpn::users]
+    attributes:
+      openvpn:
+        server_verification: "remote-cert-tls server"
+        use_databag: false
     includes: ubuntu-16.04
