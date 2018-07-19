@@ -21,7 +21,7 @@ private_key	= <%= node['openvpn']['signing_ca_key'] %>
 RANDFILE	= $dir/.rand
 x509_extensions	= usr_cert
 default_days	= <%= node['openvpn']['key']['ca_expire'] %>
-default_crl_days= 30
+default_crl_days	= <%= node['openvpn']['key']['crl_expire'] %>
 default_md	= md5
 preserve	= no
 policy		= policy_anything
