@@ -38,8 +38,7 @@ describe 'openvpn::server' do
         command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl ' \
                  '-keyfile /etc/openvpn/keys/server.key ' \
                  '-cert /etc/openvpn/keys/server.crt ' \
-                 '-out /etc/openvpn/keys/crl.pem',
-        creates: '/etc/openvpn/keys/crl.pem'
+                 '-out /etc/openvpn/keys/crl.pem'
       )
     end
 
