@@ -144,7 +144,8 @@ execute 'gencrl' do
           "-out #{key_dir}/crl.pem"
   not_if {
     ::File.exist?("#{key_dir}/crl.pem") &&
-    ::File.mtime("#{key_dir}/crl.pem") >= renew_after.to_time
+    ::File.mtime("#{key_dir}/crl.pem") >= renew_after.to_time &&
+    ::File.mtime("#{key_dir}/crl.pem") >= ::File.mtime("#{key_dir}/index.txt")
   }
   action  :run
 end
