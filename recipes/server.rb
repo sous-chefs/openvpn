@@ -147,7 +147,7 @@ execute 'gencrl' do
     ::File.mtime("#{key_dir}/crl.pem") >= renew_after.to_time &&
     ::File.mtime("#{key_dir}/crl.pem") >= ::File.mtime("#{key_dir}/index.txt")
   }
-  action  :run
+  action :run
 end
 
 # Make a world readable copy of the CRL
