@@ -134,19 +134,26 @@ end
   end
 end
 
-renew_after = ::Date.today - node['openvpn']['key']['crl_expire'] / 2
-
 execute 'gencrl' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
   command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} -gencrl " \
           "-keyfile #{key_dir}/server.key " \
           "-cert #{key_dir}/server.crt " \
           "-out #{key_dir}/crl.pem"
-  not_if {
-    ::File.exist?("#{key_dir}/crl.pem") &&
-    ::File.mtime("#{key_dir}/crl.pem") >= renew_after.to_time &&
-    ::File.mtime("#{key_dir}/crl.pem") >= ::File.mtime("#{key_dir}/index.txt")
-  }
+  only_if do
+    crl = "#{key_dir}/crl.pem"
+    generate = false
+    if !::File.exist?(crl)
+      generate = true
+    else
+      crl_mtime = ::File.mtime(crl)
+      index_mtime = ::File.mtime("#{key_dir}/index.txt")
+      renew_after = ::Date.today - node['openvpn']['key']['crl_expire'] / 2
+      generate = true if crl_mtime < renew_after.to_time
+      generate = true if crl_mtime < index_mtime
+    end
+    generate
+  end
   action :run
 end
 
