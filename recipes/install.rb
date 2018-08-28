@@ -17,6 +17,7 @@
 # limitations under the License.
 
 include_recipe 'yum-epel' if platform_family?('rhel')
+include_recipe 'openvpn::apt-repo' if platform_family?('debian')
 
 if node['openvpn']['git_package'] == true
   package 'openvpn-git'
