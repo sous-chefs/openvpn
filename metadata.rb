@@ -16,5 +16,6 @@ supports 'fedora'
 supports 'redhat'
 supports 'ubuntu'
 
+# TODO: rm after chef_version '>= 14.0'
 depends 'sysctl', '>= 1.0'
 depends 'yum-epel'

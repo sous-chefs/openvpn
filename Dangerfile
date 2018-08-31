@@ -1,5 +1,8 @@
 # Reference: http://danger.systems/reference.html
 
+# Rubocop wants `fail` to be `raise`, but it has a different meaning in Danger
+# rubocop:disable Style/SignalException
+
 # A pull request summary is required. Add a description of the pull request purpose.
 # Add labels to the pull request in github to identify the type of change. https://help.github.com/articles/applying-labels-to-issues-and-pull-requests/
 # Changelog must be updated for each pull request.
