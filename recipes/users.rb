@@ -19,9 +19,9 @@
 
 def chef_solo_search_installed?
   klass = ::Search.const_get('Helper')
-  return klass.is_a?(Class)
+  klass.is_a?(Class)
 rescue NameError
-  return false
+  false
 end
 
 if node['openvpn']['use_databag']
