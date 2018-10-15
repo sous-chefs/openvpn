@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## unreleased
+
+- Add CircleCI & Danger
+
 ## v3.0.0
 
 - [Chef-13 compatibility](https://github.com/sous-chefs/openvpn/issues/102)
