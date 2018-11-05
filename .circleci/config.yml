@@ -11,3 +11,7 @@ workflows:
           context: Danger
       - kitchen/lint:
           name: lint
+      - kitchen/dokken:
+          name: server
+          suite: server
+          requires: [  danger, lint ]
