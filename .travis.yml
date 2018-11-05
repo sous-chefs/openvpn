@@ -28,6 +28,7 @@ before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(chef shell-init bash)"
   - chef --version
+  - /opt/chefdk/embedded/bin/chef gem install danger
 
 script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
@@ -36,3 +37,6 @@ matrix:
     - script:
       - chef exec delivery local all
       env: UNIT_AND_LINT=1
+    - script:
+      - /opt/chefdk/bin/chef exec danger
+      env: DANGER

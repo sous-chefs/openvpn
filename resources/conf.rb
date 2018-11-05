@@ -55,7 +55,6 @@ action :create do
           end
         end
       end
-      # rubocop:enable Metrics/MethodLength
     end
   end
 end

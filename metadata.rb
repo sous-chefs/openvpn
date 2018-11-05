@@ -7,7 +7,7 @@ description       'Installs and configures openvpn and includes rake tasks for m
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url        'https://github.com/sous-chefs/openvpn'
 issues_url        'https://github.com/sous-chefs/openvpn/issues'
-chef_version      '>= 12.7' if respond_to?(:chef_version)
+chef_version      '>= 12.9' if respond_to?(:chef_version)
 
 supports 'arch'
 supports 'centos'
