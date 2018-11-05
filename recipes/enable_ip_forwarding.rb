@@ -19,14 +19,17 @@
 if node['platform'] == 'freebsd'
   sysctl_param 'net.inet.ip.forwarding' do
     value 1
+    ignore_error true
   end
 else
   sysctl_param 'net.ipv4.conf.all.forwarding' do
     value 1
+    ignore_error true
   end
 
   sysctl_param 'net.ipv6.conf.all.forwarding' do
     value 1
+    ignore_error true
     only_if { Dir.exist? '/proc/sys/net/ipv6' }
   end
 end
