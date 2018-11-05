@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the openvpn cookbook.
 ## unreleased
 
 - Add CircleCI & Danger
+- Add user removal support
 
 ## v3.0.0
 
