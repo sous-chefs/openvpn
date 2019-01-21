@@ -20,10 +20,8 @@
 # FreeBSD typically uses the 'wheel' group, no 'root' group exists;
 # the service from the package uses /usr/local prefix
 if node['platform'] == 'freebsd'
-  default['openvpn']['root_group'] = 'wheel'
   default['openvpn']['fs_prefix'] = '/usr/local'
 else
-  default['openvpn']['root_group'] = 'root'
   default['openvpn']['fs_prefix'] = ''
 end
 
