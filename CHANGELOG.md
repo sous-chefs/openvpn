@@ -2,15 +2,16 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
-## unreleased
+## v4.0.0 (Jan 21, 2019)
 
-- Add CircleCI & Danger
 - Require Chef 13 or later
+- Resolve compatibility with Chef 14
 - Add Ubuntu 18.04 testing and remove Ubuntu 14.04
 - Removes the dependency on the apt cookbook
 - Added a new openvpn_user resource for setting up users
 - Setup the official openvpn repo when on the debian platform_family
 - Add a new attribute `default['openvpn']['use_databag']` to control setting up users from databag entries
+- Add CircleCI & Danger testing
 
 ## v3.0.0
 
