@@ -35,14 +35,14 @@ message_digest = node['openvpn']['key']['message_digest']
 
 directory key_dir do
   owner 'root'
-  group node['openvpn']['root_group']
+  group node['root_group']
   recursive true
   mode  '0700'
 end
 
 directory [node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa'].join do
   owner 'root'
-  group node['openvpn']['root_group']
+  group node['root_group']
   mode  '0755'
 end
 
@@ -50,7 +50,7 @@ end
   template [node['openvpn']['fs_prefix'], "/etc/openvpn/easy-rsa/#{f}"].join do
     source "#{f}.erb"
     owner 'root'
-    group node['openvpn']['root_group']
+    group node['root_group']
     mode  '0755'
   end
 end
@@ -58,27 +58,27 @@ end
 template [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.sh'].join do
   source 'server.up.sh.erb'
   owner 'root'
-  group node['openvpn']['root_group']
+  group node['root_group']
   mode  '0755'
   notifies :restart, 'service[openvpn]'
 end
 
 directory [node['openvpn']['fs_prefix'], '/etc/openvpn/server.up.d'].join do
   owner 'root'
-  group node['openvpn']['root_group']
+  group node['root_group']
   mode  '0755'
 end
 
 template "#{key_dir}/openssl.cnf" do
   source 'openssl.cnf.erb'
   owner 'root'
-  group node['openvpn']['root_group']
+  group node['root_group']
   mode  '0644'
 end
 
 file "#{key_dir}/index.txt" do
   owner 'root'
-  group node['openvpn']['root_group']
+  group node['root_group']
   mode  '0600'
   action :create
 end
@@ -93,7 +93,7 @@ require 'openssl'
 file node['openvpn']['config']['dh'] do
   content lazy { OpenSSL::PKey::DH.new(key_size).to_s }
   owner   'root'
-  group   node['openvpn']['root_group']
+  group   node['root_group']
   mode    '0600'
   not_if  { ::File.exist?(node['openvpn']['config']['dh']) }
 end
@@ -129,7 +129,7 @@ end
     # Just fixes permissions.
     action :create
     owner 'root'
-    group node['openvpn']['root_group']
+    group node['root_group']
     mode '0600'
   end
 end

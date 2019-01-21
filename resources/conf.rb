@@ -33,7 +33,7 @@ action :create do
     cookbook new_resource.cookbook
     source template_source
     owner 'root'
-    group node['openvpn']['root_group']
+    group node['root_group']
     mode '644'
     variables(
       config: new_resource.config || node['openvpn']['config'],
