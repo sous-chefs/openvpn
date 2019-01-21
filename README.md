@@ -15,7 +15,7 @@ Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very
 - Fedora
 - OpenSUSE 42+ (partial support/WIP)
 - Arch Linux
-- FreeBSD 10+ (partial support/WIP)
+- FreeBSD 11+ (partial support/WIP)
 
 Note: we currently only test the latest minor release for the last 2 major releases of each OS/distribution using Test Kitchen.
 
