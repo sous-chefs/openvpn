@@ -1,66 +1,36 @@
 ---
 driver:
-  name: dokken
-  privileged: true  # because Docker and SystemD/Upstart
-  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
-
-transport:
-  name: dokken
-  require_chef_omnibus: <%= ENV['CHEF_VERSION'] || 'latest' %>
+   name: vagrant
 
 provisioner:
-  name: dokken
+  name: chef_solo
+  product_name: chef
+  enforce_idempotency: true
+  multiple_converge: 2
+  solo_rb:
+    treat_deprecation_warnings_as_errors: true
 
 verifier:
   name: inspec
-  deprecations_as_errors: true
+
+platforms:
+  - name: centos-6
+  - name: centos-7
+  - name: debian-8
+  - name: debian-9
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
+
 
 # currently only support 2 last major revs of distros (at the most)
 platforms:
-  - name: debian-8
-    driver:
-      image: dokken/debian-8
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
-  - name: debian-9
-    driver:
-      image: dokken/debian-9
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
+  - name: centos-6
   - name: centos-7
-    driver:
-      image: dokken/centos-7
-      pid_one_command: /usr/lib/systemd/systemd
-
-  - name: fedora-latest
-    driver:
-      image: dokken/fedora-latest
-      pid_one_command: /usr/lib/systemd/systemd
-
-  - name: ubuntu-14.04
-    driver:
-      image: dokken/ubuntu-14.04
-      pid_one_command: /sbin/init
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
+  - name: debian-8
+  - name: debian-9
   - name: ubuntu-16.04
-    driver:
-      image: dokken/ubuntu-16.04
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
   - name: ubuntu-18.04
-    driver:
-      image: dokken/ubuntu-18.04
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
+  - name: fedora-latest
 
 suites:
   - name: server

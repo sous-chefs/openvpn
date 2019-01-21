@@ -11,3 +11,15 @@ workflows:
           context: Danger
       - kitchen/lint:
           name: lint
+      - kitchen/dokken:
+          name: server
+          suite: server
+          requires: [ lint, danger ]
+      - kitchen/dokken:
+          name: server_verification
+          suite: server_verification
+          requires: [ lint, danger ]
+      - kitchen/dokken:
+          name: server_verify_no_databag
+          suite: server_verify_no_databag
+          requires: [ lint, danger ]
