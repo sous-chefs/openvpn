@@ -182,12 +182,17 @@ To automatically create new certificates and configurations for users, create da
 
 This cookbook also provides an 'up' script that runs when OpenVPN is started. This script is for setting up firewall rules and kernel networking parameters as needed for your environment. Modify to suit your needs, upload the cookbook and re-run chef on the openvpn server. For example, you'll probably want to enable IP forwarding (sample Linux setting is commented out). The attribute `node['openvpn']["script_security"]` must be set to 2 or higher to use this otherwise openvpn server startup will fail.
 
-Resources
----------
+## Resources
 
-openvpn_user
-============
+### openvpn_user
+
 Implements a resource for creation of users and bundles.
+
+### openvpn_config
+
+Given a hash of config options it writes out individual openvpn config files.
+
+If you don't want to use the default "server.conf" from the default recipe, set `node['openvpn']["configure_default_server"]` to false, then use this resource to configure things as you like.
 
 ## Customizing Server Configuration
 
@@ -197,10 +202,6 @@ To further customize the server configuration, there are two templates that can 
 - templates/default/server.up.sh.erb
 
 The first is the OpenVPN server configuration file. Modify to suit your needs for more advanced features of [OpenVPN](http://openvpn.net). The second is an `up` script run when OpenVPN starts. This is where you can add firewall rules, enable IP forwarding and other OS network settings required for OpenVPN. Attributes in the cookbook are provided as defaults, you can add more via the openvpn role if you need them.
-
-## Using the LWRP
-
-To create (possibly multiple) "conf" files on a server, use openvpn_conf "name". See the conf.rb file in the resources directory to find the supported attributes, or add some of your own. If you don't want to use the default "server.conf" from the default recipe, set `node['openvpn']["configure_default_server"]` to false, then use the LWRP to configure as many as you like.
 
 ## SSL Certificates
 
