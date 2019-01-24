@@ -1,0 +1,69 @@
+---
+driver:
+   name: vagrant
+
+provisioner:
+  name: chef_solo
+  product_name: chef
+  enforce_idempotency: true
+  multiple_converge: 2
+  solo_rb:
+    treat_deprecation_warnings_as_errors: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-6
+  - name: centos-7
+  - name: debian-8
+  - name: debian-9
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
+
+
+# currently only support 2 last major revs of distros (at the most)
+platforms:
+  - name: centos-6
+  - name: centos-7
+  - name: debian-8
+  - name: debian-9
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
+  - name: fedora-latest
+
+suites:
+  - name: server
+    run_list:
+      - recipe[openvpn::server]
+    attributes:
+      openvpn:
+        config:
+          verb: 1
+          mute: 10
+          route:
+            - '192.168.4.0 255.255.255.0'
+        push_routes:
+          - 192.168.10.0 255.255.255.0
+          - 10.12.10.0 255.255.255.0
+        push_options:
+          dhcp-option:
+            - 'DOMAIN local'
+            - 'DOMAIN-SEARCH local'
+  - name: server_verification
+    run_list:
+      - recipe[openvpn::server]
+      - recipe[openvpn::users]
+    attributes:
+      openvpn:
+        server_verification: "remote-cert-tls server"
+    includes: ubuntu-16.04
+  - name: server_verify_no_databag
+    run_list:
+      - recipe[openvpn::server]
+      - recipe[openvpn::users]
+    attributes:
+      openvpn:
+        server_verification: "remote-cert-tls server"
+        use_databag: false
+    includes: ubuntu-16.04
