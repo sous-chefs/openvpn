@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## unreleased
+
+- Add integration testing on CircleCI
+
 ## v4.0.0 (Jan 21, 2019)
 
 - Require Chef 13 or later
