@@ -64,7 +64,13 @@ default['openvpn']['server_verification']       = nil
 
 # Server specific
 # client 'push routes', attribute is treated as a helper
-default['openvpn']['push_routes'] = []
+default['openvpn']['push_routes'] = [
+  '192.168.10.0 255.255.255.0',
+  '10.12.10.0 255.255.255.0',
+  ]
+  default['openvpn']['route'] = [
+    '192.168.4.0 255.255.255.0'
+    ]
 
 # client 'push options', attribute is treated as a helper
 default['openvpn']['push_options'] = []
@@ -109,3 +115,9 @@ when 'server'
 when 'server-bridge'
   default['openvpn']['config']['dev'] = 'tap0'
 end
+default['openvpn']['config']['verb'] = 1
+default['openvpn']['config']['mute'] = 10
+default['openvpn']['config']['dhcp-option'] = [
+  'DOMAIN local',
+  'DOMAIN-SEARCH local',
+]
