@@ -27,11 +27,6 @@ workflows:
           platform: centos-7
           requires: [  danger, lint ]
       - kitchen/dokken-single:
-          name: server-amazonlinux-2
-          suite: server
-          platform: amazonlinux-2
-          requires: [  danger, lint ]
-      - kitchen/dokken-single:
           name: server-ubuntu-1604
           suite: server
           platform: ubuntu-1604
@@ -57,11 +52,6 @@ workflows:
           platform: centos-7
           requires: [  danger, lint ]
       - kitchen/dokken-single:
-          name: server-verify-no-databag-amazonlinux-2
-          suite: server-verify-no-databag
-          platform: amazonlinux-2
-          requires: [  danger, lint ]
-      - kitchen/dokken-single:
           name: server-verify-no-databag-ubuntu-1604
           suite: server-verify-no-databag
           platform: ubuntu-1604
@@ -85,11 +75,6 @@ workflows:
           name: server-verification-centos-7
           suite: server-verification
           platform: centos-7
-          requires: [  danger, lint ]
-      - kitchen/dokken-single:
-          name: server-verification-amazonlinux-2
-          suite: server-verification
-          platform: amazonlinux-2
           requires: [  danger, lint ]
       - kitchen/dokken-single:
           name: server-verification-ubuntu-1604

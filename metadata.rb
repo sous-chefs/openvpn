@@ -15,7 +15,6 @@ supports 'debian'
 supports 'redhat'
 supports 'ubuntu'
 supports 'oracle'
-supports 'amazon'
 
 depends 'sysctl', '>= 1.0'
 depends 'yum-epel'
