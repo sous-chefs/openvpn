@@ -11,15 +11,93 @@ workflows:
           context: Danger
       - kitchen/lint:
           name: lint
-      - kitchen/dokken:
-          name: server-suite
+      - kitchen/dokken-single:
+          name: server-debian-8
           suite: server
-          requires: [ lint, danger ]
-      - kitchen/dokken:
-          name: server-verify-no-databag-suite
+          platform: debian-8
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-debian-9
+          suite: server
+          platform: debian-9
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-centos-7
+          suite: server
+          platform: centos-7
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-amazonlinux-2
+          suite: server
+          platform: amazonlinux-2
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-ubuntu-1604
+          suite: server
+          platform: ubuntu-1604
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-ubuntu-1804
+          suite: server
+          platform: ubuntu-1804
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-debian-8
           suite: server-verify-no-databag
-          requires: [ lint, danger ]
-      - kitchen/dokken:
-          name: server-verification-suite
+          platform: debian-8
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-debian-9
+          suite: server-verify-no-databag
+          platform: debian-9
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-centos-7
+          suite: server-verify-no-databag
+          platform: centos-7
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-amazonlinux-2
+          suite: server-verify-no-databag
+          platform: amazonlinux-2
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-ubuntu-1604
+          suite: server-verify-no-databag
+          platform: ubuntu-1604
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-ubuntu-1804
+          suite: server-verify-no-databag
+          platform: ubuntu-1804
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verification-debian-8
           suite: server-verification
-          requires: [ lint, danger ]
+          platform: debian-8
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verification-debian-9
+          suite: server-verification
+          platform: debian-9
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verification-centos-7
+          suite: server-verification
+          platform: centos-7
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verification-amazonlinux-2
+          suite: server-verification
+          platform: amazonlinux-2
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verification-ubuntu-1604
+          suite: server-verification
+          platform: ubuntu-1604
+          requires: [  danger, lint ]
+      - kitchen/dokken-single:
+          name: server-verification-ubuntu-1804
+          suite: server-verification
+          platform: ubuntu-1804
+          requires: [  danger, lint ]
