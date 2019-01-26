@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## unreleased
+
+- Moved testing to circleci
+- dropped support for fedora
+- added support for amazon linux 2
+
 ## v4.0.0 (Jan 21, 2019)
 
 - Require Chef 13 or later
