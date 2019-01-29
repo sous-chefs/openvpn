@@ -1,6 +1,7 @@
 # openvpn Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/openvpn.svg?branch=master)](https://travis-ci.org/sous-chefs/openvpn) [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn) [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
+[![Build Status](https://img.shields.io/circleci/project/github/sous-chefs/openvpn/master.svg)](https://circleci.com/gh/sous-chefs/openvpn)
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see **Customizing Server Configuration** below).
 
