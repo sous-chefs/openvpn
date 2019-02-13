@@ -1,7 +1,8 @@
+---
 version: 2.1
 
 orbs:
-  kitchen: sous-chefs/kitchen@1.0.0
+  kitchen: sous-chefs/kitchen@1.0.1
 
 workflows:
   kitchen:
@@ -11,35 +12,9 @@ workflows:
           context: Danger
       - kitchen/lint:
           name: lint
-      - kitchen/dokken-single:
-          name: server-debian-8
+      - kitchen/dokken:
+          name: server
           suite: server
-          platform: debian-8
-          requires: [danger, lint]
-      - kitchen/dokken-single:
-          name: server-debian-9
-          suite: server
-          platform: debian-9
-          requires: [danger, lint]
-      - kitchen/dokken-single:
-          name: server-centos-7
-          suite: server
-          platform: centos-7
-          requires: [danger, lint]
-      - kitchen/dokken-single:
-          name: server-fedora-latest
-          suite: server
-          platform: fedora-latest
-          requires: [danger, lint]
-      - kitchen/dokken-single:
-          name: server-ubuntu-1604
-          suite: server
-          platform: ubuntu-1604
-          requires: [danger, lint]
-      - kitchen/dokken-single:
-          name: server-ubuntu-1804
-          suite: server
-          platform: ubuntu-1804
           requires: [danger, lint]
       - kitchen/dokken-single:
           name: server-verify-no-databag-ubuntu-1604
