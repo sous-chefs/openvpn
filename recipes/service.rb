@@ -20,7 +20,7 @@ include_recipe 'openvpn::install'
 
 # systemd platforms use an instance service
 case node['platform_family']
-when 'rhel'
+when 'rhel', 'amazon'
   if node['platform_version'] >= '7'
     link "/etc/systemd/system/multi-user.target.wants/openvpn@#{node['openvpn']['type']}.service" do
       to '/usr/lib/systemd/system/openvpn@.service'
