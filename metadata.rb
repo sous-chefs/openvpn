@@ -16,5 +16,4 @@ supports 'fedora'
 supports 'redhat'
 supports 'ubuntu'
 
-depends 'sysctl', '>= 1.0'
 depends 'yum-epel'
