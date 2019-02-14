@@ -1,7 +1,7 @@
 ---
 driver:
   name: dokken
-  privileged: false
+  privileged: true # needed for sysctl changes
 
 transport:
   name: dokken
@@ -38,6 +38,8 @@ platforms:
   driver:
     image: dokken/centos-6
     pid_one_command: /sbin/init
+    intermediate_instructions:
+      - RUN cp /bin/true /sbin/agetty
 
 - name: centos-7
   driver:
