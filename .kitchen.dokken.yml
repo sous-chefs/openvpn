@@ -1,7 +1,7 @@
 ---
 driver:
   name: dokken
-  privileged: true
+  privileged: false
 
 transport:
   name: dokken
