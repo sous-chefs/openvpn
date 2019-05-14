@@ -1,4 +1,3 @@
-
 %w(
   /etc/openvpn/easy-rsa/Rakefile
   /etc/openvpn/keys/vpn-prod-vpn_user.conf

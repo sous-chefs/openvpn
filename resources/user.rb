@@ -27,17 +27,17 @@ action :create do
     command "./pkitool #{new_resource.client_name}"
     cwd '/etc/openvpn/easy-rsa'
     environment(
-      'EASY_RSA'     => '/etc/openvpn/easy-rsa',
-      'KEY_CONFIG'   => '/etc/openvpn/easy-rsa/openssl.cnf',
-      'KEY_DIR'      => key_dir,
-      'CA_EXPIRE'    => node['openvpn']['key']['ca_expire'].to_s,
-      'KEY_EXPIRE'   => node['openvpn']['key']['expire'].to_s,
-      'KEY_SIZE'     => node['openvpn']['key']['size'].to_s,
-      'KEY_COUNTRY'  => node['openvpn']['key']['country'],
+      'EASY_RSA' => '/etc/openvpn/easy-rsa',
+      'KEY_CONFIG' => '/etc/openvpn/easy-rsa/openssl.cnf',
+      'KEY_DIR' => key_dir,
+      'CA_EXPIRE' => node['openvpn']['key']['ca_expire'].to_s,
+      'KEY_EXPIRE' => node['openvpn']['key']['expire'].to_s,
+      'KEY_SIZE' => node['openvpn']['key']['size'].to_s,
+      'KEY_COUNTRY' => node['openvpn']['key']['country'],
       'KEY_PROVINCE' => node['openvpn']['key']['province'],
-      'KEY_CITY'     => node['openvpn']['key']['city'],
-      'KEY_ORG'      => node['openvpn']['key']['org'],
-      'KEY_EMAIL'    => node['openvpn']['key']['email']
+      'KEY_CITY' => node['openvpn']['key']['city'],
+      'KEY_ORG' => node['openvpn']['key']['org'],
+      'KEY_EMAIL' => node['openvpn']['key']['email']
     )
     creates cert_path unless new_resource.force
   end
