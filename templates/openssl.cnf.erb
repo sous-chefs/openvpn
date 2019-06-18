@@ -25,6 +25,7 @@ default_crl_days	= <%= node['openvpn']['key']['crl_expire'] %>
 default_md	= md5
 preserve	= no
 policy		= policy_anything
+unique_subject	= no
 [ policy_match ]
 countryName		= match
 stateOrProvinceName	= match
