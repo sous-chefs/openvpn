@@ -136,7 +136,9 @@ end
 
 execute 'gencrl' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
-  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} -gencrl " \
+  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} " \
+          '-gencrl ' \
+          '-crlexts crl_ext ' \
           "-keyfile #{key_dir}/ca.key " \
           "-cert #{key_dir}/ca.crt " \
           "-out #{key_dir}/crl.pem"

@@ -39,7 +39,9 @@ describe 'openvpn::server' do
     it 'executes gencrl with correction parameters' do
       expect(chef_run).to run_execute('gencrl').with(
         environment: { 'KEY_CN' => 'Fort Funston CA' },
-        command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl ' \
+        command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf ' \
+                 '-gencrl ' \
+                 '-crlexts crl_ext ' \
                  '-keyfile /etc/openvpn/keys/ca.key ' \
                  '-cert /etc/openvpn/keys/ca.crt ' \
                  '-out /etc/openvpn/keys/crl.pem'
