@@ -14,6 +14,10 @@ describe 'openvpn::server' do
       end.converge(described_recipe)
     end
 
+    before do
+      allow(::File).to receive(:mtime).with('/etc/openvpn/keys/index.txt').and_return(Time.now - 31 * 60 * 24)
+    end
+
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
