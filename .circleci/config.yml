@@ -1,53 +1,65 @@
+---
+lint_and_unit: &lint_and_unit
+  - delivery
+  - danger
+  - lint-yaml
+  - lint-markdown
+
 version: 2.1
 
 orbs:
-  kitchen: sous-chefs/kitchen@1.0.0
+  kitchen: sous-chefs/kitchen@2
 
 workflows:
   kitchen:
     jobs:
+      # Lint and Unit Test
+      - kitchen/yamllint:
+          name: lint-yaml
+      - kitchen/mdlint:
+          name: lint-markdown
       - kitchen/danger:
           name: danger
           context: Danger
-      - kitchen/lint:
-          name: lint
+      - kitchen/delivery:
+          name: delivery
       - kitchen/dokken-single:
           name: server-debian-8
-          suite: server
-          platform: debian-8
-          requires: [danger, lint]
+          suite: server-debian-8
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-debian-9
-          suite: server
-          platform: debian-9
-          requires: [danger, lint]
+          suite: server-debian-9
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-centos-7
-          suite: server
-          platform: centos-7
-          requires: [danger, lint]
+          suite: server-centos-7
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-fedora-latest
-          suite: server
-          platform: fedora-latest
-          requires: [danger, lint]
+          suite: server-fedora-latest
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-ubuntu-1604
-          suite: server
-          platform: ubuntu-1604
-          requires: [danger, lint]
+          suite: server-ubuntu-1604
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-ubuntu-1804
-          suite: server
-          platform: ubuntu-1804
-          requires: [danger, lint]
+          suite: server-ubuntu-1804
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-verify-no-databag-ubuntu-1604
-          suite: server-verify-no-databag
-          platform: ubuntu-1604
-          requires: [danger, lint]
+          suite: server-verify-no-databag-ubuntu-1604
+          requires:
+            *lint_and_unit
       - kitchen/dokken-single:
           name: server-verification-ubuntu-1604
-          suite: server-verification
-          platform: ubuntu-1604
-          requires: [danger, lint]
+          suite: server-verification-ubuntu-1604
+          requires:
+            *lint_and_unit
