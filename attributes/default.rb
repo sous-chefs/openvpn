@@ -35,6 +35,7 @@ default['openvpn']['git_package'] = false
 # Used by helper library to generate certificates/keys
 default['openvpn']['key']['ca_expire']      = 3650
 default['openvpn']['key']['expire']         = 3650
+default['openvpn']['key']['crl_expire']     = 30
 default['openvpn']['key']['size']           = 2048
 default['openvpn']['key']['country']        = 'US'
 default['openvpn']['key']['province']       = 'CA'

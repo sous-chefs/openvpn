@@ -88,6 +88,11 @@ The following lets you specify the message digest used for generating certificat
 
 - `node['openvpn']['key']['message_digest']` - Default is `sha256` for a high-level of security.
 
+The CRL will be generated, and refreshed automatically, allowing you to
+revoke certificates
+
+- `node['openvpn']['key']['crl_expire']` - In how many days should the CRL expire? Will be refreshed after half of this time
+
 ## Recipes
 
 ### `openvpn::default`
