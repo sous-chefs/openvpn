@@ -142,7 +142,7 @@ execute 'gencrl' do
           "-md #{node['openvpn']['key']['message_digest']} " \
           "-keyfile #{key_dir}/ca.key " \
           "-cert #{key_dir}/ca.crt " \
-          "-out #{key_dir}/crl.pem"
+          "> #{key_dir}/crl.pem"
   only_if do
     crl = "#{key_dir}/crl.pem"
     generate = false

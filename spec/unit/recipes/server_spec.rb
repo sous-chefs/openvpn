@@ -45,7 +45,7 @@ describe 'openvpn::server' do
                  '-md sha256 ' \
                  '-keyfile /etc/openvpn/keys/ca.key ' \
                  '-cert /etc/openvpn/keys/ca.crt ' \
-                 '-out /etc/openvpn/keys/crl.pem'
+                 '> /etc/openvpn/keys/crl.pem'
       )
     end
 
