@@ -8,6 +8,10 @@
 
 Installs OpenVPN and sets up a fairly basic configuration. Since OpenVPN is very complex, we provide a baseline only (see **Customizing Server Configuration** below).
 
+## Maintainers
+
+This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of Chef cookbook maintainers working together to maintain important cookbooks. If you’d like to know more please visit [sous-chefs.org](https://sous-chefs.org/) or come chat with us on the Chef Community Slack in [#sous-chefs](https://chefcommunity.slack.com/messages/C2V7B88SF).
+
 ## Requirements
 
 ### Platforms
@@ -83,6 +87,11 @@ The following are for the default values for fields place in the certificate fro
 The following lets you specify the message digest used for generating certificates by OpenVPN
 
 - `node['openvpn']['key']['message_digest']` - Default is `sha256` for a high-level of security.
+
+The CRL will be generated, and refreshed automatically, allowing you to
+revoke certificates
+
+- `node['openvpn']['key']['crl_expire']` - In how many days should the CRL expire? Will be refreshed after half of this time
 
 ## Recipes
 

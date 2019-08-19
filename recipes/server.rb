@@ -136,18 +136,34 @@ end
 
 execute 'gencrl' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
-  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} -gencrl " \
-          "-keyfile #{node['openvpn']['key_dir']}/server.key " \
-          "-cert #{node['openvpn']['key_dir']}/server.crt " \
-          "-out #{node['openvpn']['key_dir']}/crl.pem"
-  creates "#{node['openvpn']['key_dir']}/crl.pem"
-  action  :run
+  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} " \
+          '-gencrl ' \
+          '-crlexts crl_ext ' \
+          "-md #{node['openvpn']['key']['message_digest']} " \
+          "-keyfile #{key_dir}/ca.key " \
+          "-cert #{key_dir}/ca.crt " \
+          "-out #{key_dir}/crl.pem"
+  only_if do
+    crl = "#{key_dir}/crl.pem"
+    generate = false
+    if !::File.exist?(crl)
+      generate = true
+    else
+      crl_mtime = ::File.mtime(crl)
+      index_mtime = ::File.mtime("#{key_dir}/index.txt")
+      renew_after = ::Date.today - node['openvpn']['key']['crl_expire'] / 2
+      generate = true if crl_mtime < renew_after.to_time
+      generate = true if crl_mtime < index_mtime
+    end
+    generate
+  end
+  action :run
 end
 
 # Make a world readable copy of the CRL
 remote_file [node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join do
   mode   '644'
-  source "file://#{node['openvpn']['key_dir']}/crl.pem"
+  source "file://#{key_dir}/crl.pem"
 end
 
 # the FreeBSD service expects openvpn.conf
