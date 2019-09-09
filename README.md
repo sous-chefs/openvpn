@@ -29,7 +29,6 @@ Note: we currently only test the latest minor release for the last 2 major relea
 
 ### Cookbooks
 
-- sysctl
 - yum-epel
 
 ### Not Supported
