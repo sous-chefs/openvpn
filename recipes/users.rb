@@ -2,7 +2,7 @@
 # Cookbook:: openvpn
 # Recipe:: users
 #
-# Copyright:: 2010-2018, Chef Software, Inc.
+# Copyright:: 2010-2019, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,22 +17,10 @@
 # limitations under the License.
 #
 
-def chef_solo_search_installed?
-  klass = ::Search.const_get('Helper')
-  klass.is_a?(Class)
-rescue NameError
-  false
-end
-
 if node['openvpn']['use_databag']
-  if Chef::Config[:solo] && !chef_solo_search_installed?
-    Chef::Log.warn('This recipe uses search. Chef-Solo does not support search unless '\
-      'you install the chef-solo-search cookbook.')
-  else
-    search(node['openvpn']['user_databag'], node['openvpn']['user_query']) do |u|
-      openvpn_user u['id'] do
-        create_bundle true
-      end
+  search(node['openvpn']['user_databag'], node['openvpn']['user_query']) do |u|
+    openvpn_user u['id'] do
+      create_bundle true
     end
   end
 else
