@@ -16,19 +16,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if node['platform'] == 'freebsd'
-  sysctl_param 'net.inet.ip.forwarding' do
+if platform_family?('rhel')
+  sysctl 'net.inet.ip.forwarding' do
     value 1
   end
 else
-  sysctl_param 'net.ipv4.conf.all.forwarding' do
+  sysctl 'net.ipv4.conf.all.forwarding' do
     value 1
-    ignore_error true if node['platform_family'] == 'rhel'
+    ignore_error true if platform_family?('rhel')
   end
 
-  sysctl_param 'net.ipv6.conf.all.forwarding' do
+  sysctl 'net.ipv6.conf.all.forwarding' do
     value 1
     only_if { Dir.exist? '/proc/sys/net/ipv6' }
-    ignore_error true if node['platform_family'] == 'rhel'
+    ignore_error true if platform_family?('rhel')
   end
 end

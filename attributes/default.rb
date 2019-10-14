@@ -20,7 +20,7 @@
 # FreeBSD typically uses the 'wheel' group, no 'root' group exists;
 # the service from the package uses /usr/local prefix
 
-default['openvpn']['fs_prefix'] = if node['platform'] == 'freebsd'
+default['openvpn']['fs_prefix'] = if platform?('freebsd')
                                     '/usr/local'
                                   else
                                     ''
@@ -35,6 +35,7 @@ default['openvpn']['git_package'] = false
 # Used by helper library to generate certificates/keys
 default['openvpn']['key']['ca_expire']      = 3650
 default['openvpn']['key']['expire']         = 3650
+default['openvpn']['key']['crl_expire']     = 30
 default['openvpn']['key']['size']           = 2048
 default['openvpn']['key']['country']        = 'US'
 default['openvpn']['key']['province']       = 'CA'

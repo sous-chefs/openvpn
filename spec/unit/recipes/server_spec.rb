@@ -14,6 +14,10 @@ describe 'openvpn::server' do
       end.converge(described_recipe)
     end
 
+    before do
+      allow(::File).to receive(:mtime).with('/etc/openvpn/keys/index.txt').and_return(Time.now - 31 * 60 * 24)
+    end
+
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
@@ -35,11 +39,13 @@ describe 'openvpn::server' do
     it 'executes gencrl with correction parameters' do
       expect(chef_run).to run_execute('gencrl').with(
         environment: { 'KEY_CN' => 'Fort Funston CA' },
-        command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf -gencrl ' \
-                 '-keyfile /etc/openvpn/keys/server.key ' \
-                 '-cert /etc/openvpn/keys/server.crt ' \
-                 '-out /etc/openvpn/keys/crl.pem',
-        creates: '/etc/openvpn/keys/crl.pem'
+        command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf ' \
+                 '-gencrl ' \
+                 '-crlexts crl_ext ' \
+                 '-md sha256 ' \
+                 '-keyfile /etc/openvpn/keys/ca.key ' \
+                 '-cert /etc/openvpn/keys/ca.crt ' \
+                 '-out /etc/openvpn/keys/crl.pem'
       )
     end
 
