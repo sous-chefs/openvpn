@@ -40,10 +40,6 @@ workflows:
           suite: server-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: server-fedora-latest
-          suite: server-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: server-ubuntu-1604
           suite: server-ubuntu-1604
           requires: *lint_and_unit
@@ -64,7 +60,6 @@ workflows:
             - server-debian-8
             - server-debian-9
             - server-centos-7
-            - server-fedora-latest
             - server-ubuntu-1604
             - server-ubuntu-1804
             - server-verification-ubuntu-1604
