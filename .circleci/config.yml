@@ -1,19 +1,23 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
   - lint-yaml
   - lint-markdown
-
 version: 2.1
-
 orbs:
   kitchen: sous-chefs/kitchen@2
-
 workflows:
   kitchen:
     jobs:
-      # Lint and Unit Test
       - kitchen/yamllint:
           name: lint-yaml
       - kitchen/mdlint:
@@ -26,40 +30,37 @@ workflows:
       - kitchen/dokken-single:
           name: server-debian-8
           suite: server-debian-8
-          requires:
-            *lint_and_unit
+          requires: *lint_and_unit
       - kitchen/dokken-single:
           name: server-debian-9
           suite: server-debian-9
-          requires:
-            *lint_and_unit
+          requires: *lint_and_unit
       - kitchen/dokken-single:
           name: server-centos-7
           suite: server-centos-7
-          requires:
-            *lint_and_unit
-      - kitchen/dokken-single:
-          name: server-fedora-latest
-          suite: server-fedora-latest
-          requires:
-            *lint_and_unit
+          requires: *lint_and_unit
       - kitchen/dokken-single:
           name: server-ubuntu-1604
           suite: server-ubuntu-1604
-          requires:
-            *lint_and_unit
+          requires: *lint_and_unit
       - kitchen/dokken-single:
           name: server-ubuntu-1804
           suite: server-ubuntu-1804
-          requires:
-            *lint_and_unit
-      - kitchen/dokken-single:
-          name: server-verify-no-databag-ubuntu-1604
-          suite: server-verify-no-databag-ubuntu-1604
-          requires:
-            *lint_and_unit
+          requires: *lint_and_unit
       - kitchen/dokken-single:
           name: server-verification-ubuntu-1604
           suite: server-verification-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: server-verify-no-databag-ubuntu-1604
+          suite: server-verify-no-databag-ubuntu-1604
+          requires: *lint_and_unit
+      - final:
           requires:
-            *lint_and_unit
+            - server-debian-8
+            - server-debian-9
+            - server-centos-7
+            - server-ubuntu-1604
+            - server-ubuntu-1804
+            - server-verification-ubuntu-1604
+            - server-verify-no-databag-ubuntu-1604
