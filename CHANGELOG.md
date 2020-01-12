@@ -8,6 +8,7 @@ This file is used to list changes made in each version of the openvpn cookbook.
 - [Periodically refresh the CRL](https://github.com/sous-chefs/openvpn/pull/129)
   - Sign it with the correct certificate & algorithm. Use CRL v2.
 - [Disable `unique_subject` in the CA](https://github.com/sous-chefs/openvpn/pull/149)
+- Migrate to Actions for testing
 
 ## v4.0.0 (Jan 21, 2019)
 
