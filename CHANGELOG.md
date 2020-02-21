@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
-## unreleased
+## 5.0.0 (2020-02-21)
 
 - Add integration testing on CircleCI.
 - [Periodically refresh the CRL](https://github.com/sous-chefs/openvpn/pull/129)
@@ -14,7 +14,7 @@ This file is used to list changes made in each version of the openvpn cookbook.
 - Removed support for EOL Ubuntu and Debian releases
 - Removed the unused long_description field in metadata.rb
 
-## v4.0.0 (Jan 21, 2019)
+## v4.0.0 (2019-01-21)
 
 - Require Chef 13 or later
 - Resolve compatibility with Chef 14
