@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'openvpn::server' do
-  context 'When push_options & push_routes are set, on Ubuntu 14.04' do
+  context 'When push_options & push_routes are set, on Ubuntu' do
     cached(:chef_run) do
       ChefSpec::ServerRunner.new(step_into: ['openvpn_conf']) do |node|
         node.override['openvpn']['push_options'] = {

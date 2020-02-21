@@ -17,7 +17,7 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 ### Platforms
 
 - Debian 8+
-- Ubuntu 14.04+
+- Ubuntu 16.04+
 - RHEL 6.x and 7.x w/ (EPEL is enabled as required)
 - CentOS 6.x, 7.x
 - Fedora
@@ -29,7 +29,6 @@ Note: we currently only test the latest minor release for the last 2 major relea
 
 ### Cookbooks
 
-- sysctl
 - yum-epel
 
 ### Not Supported
@@ -117,7 +116,7 @@ Manages the OpenVPN system service (there is no need to use this recipe directly
 
 ### `openvpn::users`
 
-Utilizes a data bag called `users` to generate OpenVPN keys for each user. [chef-solo-search](https://github.com/edelight/chef-solo-search) is required in order to use this recipe with Chef-Solo, although it is not a dependency of this cookbook.
+Utilizes a data bag called `users` to generate OpenVPN keys for each user.
 
 ### `openvpn::easy_rsa`
 

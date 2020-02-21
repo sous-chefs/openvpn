@@ -2,7 +2,7 @@
 # Cookbook:: openvpn
 # Recipe:: service
 #
-# Copyright:: 2009-2018, Chef Software, Inc.
+# Copyright:: 2009-2019, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,16 +35,7 @@ when 'fedora'
   end
   service_name = "openvpn@#{node['openvpn']['type']}.service"
 when 'debian'
-  service_name = 'openvpn'
-  if platform?('debian')
-    if node['platform_version'] >= '8'
-      service_name = "openvpn@#{node['openvpn']['type']}.service"
-    end
-  elsif platform?('ubuntu')
-    if node['platform_version'] >= '15.04'
-      service_name = "openvpn@#{node['openvpn']['type']}.service"
-    end
-  end
+  service_name = "openvpn@#{node['openvpn']['type']}.service"
 when 'arch'
   if node['openvpn']['git_package']
     link "#{node['openvpn']['fs_prefix']}/etc/openvpn/#{node['openvpn']['type']}/#{node['openvpn']['type']}.conf" do

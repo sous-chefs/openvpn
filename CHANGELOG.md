@@ -9,6 +9,10 @@ This file is used to list changes made in each version of the openvpn cookbook.
   - Sign it with the correct certificate & algorithm. Use CRL v2.
 - [Disable `unique_subject` in the CA](https://github.com/sous-chefs/openvpn/pull/149)
 - Migrate to Actions for testing
+- Remove the depedency on the sysctl cookbook and instead require Chef Infra Client 14.0
+- Remove checks for Chef Solo / chef-solo-search in users recipe. Chef Solo supports search unless running in the EOL legacy mode
+- Removed support for EOL Ubuntu and Debian releases
+- Removed the unused long_description field in metadata.rb
 
 ## v4.0.0 (Jan 21, 2019)
 
