@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
+- Add CentOS 8 support
+
 ## 5.0.0 (2020-02-21)
 
 - Add integration testing on CircleCI.
