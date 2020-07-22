@@ -29,7 +29,13 @@ action :create do
                       "#{new_resource.name}.conf.erb"
                     end
 
-  template [node['openvpn']['fs_prefix'], "/etc/openvpn/#{new_resource.name}.conf"].join do
+  conf_location = if platform_family?('rhel') && node['platform_version'].to_i >= 8
+                    "/etc/openvpn/#{new_resource.name}/#{new_resource.name}.conf"
+                  else
+                    "/etc/openvpn/#{new_resource.name}.conf"
+                  end
+
+  template [node['openvpn']['fs_prefix'], "#{conf_location}"].join do
     cookbook new_resource.cookbook
     source template_source
     owner 'root'
@@ -60,7 +66,7 @@ action :create do
 end
 
 action :delete do
-  file [node['openvpn']['fs_prefix'], "/etc/openvpn/#{new_resource.name}.conf"].join do
+  file [node['openvpn']['fs_prefix'], "#{conf_location}"].join do
     action :delete
   end
 end

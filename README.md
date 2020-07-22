@@ -19,7 +19,7 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 - Debian 8+
 - Ubuntu 16.04+
 - RHEL 6.x and 7.x w/ (EPEL is enabled as required)
-- CentOS 6.x, 7.x
+- CentOS 6.x, 7.x, 8.x
 - Fedora
 - OpenSUSE 42+ (partial support/WIP)
 - Arch Linux
