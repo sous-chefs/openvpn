@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
+- Install tar package
+
 ## 5.1.0 (2020-07-22)
 
 - Add CentOS 8 support

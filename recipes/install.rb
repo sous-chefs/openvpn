@@ -24,3 +24,5 @@ if node['openvpn']['git_package'] == true
 else
   package 'openvpn'
 end
+
+package 'tar'
