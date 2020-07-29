@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
-## Unreleased
+## 5.1.1 (2020-07-29)
 
 - Install tar package
 
