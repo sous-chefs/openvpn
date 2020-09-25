@@ -5,6 +5,7 @@ if (os[:name] == 'redhat' && os[:release] >= '7') ||
    (os[:name] == 'centos' && os[:release] < '8') ||
    (os[:name] == 'debian' && os[:release] >= '8') ||
    (os[:name] == 'ubuntu' && os[:release] >= '15.04') ||
+   (os[:name] == 'amazon' && os[:release] >= '2') ||
    (os[:name] == 'fedora')
   describe service('openvpn@server') do
     it { is_expected.to be_enabled }

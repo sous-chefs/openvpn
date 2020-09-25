@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
+- Add support for Amazon Linux
+
 ## 5.1.2 (2020-10-09)
 
 - Install gpg package (fixes [#183](https://github.com/sous-chefs/openvpn/issues/183))
