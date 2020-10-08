@@ -7,7 +7,7 @@ apt_update 'all platforms' do
   action :nothing
 end
 
-apt_package 'gpg' do
+apt_package 'gnupg' do
   action :install
   notifies :update, 'apt_update[all platforms]', :before
 end
