@@ -40,6 +40,16 @@ when 'fedora'
     to '/usr/lib/systemd/system/openvpn@.service'
   end
   service_name = "openvpn@#{node['openvpn']['type']}.service"
+when 'amazon'
+  case node['platform_version'].to_i
+  when 2
+    link "/etc/systemd/system/multi-user.target.wants/openvpn@#{node['openvpn']['type']}.service" do
+      to '/usr/lib/systemd/system/openvpn@.service'
+    end
+    service_name = "openvpn@#{node['openvpn']['type']}.service"
+  else
+    service_name = 'openvpn'
+  end
 when 'debian'
   service_name = "openvpn@#{node['openvpn']['type']}.service"
 when 'arch'

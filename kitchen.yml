@@ -18,6 +18,11 @@ verifier:
 
 # currently only support 2 last major revs of distros (at the most)
 platforms:
+  - name: amazonlinux-2
+    driver:
+      image: dokken/amazonlinux-2
+      pid_one_command: /usr/lib/systemd/systemd
+
   - name: debian-8
     driver:
       image: dokken/debian-8
