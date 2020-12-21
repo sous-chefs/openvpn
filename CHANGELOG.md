@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
 ## 5.2.0 - *2020-12-21*
 
 - Add support for Amazon Linux
