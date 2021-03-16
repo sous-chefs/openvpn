@@ -206,6 +206,39 @@ Given a hash of config options it writes out individual openvpn config files.
 
 If you don't want to use the default "server.conf" from the default recipe, set `node['openvpn']["configure_default_server"]` to false, then use this resource to configure things as you like.
 
+#### Example
+
+.pem files should be provided before (e.g.: `cookbook_file`)
+
+```ruby
+openvpn_conf 'myvpn' do
+  config({
+    'client' => '',
+    'dev' => 'tun',
+    'proto' => 'tcp',
+    'remote' => '1.2.3.4 443',
+    'cipher' => 'AES-128-CBC',
+    'tls-cipher' => 'DHE-RSA-AES256-SHA',
+    'auth' => 'SHA1',
+    'nobind' => '',
+    'resolv-retry' => 'infinite',
+    'persist-key' => '',
+    'persist-tun' => '',
+    'ca' => "/etc/openvpn/myvpn/ca.pem",
+    'cert' => "/etc/openvpn/myvpn/cert.pem",
+    'key' => "/etc/openvpn/myvpn/key.pem",
+    'comp-lzo' => '',
+    'verb' => false,
+    'auth-user-pass' => "/etc/openvpn/myvpn/login.conf",
+  })
+end
+
+# for systemd based systems
+service 'openvpn@myvpn' do
+  action [:start, :enable]
+end
+```
+
 ## Customizing Server Configuration
 
 To further customize the server configuration, there are two templates that can be modified in this cookbook.
