@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
+- Fix openvpn_conf template handling
+
 ## 5.2.0 - *2020-12-21*
 
 - Add support for Amazon Linux

@@ -18,17 +18,11 @@
 
 property :cookbook, String, default: 'openvpn'
 property :config, Hash
+property :template_source, String, default: 'server.conf.erb'
 property :push_routes, Array
 property :push_options, Array
 
 action :create do
-  # FreeBSD service uses openvpn.conf
-  template_source = if new_resource.name == 'openvpn' || new_resource.name == 'server-bridge'
-                      'server.conf.erb'
-                    else
-                      "#{new_resource.name}.conf.erb"
-                    end
-
   conf_location = if platform_family?('rhel') && node['platform_version'].to_i >= 8
                     "/etc/openvpn/#{new_resource.name}/#{new_resource.name}.conf"
                   else
@@ -37,7 +31,7 @@ action :create do
 
   template [node['openvpn']['fs_prefix'], "#{conf_location}"].join do
     cookbook new_resource.cookbook
-    source template_source
+    source new_resource.template_source
     owner 'root'
     group node['root_group']
     mode '644'
