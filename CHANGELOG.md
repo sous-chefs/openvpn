@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
-## Unreleased
+## 5.3.0 - *2021-03-16*
 
 - Fix openvpn_conf template handling
 
