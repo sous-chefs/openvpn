@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
+- Make client config match server config (fixes [#189](https://github.com/sous-chefs/openvpn/issues/189))
+- Document usage of `openvpn_user` with examples for `additional_vars`
+
 ## 5.3.0 - *2021-03-16*
 
 - Fix openvpn_conf template handling
