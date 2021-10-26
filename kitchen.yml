@@ -11,6 +11,8 @@ transport:
 provisioner:
   name: dokken
   chef_license: accept-no-persist
+  enforce_idempotency: true 
+  multiple_converge: 2
 
 verifier:
   name: inspec
