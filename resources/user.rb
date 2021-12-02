@@ -8,6 +8,16 @@ property :create_bundle, [true, false], default: true
 property :force, [true, false]
 property :destination, String
 property :additional_vars, Hash, default: {}
+property :key_dir,   String, default: lazy { node['openvpn']['key_dir'] }
+property :ca_expire, String, default: lazy { node['openvpn']['key']['ca_expire'].to_s }
+property :key_expire, String, default: lazy { node['openvpn']['key']['expire'].to_s }
+property :key_size, String, default: lazy { node['openvpn']['key']['size'].to_s }
+property :key_country, String, default: lazy { node['openvpn']['key']['country'] }
+property :key_province, String, default: lazy { node['openvpn']['key']['province'] }
+property :key_city, String, default: lazy { node['openvpn']['key']['city'] }
+property :key_org, String, default: lazy { node['openvpn']['key']['org'] }
+property :key_email, String, default: lazy { node['openvpn']['key']['email'] }
+property :key_org_unit, String, default: "OpenVPN Server"
 
 unified_mode true
 
@@ -16,12 +26,11 @@ unified_mode true
 
 action :create do
   # Setup some variables
-  key_dir = node['openvpn']['key_dir']
-  cert_path = ::File.join(key_dir, "#{new_resource.client_name}.crt")
-  ca_cert_path = ::File.join(key_dir, 'ca.crt')
-  key_path = ::File.join(key_dir, "#{new_resource.client_name}.key")
+  cert_path = ::File.join(new_resource.key_dir, "#{new_resource.client_name}.crt")
+  ca_cert_path = ::File.join(new_resource.key_dir, 'ca.crt')
+  key_path = ::File.join(new_resource.key_dir, "#{new_resource.client_name}.key")
   client_file_basename = [node['openvpn']['client_prefix'], new_resource.client_name].join('-')
-  destination_path = ::File.expand_path(new_resource.destination || key_dir)
+  destination_path = ::File.expand_path(new_resource.destination || new_resource.key_dir)
   bundle_filename = "#{new_resource.client_name}.tar.gz"
   bundle_full_path = ::File.expand_path(::File.join(destination_path, bundle_filename))
 
@@ -31,15 +40,16 @@ action :create do
     environment(
       'EASY_RSA' => '/etc/openvpn/easy-rsa',
       'KEY_CONFIG' => '/etc/openvpn/easy-rsa/openssl.cnf',
-      'KEY_DIR' => key_dir,
-      'CA_EXPIRE' => node['openvpn']['key']['ca_expire'].to_s,
-      'KEY_EXPIRE' => node['openvpn']['key']['expire'].to_s,
-      'KEY_SIZE' => node['openvpn']['key']['size'].to_s,
-      'KEY_COUNTRY' => node['openvpn']['key']['country'],
-      'KEY_PROVINCE' => node['openvpn']['key']['province'],
-      'KEY_CITY' => node['openvpn']['key']['city'],
-      'KEY_ORG' => node['openvpn']['key']['org'],
-      'KEY_EMAIL' => node['openvpn']['key']['email']
+      'KEY_DIR' => new_resource.key_dir,
+      'CA_EXPIRE' => new_resource.ca_expire,
+      'KEY_EXPIRE' => new_resource.key_expire,
+      'KEY_SIZE' => new_resource.key_size,
+      'KEY_COUNTRY' => new_resource.key_country,
+      'KEY_PROVINCE' => new_resource.key_province,
+      'KEY_CITY' => new_resource.key_city,
+      'KEY_ORG' => new_resource.key_org,
+      'KEY_EMAIL' => new_resource.key_email,
+      'KEY_OU' => new_resource.key_org_unit
     )
     creates cert_path unless new_resource.force
     notifies :run, 'execute[gencrl]', :immediately

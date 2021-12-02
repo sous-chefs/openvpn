@@ -99,7 +99,16 @@ file node['openvpn']['config']['dh'] do
 end
 
 bash 'openvpn-initca' do
-  environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
+  environment(
+    'KEY_CN' => "#{node['openvpn']['key']['org']} CA",
+    'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
+    'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
+    'KEY_CITY' => "#{node['openvpn']['key']['city']}",
+    'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
+    'KEY_DIR' => "#{node['openvpn']['key_dir']}",
+    'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
+    'KEY_ORG' => "#{node['openvpn']['key']['org']}"
+  )
   code <<-EOF
     umask 077 && \
     openssl req -batch -days #{node['openvpn']['key']['ca_expire']} \
@@ -112,7 +121,16 @@ bash 'openvpn-initca' do
 end
 
 bash 'openvpn-server-key' do
-  environment('KEY_CN' => 'server')
+  environment(
+    'KEY_CN' => 'server',
+    'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
+    'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
+    'KEY_CITY' => "#{node['openvpn']['key']['city']}",
+    'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
+    'KEY_DIR' => "#{node['openvpn']['key_dir']}",
+    'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
+    'KEY_ORG' => "#{node['openvpn']['key']['org']}"
+  )
   code <<-EOF
     umask 077 && \
     openssl req -batch -days #{node['openvpn']['key']['expire']} \
@@ -137,7 +155,16 @@ end
 end
 
 execute 'gencrl' do
-  environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
+  environment(
+    'KEY_CN' => "#{node['openvpn']['key']['org']} CA",
+    'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
+    'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
+    'KEY_CITY' => "#{node['openvpn']['key']['city']}",
+    'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
+    'KEY_DIR' => "#{node['openvpn']['key_dir']}",
+    'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
+    'KEY_ORG' => "#{node['openvpn']['key']['org']}"
+  )
   command 'umask 077 && ' \
           "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} " \
           '-gencrl ' \
