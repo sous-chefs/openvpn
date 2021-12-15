@@ -12,14 +12,11 @@
 end
 
 describe file('/etc/openvpn/keys/vpn_user.crt') do
-  describe '#content' do
-    subject { super().content }
-    it { is_expected.to include 'C=CA' }
-    it { is_expected.to include 'ST=Ontario' }
-    it { is_expected.to include 'L=Ottawa' }
-    it { is_expected.to include 'O=Test Org' }
-    it { is_expected.to include 'OU=Test Org Unit' }
-    it { is_expected.to include 'CN=vpn_user/emailAddress=vpn_user@test.com' }
-    it { is_expected.to include 'Public-Key: (1024 bit)' }
-  end
+  its('content') { should match /C=CA/ }
+  its('content') { should match /ST=Ontario/ }
+  its('content') { should match /L=Ottawa/ }
+  its('content') { should match /O=Test Org/ }
+  its('content') { should match /OU=Test Org Unit/ }
+  its('content') { should match %r{CN=vpn_user/emailAddress=vpn_user@test.com} }
+  its('content') { should match /Public-Key: \(1024 bit\)/ }
 end
