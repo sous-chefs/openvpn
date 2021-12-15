@@ -108,7 +108,7 @@ bash 'openvpn-initca' do
     'KEY_DIR' => "#{node['openvpn']['key_dir']}",
     'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
     'KEY_ORG' => "#{node['openvpn']['key']['org']}",
-    'KEY_OU' => "OpenVPN Server"
+    'KEY_OU' => 'OpenVPN Server'
   )
   code <<-EOF
     umask 077 && \
@@ -131,7 +131,7 @@ bash 'openvpn-server-key' do
     'KEY_DIR' => "#{node['openvpn']['key_dir']}",
     'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
     'KEY_ORG' => "#{node['openvpn']['key']['org']}",
-    'KEY_OU' => "OpenVPN Server"
+    'KEY_OU' => 'OpenVPN Server'
   )
   code <<-EOF
     umask 077 && \
@@ -166,7 +166,7 @@ execute 'gencrl' do
     'KEY_DIR' => "#{node['openvpn']['key_dir']}",
     'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
     'KEY_ORG' => "#{node['openvpn']['key']['org']}",
-    'KEY_OU' => "OpenVPN Server"
+    'KEY_OU' => 'OpenVPN Server'
   )
   command 'umask 077 && ' \
           "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} " \

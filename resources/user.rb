@@ -17,7 +17,7 @@ property :key_province, String, default: lazy { node['openvpn']['key']['province
 property :key_city, String, default: lazy { node['openvpn']['key']['city'] }
 property :key_org, String, default: lazy { node['openvpn']['key']['org'] }
 property :key_email, String, default: lazy { node['openvpn']['key']['email'] }
-property :key_org_unit, String, default: "OpenVPN Server"
+property :key_org_unit, String, default: 'OpenVPN Server'
 
 unified_mode true
 
