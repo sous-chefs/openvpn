@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 - resolved cookstyle error: recipes/server.rb:88:3 refactor: `Chef/RedundantCode/UseCreateIfMissing`
 - resolved cookstyle error: recipes/server.rb:98:3 refactor: `Chef/RedundantCode/UseCreateIfMissing`
+
 ## 5.3.2 - *2021-08-30*
 
 - Standardise files with files in sous-chefs/repo-management
