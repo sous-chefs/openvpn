@@ -85,7 +85,7 @@ end
 
 file "#{key_dir}/serial" do
   content '01'
-  not_if { ::File.exist?("#{key_dir}/serial") }
+  action :create_if_missing
 end
 
 require 'openssl'
@@ -95,7 +95,7 @@ file node['openvpn']['config']['dh'] do
   owner   'root'
   group   node['root_group']
   mode    '0600'
-  not_if  { ::File.exist?(node['openvpn']['config']['dh']) }
+  action :create_if_missing
 end
 
 bash 'openvpn-initca' do
