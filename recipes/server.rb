@@ -98,51 +98,47 @@ file node['openvpn']['config']['dh'] do
   action :create_if_missing
 end
 
-bash 'openvpn-initca' do
+execute 'openvpn-initca' do
   environment(
     'KEY_CN' => "#{node['openvpn']['key']['org']} CA",
     'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
     'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
     'KEY_CITY' => "#{node['openvpn']['key']['city']}",
     'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
-    'KEY_DIR' => "#{node['openvpn']['key_dir']}",
+    'KEY_DIR' => '/etc/openvpn/keys',
     'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
     'KEY_ORG' => "#{node['openvpn']['key']['org']}",
     'KEY_OU' => 'OpenVPN Server'
   )
-  code <<-EOF
-    umask 077 && \
-    openssl req -batch -days #{node['openvpn']['key']['ca_expire']} \
-      -nodes -new -newkey rsa:#{key_size} -#{message_digest} -x509 \
-      -keyout #{node['openvpn']['signing_ca_key']} \
-      -out #{node['openvpn']['signing_ca_cert']} \
-      -config #{key_dir}/openssl.cnf
-  EOF
+  command 'umask 077 && ' \
+          "openssl req -batch -days #{node['openvpn']['key']['ca_expire']} " \
+          "-nodes -new -newkey rsa:#{key_size} -#{message_digest} -x509 " \
+          "-keyout #{node['openvpn']['signing_ca_key']} " \
+          "-out #{node['openvpn']['signing_ca_cert']} " \
+          "-config #{key_dir}/openssl.cnf"
   not_if { ::File.exist?(node['openvpn']['signing_ca_cert']) }
 end
 
-bash 'openvpn-server-key' do
+execute 'openvpn-server-key' do
   environment(
     'KEY_CN' => 'server',
     'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
     'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
     'KEY_CITY' => "#{node['openvpn']['key']['city']}",
     'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
-    'KEY_DIR' => "#{node['openvpn']['key_dir']}",
+    'KEY_DIR' => '/etc/openvpn/keys',
     'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
     'KEY_ORG' => "#{node['openvpn']['key']['org']}",
     'KEY_OU' => 'OpenVPN Server'
   )
-  code <<-EOF
-    umask 077 && \
-    openssl req -batch -days #{node['openvpn']['key']['expire']} \
-      -nodes -new -newkey rsa:#{key_size} -keyout #{key_dir}/server.key \
-      -out #{key_dir}/server.csr -extensions server \
-      -config #{key_dir}/openssl.cnf && \
-    openssl ca -batch -days #{node['openvpn']['key']['ca_expire']} \
-      -out #{key_dir}/server.crt -in #{key_dir}/server.csr \
-      -extensions server -md #{message_digest} -config #{key_dir}/openssl.cnf
-  EOF
+  command 'umask 077 && ' \
+          "openssl req -batch -days #{node['openvpn']['key']['expire']} " \
+          "-nodes -new -newkey rsa:#{key_size} -keyout #{key_dir}/server.key " \
+          "-out #{key_dir}/server.csr -extensions server " \
+          "-config #{key_dir}/openssl.cnf && " \
+          "openssl ca -batch -days #{node['openvpn']['key']['ca_expire']} " \
+          "-out #{key_dir}/server.crt -in #{key_dir}/server.csr " \
+          "-extensions server -md #{message_digest} -config #{key_dir}/openssl.cnf"
   not_if { ::File.exist?("#{key_dir}/server.crt") }
 end
 
@@ -163,7 +159,7 @@ execute 'gencrl' do
     'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
     'KEY_CITY' => "#{node['openvpn']['key']['city']}",
     'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
-    'KEY_DIR' => "#{node['openvpn']['key_dir']}",
+    'KEY_DIR' => '/etc/openvpn/keys',
     'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
     'KEY_ORG' => "#{node['openvpn']['key']['org']}",
     'KEY_OU' => 'OpenVPN Server'

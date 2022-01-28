@@ -6,6 +6,5 @@
   "key_org":      "Test Org",
   "key_org_unit": "Test Org Unit",
   "key_email":    "vpn_user@test.com",
-  "key_size":     "1024",
-  "key_dir":      "/etc/openvpn/keys/"
+  "key_size":     "1024"
 }
