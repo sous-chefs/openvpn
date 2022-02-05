@@ -36,10 +36,10 @@ when 'rhel'
     service_name = 'openvpn'
   end
 when 'fedora'
-  link "/etc/systemd/system/multi-user.target.wants/openvpn@#{node['openvpn']['type']}.service" do
+  link "/etc/systemd/system/multi-user.target.wants/openvpn-#{node['openvpn']['type']}@#{node['openvpn']['type']}.service" do
     to '/usr/lib/systemd/system/openvpn@.service'
   end
-  service_name = "openvpn@#{node['openvpn']['type']}.service"
+  service_name = "openvpn-#{node['openvpn']['type']}@#{node['openvpn']['type']}.service"
 when 'amazon'
   case node['platform_version'].to_i
   when 2
