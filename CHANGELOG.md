@@ -7,6 +7,8 @@ This file is used to list changes made in each version of the openvpn cookbook.
 - Remove delivery and move to calling RSpec directly via a reusable workflow
 - Update tested platforms
 - Fix Fedora
+- Standardize kitchen settings
+- Enable unified_mode and require Chef >= 15.3
 
 ## 5.4.0 - *2022-01-18*
 

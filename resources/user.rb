@@ -9,6 +9,8 @@ property :force, [true, false]
 property :destination, String
 property :additional_vars, Hash, default: {}
 
+unified_mode true
+
 # TODO: this action will not recreate if the client configuration data has
 #       changed. Requires manual intervention.
 
