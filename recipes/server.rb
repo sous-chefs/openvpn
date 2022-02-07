@@ -101,6 +101,7 @@ end
 bash 'openvpn-initca' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
   code <<-EOF
+    umask 077 && \
     openssl req -batch -days #{node['openvpn']['key']['ca_expire']} \
       -nodes -new -newkey rsa:#{key_size} -#{message_digest} -x509 \
       -keyout #{node['openvpn']['signing_ca_key']} \
@@ -113,6 +114,7 @@ end
 bash 'openvpn-server-key' do
   environment('KEY_CN' => 'server')
   code <<-EOF
+    umask 077 && \
     openssl req -batch -days #{node['openvpn']['key']['expire']} \
       -nodes -new -newkey rsa:#{key_size} -keyout #{key_dir}/server.key \
       -out #{key_dir}/server.csr -extensions server \
@@ -136,7 +138,8 @@ end
 
 execute 'gencrl' do
   environment('KEY_CN' => "#{node['openvpn']['key']['org']} CA")
-  command "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} " \
+  command 'umask 077 && ' \
+          "openssl ca -config #{[node['openvpn']['fs_prefix'], '/etc/openvpn/easy-rsa/openssl.cnf'].join} " \
           '-gencrl ' \
           '-crlexts crl_ext ' \
           "-md #{node['openvpn']['key']['message_digest']} " \
@@ -158,6 +161,7 @@ execute 'gencrl' do
     generate
   end
   action :run
+  notifies :create, "remote_file[#{[node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join}]"
 end
 
 # Make a world readable copy of the CRL
