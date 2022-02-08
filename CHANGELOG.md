@@ -4,6 +4,15 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
+- Remove delivery and move to calling RSpec directly via a reusable workflow
+- Update tested platforms
+- Fix Fedora
+- Standardize kitchen settings
+- Enable unified_mode and require Chef >= 15.3
+- Fix various idempotency issues
+  - Set umask to 077 to match file permissions we expect
+  - Trigger various resources to run during first converge phase
+
 ## 5.4.0 - *2022-01-18*
 
 - resolved cookstyle error: recipes/server.rb:88:3 refactor: `Chef/RedundantCode/UseCreateIfMissing`

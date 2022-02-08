@@ -9,6 +9,8 @@ property :force, [true, false]
 property :destination, String
 property :additional_vars, Hash, default: {}
 
+unified_mode true
+
 # TODO: this action will not recreate if the client configuration data has
 #       changed. Requires manual intervention.
 
@@ -24,7 +26,7 @@ action :create do
   bundle_full_path = ::File.expand_path(::File.join(destination_path, bundle_filename))
 
   execute "generate-openvpn-#{new_resource.client_name}" do
-    command "./pkitool #{new_resource.client_name}"
+    command "umask 077 && ./pkitool #{new_resource.client_name}"
     cwd '/etc/openvpn/easy-rsa'
     environment(
       'EASY_RSA' => '/etc/openvpn/easy-rsa',
@@ -40,6 +42,8 @@ action :create do
       'KEY_EMAIL' => node['openvpn']['key']['email']
     )
     creates cert_path unless new_resource.force
+    notifies :run, 'execute[gencrl]', :immediately
+    notifies :create, "remote_file[#{[node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join}]", :immediately
   end
 
   cleanup_name = "cleanup-old-bundle-#{new_resource.client_name}"
@@ -83,7 +87,7 @@ action :create do
     cwd destination_path
     filelist = "ca.crt #{new_resource.client_name}.crt #{new_resource.client_name}.key #{client_file_basename}.ovpn"
     filelist += " #{client_file_basename}.conf" if new_resource.create_bundle
-    command "tar zcf #{bundle_filename} #{filelist}"
+    command "umask 077 && tar zcf #{bundle_filename} #{filelist}"
     creates bundle_full_path unless new_resource.force
   end
 end

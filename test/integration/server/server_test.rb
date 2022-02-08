@@ -1,17 +1,15 @@
 # this is done in a similar fashion to
 # https://github.com/xhost-cookbooks/openvpn/blob/master/recipes/service.rb
 
-if (os[:name] == 'redhat' && os[:release] >= '7') ||
-   (os[:name] == 'centos' && os[:release] < '8') ||
-   (os[:name] == 'debian' && os[:release] >= '8') ||
-   (os[:name] == 'ubuntu' && os[:release] >= '15.04') ||
-   (os[:name] == 'amazon' && os[:release] >= '2') ||
-   (os[:name] == 'fedora')
+if (os[:family] == 'redhat' && os[:release].to_i < 8) ||
+   (os[:name] == 'debian') ||
+   (os[:name] == 'ubuntu') ||
+   (os[:name] == 'amazon')
   describe service('openvpn@server') do
     it { is_expected.to be_enabled }
     it { is_expected.to be_running }
   end
-elsif os[:name] == 'centos' && os[:release] >= '8'
+elsif (os[:family] == 'redhat' && os[:release] >= '8') || os[:family] == 'fedora'
   describe service('openvpn-server@server') do
     it { is_expected.to be_enabled }
     it { is_expected.to be_running }
@@ -23,7 +21,7 @@ else
   end
 end
 
-conf_location = if os[:name] == 'centos' && os[:release] >= '8'
+conf_location = if (os[:family] == 'redhat' && os[:release] >= '8') || os[:family] == 'fedora'
                   '/etc/openvpn/server/server.conf'
                 else
                   '/etc/openvpn/server.conf'

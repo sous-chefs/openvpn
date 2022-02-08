@@ -10,6 +10,10 @@ transport:
 
 provisioner:
   name: dokken
+  enforce_idempotency: true
+  multiple_converge: 2
+  deprecations_as_errors: true
+  chef_log_level: <%= ENV['CHEF_LOG_LEVEL'] || 'auto' %>
   chef_license: accept-no-persist
 
 verifier:
@@ -18,40 +22,34 @@ verifier:
 
 # currently only support 2 last major revs of distros (at the most)
 platforms:
+  - name: almalinux-8
+    driver:
+      image: dokken/almalinux-8
+      pid_one_command: /usr/lib/systemd/systemd
+
   - name: amazonlinux-2
     driver:
       image: dokken/amazonlinux-2
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: debian-8
-    driver:
-      image: dokken/debian-8
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
-  - name: debian-9
-    driver:
-      image: dokken/debian-9
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
   - name: debian-10
     driver:
       image: dokken/debian-10
       pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
+
+  - name: debian-11
+    driver:
+      image: dokken/debian-11
+      pid_one_command: /bin/systemd
 
   - name: centos-7
     driver:
       image: dokken/centos-7
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: centos-8
+  - name: centos-stream-8
     driver:
-      image: dokken/centos-8
+      image: dokken/centos-stream-8
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: fedora-latest
@@ -59,19 +57,20 @@ platforms:
       image: dokken/fedora-latest
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: ubuntu-16.04
-    driver:
-      image: dokken/ubuntu-16.04
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-
   - name: ubuntu-18.04
     driver:
       image: dokken/ubuntu-18.04
       pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
+
+  - name: ubuntu-20.04
+    driver:
+      image: dokken/ubuntu-20.04
+      pid_one_command: /bin/systemd
+
+  - name: rockylinux-8
+    driver:
+      image: dokken/rockylinux-8
+      pid_one_command: /usr/lib/systemd/systemd
 
 suites:
   - name: server
