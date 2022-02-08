@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
 ## 6.0.0 - *2022-02-08*
 
 - Remove delivery and move to calling RSpec directly via a reusable workflow
