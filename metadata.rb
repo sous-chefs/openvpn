@@ -1,5 +1,5 @@
 name              'openvpn'
-version           '5.4.0'
+version           '6.0.0'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
 license           'Apache-2.0'
