@@ -12,7 +12,17 @@ resolv-retry infinite
 nobind
 persist-key
 persist-tun
-comp-lzo
+<% if @compression -%>
+compress <%= @compression %>
+<% end %>
+<% 
+%w(cipher tls-cipher auth keysize link-mtu).each do |conf| 
+  if node['openvpn']['config'][conf]
+%><%= "#{conf} #{node['openvpn']['config'][conf]}" %>
+<%
+  end
+end 
+-%>
 verb 3
 <ca>
 <%= @ca -%>

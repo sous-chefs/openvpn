@@ -15,8 +15,18 @@ persist-tun
 ca ca.crt
 cert <%= @client_cn %>.crt
 key <%= @client_cn %>.key
-comp-lzo
-verb 3
-<% if node['openvpn']['server_verification'] %>
-<%= node['openvpn']['server_verification'] %>
+<% if @compression -%>
+<%= @compression %>
 <% end %>
+<% 
+%w(cipher tls-cipher auth keysize link-mtu).each do |conf| 
+  if node['openvpn']['config'][conf]
+%><%= "#{conf} #{node['openvpn']['config'][conf]}" %>
+<%
+  end
+end 
+-%>
+verb 3
+<% if node['openvpn']['server_verification'] -%>
+<%= node['openvpn']['server_verification'] %>
+<% end -%>

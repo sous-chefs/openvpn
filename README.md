@@ -58,7 +58,7 @@ These attributes are set by the cookbook by default.
 - `node['openvpn']['configure_default_server']` - Boolean. Set this to false if you want to create all of your "conf" files with the LWRP.
 - `node['openvpn']['git_package']` - Boolean. Whether to use the `openvpn-git` package (Arch Linux only, default false).
 - `node['openvpn']['client_prefix']` - String. Name of the config that is created for clients. When imported into most vpn clients, this is the name that will be displayed for the connection. Default is 'vpn-prod'.
-- `node['openvpn']['cookbook_user_conf']` - String. The cookbook used by the `openvpn::users` recipe for the `client.conf.erb` template. You can override this to your own, such as your wrapper cookbook. Default is `'openvpn'`.
+- `node['openvpn']['cookbook_user_conf']` - String. The cookbook used by the `openvpn::users` recipe for the `client.conf.erb` template. You can override this to your own, such as your wrapper cookbook. Default is `'openvpn'`. See [Customizing user configuration](#customizing-user-configuration) under the [openvpn_user resource](#openvpn_user) section
 - `node['openvpn']['key_dir']` - Location to store keys, certificates and related files. Default `/etc/openvpn/keys`.
 - `node['openvpn']['signing_ca_cert']` - CA certificate for signing, default `/etc/openvpn/keys/ca.crt`
 - `node['openvpn']['signing_ca_key']` - CA key for signing, default `/etc/openvpn/keys/ca.key`
@@ -198,7 +198,54 @@ This cookbook also provides an 'up' script that runs when OpenVPN is started. Th
 
 ### openvpn_user
 
-Implements a resource for creation of users and bundles.
+Implements a resource for creation of users and bundles. User configuration will attempt to match the server configuration as best as possible,
+by matching node attributes like `node['openvpn']['config']['compress']` and `node['openvpn']['config']['cipher']`. Reasonable default configuration
+for the user bundle is specified otherwise.
+
+By default, an OpenVPN user _bundle_ is created, which is a gzipped TAR file (`.tgz` archive) containing the user configuration and the public/private
+keys. This is controlled by the `create_bundle` attribute of the `openvpn_user` resource; pass `create_bundle false` if you prefer to have inline `.ovpn`
+files created, containing the public and private keys all inside one OpenVPN config file.
+
+#### Customizing user configuration
+
+If the provided OpenVPN configuration does not meet your needs, either because you need different configuration directives, or you want to add directives which
+are not present, you can use the node attribute `node['openvpn']['cookbook_user_conf']` to look for the template files in a different cookbook, E.G. in your
+wrapper cookbook.
+
+If you only need _additional_ directives, you can use the `additional_vars` attribute of the `openvpn_user` resource to pass additional template variables to your
+custom template. This way, you can render the user configuration from this cookbook using a partial, and append (or prepend) your own config inside your template.
+
+#### Example
+
+Adding a 2FA via a hardware token
+
+`cookbooks/vpn_wrapper/recipes/user.rb`:
+
+```ruby
+override["openvpn"]["cookbook_user_conf"] => "vpn_wrapper"
+openvpn_user "VPN User Bundle" do
+  client_name "my_user"
+  additional_vars(
+    static_challenge: %{"Touch your hardware token now:" 0}
+  )
+end
+```
+
+`cookbooks/vpn_wrapper/templates/client.conf.erb`:
+
+```ruby
+<%= render "client.conf.erb", cookbook: "openvpn" %>
+auth-user-pass
+static-challenge <%= @static_challenge %>
+```
+
+`cookbooks/vpn_wrapper/templates/client-inline.conf.erb`:
+
+```ruby
+<%= render "client-inline.conf.erb", cookbook: "openvpn" %>
+auth-user-pass
+static-challenge <%= @static_challenge %>
+```
 
 ### openvpn_config
 
