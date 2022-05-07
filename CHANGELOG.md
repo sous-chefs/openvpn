@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
 ## 7.0.0 - *2022-05-07*
 
 - Remove comp-lzo as a default option
