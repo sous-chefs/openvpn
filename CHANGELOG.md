@@ -4,7 +4,11 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
-Standardise files with files in sous-chefs/repo-management
+- Standardise files with files in sous-chefs/repo-management
+
+## 7.0.0 - *2022-05-07*
+
+- Remove comp-lzo as a default option
 
 ## 6.1.0 - *2022-02-24*
 
