@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
+- Switch from mdl to markdownlint-cli2
+- Update workflows
+
 ## 7.0.5 - *2023-02-16*
 
 ## 7.0.4 - *2023-02-16*
