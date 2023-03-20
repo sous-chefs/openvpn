@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
+Standardise files with files in sous-chefs/repo-management
+
 ## 7.0.7 - *2023-03-15*
 
 Standardise files with files in sous-chefs/repo-management
