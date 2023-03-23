@@ -1,11 +1,11 @@
 name              'openvpn'
-version           '7.0.17'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
 license           'Apache-2.0'
 description       'Installs and configures openvpn and includes rake tasks for managing certs.'
 source_url        'https://github.com/sous-chefs/openvpn'
 issues_url        'https://github.com/sous-chefs/openvpn/issues'
+version           '7.0.17'
 chef_version      '>= 15.3'
 
 supports 'arch'
