@@ -10,15 +10,21 @@ name: ci
 jobs:
   lint-unit:
     uses: sous-chefs/.github/.github/workflows/lint-unit.yml@2.0.6
+    permissions:
+      actions: write
+      checks: write
+      pull-requests: write
+      statuses: write
+      issues: write
 
   integration:
-    needs: lint-unit
+    needs: "lint-unit"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os:
           - "almalinux-8"
-          - "amazonlinux-2"
+          - "amazonlinux-2023"
           - "centos-7"
           - "centos-stream-8"
           - "debian-10"

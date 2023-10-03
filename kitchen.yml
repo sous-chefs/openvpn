@@ -1,78 +1,29 @@
----
 driver:
-  name: dokken
-  privileged: true  # because Docker and SystemD/Upstart
-  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
-
-transport:
-  name: dokken
-  require_chef_omnibus: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  name: vagrant
 
 provisioner:
-  name: dokken
+  name: chef_infra
   enforce_idempotency: true
   multiple_converge: 2
   deprecations_as_errors: true
-  chef_log_level: <%= ENV['CHEF_LOG_LEVEL'] || 'auto' %>
   chef_license: accept-no-persist
   enforce_idempotency: true
   multiple_converge: 2
 
 verifier:
   name: inspec
-  deprecations_as_errors: true
 
-# currently only support 2 last major revs of distros (at the most)
 platforms:
-  - name: almalinux-8
-    driver:
-      image: dokken/almalinux-8
-      pid_one_command: /usr/lib/systemd/systemd
-
   - name: amazonlinux-2
-    driver:
-      image: dokken/amazonlinux-2
-      pid_one_command: /usr/lib/systemd/systemd
-
-  - name: debian-10
-    driver:
-      image: dokken/debian-10
-      pid_one_command: /bin/systemd
-
-  - name: debian-11
-    driver:
-      image: dokken/debian-11
-      pid_one_command: /bin/systemd
-
   - name: centos-7
-    driver:
-      image: dokken/centos-7
-      pid_one_command: /usr/lib/systemd/systemd
-
   - name: centos-stream-8
-    driver:
-      image: dokken/centos-stream-8
-      pid_one_command: /usr/lib/systemd/systemd
-
+  - name: debian-10
+  - name: debian-10
+  - name: freebsd-12
   - name: fedora-latest
-    driver:
-      image: dokken/fedora-latest
-      pid_one_command: /usr/lib/systemd/systemd
-
+  - name: opensuse-leap-15
   - name: ubuntu-18.04
-    driver:
-      image: dokken/ubuntu-18.04
-      pid_one_command: /bin/systemd
-
   - name: ubuntu-20.04
-    driver:
-      image: dokken/ubuntu-20.04
-      pid_one_command: /bin/systemd
-
-  - name: rockylinux-8
-    driver:
-      image: dokken/rockylinux-8
-      pid_one_command: /usr/lib/systemd/systemd
 
 suites:
   - name: server
@@ -83,15 +34,15 @@ suites:
         config:
           verb: 1
           mute: 10
-          route:
-            - '192.168.4.0 255.255.255.0'
+          route: ["192.168.4.0 255.255.255.0"]
         push_routes:
           - 192.168.10.0 255.255.255.0
           - 10.12.10.0 255.255.255.0
         push_options:
           dhcp-option:
-            - 'DOMAIN local'
-            - 'DOMAIN-SEARCH local'
+            - "DOMAIN local"
+            - "DOMAIN-SEARCH local"
+
   - name: server_verification
     run_list:
       - recipe[openvpn::server]
@@ -99,6 +50,7 @@ suites:
     attributes:
       openvpn:
         server_verification: "remote-cert-tls server"
+
   - name: server_verify_no_databag
     run_list:
       - recipe[openvpn::server]
