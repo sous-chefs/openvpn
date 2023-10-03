@@ -38,8 +38,18 @@ describe 'openvpn::server' do
 
     it 'executes gencrl with correction parameters' do
       expect(chef_run).to run_execute('gencrl').with(
-        environment: { 'KEY_CN' => 'Fort Funston CA' },
-        command: 'openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf ' \
+        environment: {
+          'KEY_CITY' => 'San Francisco',
+          'KEY_CN' => 'Fort Funston CA',
+          'KEY_COUNTRY' => 'US',
+          'KEY_DIR' => '/etc/openvpn/keys',
+          'KEY_EMAIL' => 'admin@foobar.com',
+          'KEY_ORG' => 'Fort Funston',
+          'KEY_OU' => 'OpenVPN Server',
+          'KEY_PROVINCE' => 'CA',
+          'KEY_SIZE' => '2048',
+        },
+        command: 'umask 077 && openssl ca -config /etc/openvpn/easy-rsa/openssl.cnf ' \
                  '-gencrl ' \
                  '-crlexts crl_ext ' \
                  '-md sha256 ' \

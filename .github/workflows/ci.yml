@@ -8,57 +8,38 @@ name: ci
       - main
 
 jobs:
-  delivery:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Run Chef Delivery
-        uses: actionshub/chef-delivery@main
-        env:
-          CHEF_LICENSE: accept-no-persist
-
-  yamllint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Run yaml Lint
-        uses: actionshub/yamllint@main
-
-  mdl:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Run Markdown Lint
-        uses: actionshub/markdownlint@main
+  lint-unit:
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@2.0.6
 
   integration:
-    needs: [mdl, yamllint, delivery]
+    needs: lint-unit
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os:
-          - 'amazonlinux-2'
-          - 'centos-7'
-          - 'centos-8'
-          - 'debian-9'
-          - 'ubuntu-1604'
-          - 'ubuntu-1804'
+          - "almalinux-8"
+          - "amazonlinux-2"
+          - "centos-7"
+          - "centos-stream-8"
+          - "debian-10"
+          - "debian-11"
+          - "fedora-latest"
+          - "rockylinux-8"
+          - "ubuntu-1804"
+          - "ubuntu-2004"
         suite:
-          - 'server'
-          - 'server-verification'
-          - 'server-verify-no-databag'
+          - "server"
+          - "server-verification"
+          - "server-verify-no-databag"
       fail-fast: false
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install Chef
-        uses: actionshub/chef-install@main
+        uses: actionshub/chef-install@2.0.4
       - name: Dokken
-        uses: actionshub/test-kitchen@main
+        uses: actionshub/test-kitchen@2.1.0
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml

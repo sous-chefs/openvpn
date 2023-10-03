@@ -21,9 +21,10 @@ property :config, Hash
 property :template_source, String, default: 'server.conf.erb'
 property :push_routes, Array
 property :push_options, Array
+unified_mode true
 
 action :create do
-  conf_location = if platform_family?('rhel') && node['platform_version'].to_i >= 8
+  conf_location = if (platform_family?('rhel') && node['platform_version'].to_i >= 8) || platform_family?('fedora')
                     "/etc/openvpn/#{new_resource.name}/#{new_resource.name}.conf"
                   else
                     "/etc/openvpn/#{new_resource.name}.conf"

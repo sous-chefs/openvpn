@@ -20,6 +20,15 @@
 if node['openvpn']['use_databag']
   search(node['openvpn']['user_databag'], node['openvpn']['user_query']) do |u|
     openvpn_user u['id'] do
+      key_vars({
+        'key_country'  => u['key_country'],
+        'key_province' => u['key_province'],
+        'key_city'     => u['key_city'],
+        'key_email'    => u['key_email'],
+        'key_size'     => u['key_size'],
+        'key_org'      => u['key_org'],
+        'key_org_unit' => u['key_org_unit'],
+      })
       create_bundle true
     end
   end
