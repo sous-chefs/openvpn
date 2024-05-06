@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the openvpn cookbook.
 
 ## Unreleased
 
+- Make client config match server config (fixes [#189](https://github.com/sous-chefs/openvpn/issues/189))
+- Document usage of `openvpn_user` with examples for `additional_vars`
+
 ## 7.0.20 - *2024-05-06*
 
 ## 7.0.19 - *2024-05-06*
