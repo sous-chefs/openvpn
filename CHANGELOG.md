@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the openvpn cookbook.
 
+## Unreleased
+
 ## 7.0.20 - *2024-05-06*
 
 ## 7.0.19 - *2024-05-06*
