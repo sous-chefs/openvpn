@@ -9,7 +9,7 @@ engines                 = engine_section
 [ ca ]
 default_ca	= CA_default
 [ CA_default ]
-dir		= <%= node['openvpn']['key_dir'] %>
+dir		= $ENV::KEY_DIR
 certs		= $dir
 crl_dir		= $dir
 database	= $dir/index.txt
@@ -42,7 +42,7 @@ organizationalUnitName	= optional
 commonName		= supplied
 emailAddress		= optional
 [ req ]
-default_bits		= <%= node['openvpn']['key']['size'] %>
+default_bits		= $ENV::KEY_SIZE
 default_keyfile 	= privkey.pem
 distinguished_name	= req_distinguished_name
 attributes		= req_attributes
@@ -50,22 +50,22 @@ x509_extensions	        = v3_ca
 string_mask             = nombstr
 [ req_distinguished_name ]
 countryName			= Country Name (2 letter code)
-countryName_default		= <%= node['openvpn']['key']['country'] %>
+countryName_default		= $ENV::KEY_COUNTRY
 countryName_min			= 2
 countryName_max			= 2
 stateOrProvinceName		= State or Province Name (full name)
-stateOrProvinceName_default	= <%= node['openvpn']['key']['province'] %>
+stateOrProvinceName_default	= $ENV::KEY_PROVINCE
 localityName			= Locality Name (eg, city)
-localityName_default		= <%= node['openvpn']['key']['city'] %>
+localityName_default		= $ENV::KEY_CITY
 0.organizationName		= Organization Name (eg, company)
-0.organizationName_default	= <%= node['openvpn']['key']['org'] %>
+0.organizationName_default	= $ENV::KEY_ORG
 organizationalUnitName		= Organizational Unit Name (eg, section)
 commonName			= Common Name (eg, your name or your server\'s hostname)
 commonName_max			= 64
 emailAddress			= Email Address
-emailAddress_default		= <%= node['openvpn']['key']['email'] %>
+emailAddress_default		= $ENV::KEY_EMAIL
 emailAddress_max		= 40
-organizationalUnitName_default = "OpenVPN Server"
+organizationalUnitName_default = $ENV::KEY_OU
 commonName_default = $ENV::KEY_CN
 [ req_attributes ]
 challengePassword		= A challenge password

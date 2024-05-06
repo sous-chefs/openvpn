@@ -7,6 +7,99 @@ This file is used to list changes made in each version of the openvpn cookbook.
 - Make client config match server config (fixes [#189](https://github.com/sous-chefs/openvpn/issues/189))
 - Document usage of `openvpn_user` with examples for `additional_vars`
 
+## 7.0.20 - *2024-05-06*
+
+## 7.0.19 - *2024-05-06*
+
+## 7.0.18 - *2023-10-03*
+
+## 7.0.17 - *2023-10-03*
+
+- Added idempotency checks on CI
+
+## 7.0.16 - *2023-09-29*
+
+## 7.0.15 - *2023-09-11*
+
+## 7.0.14 - *2023-05-16*
+
+## 7.0.13 - *2023-04-17*
+
+## 7.0.12 - *2023-04-07*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.11 - *2023-04-01*
+
+## 7.0.10 - *2023-04-01*
+
+## 7.0.9 - *2023-04-01*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.8 - *2023-03-20*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.7 - *2023-03-15*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.6 - *2023-03-01*
+
+- Switch from mdl to markdownlint-cli2
+- Update workflows
+
+## 7.0.5 - *2023-02-16*
+
+## 7.0.4 - *2023-02-16*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.3 - *2023-02-15*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.2 - *2022-12-09*
+
+Standardise files with files in sous-chefs/repo-management
+
+## 7.0.1 - *2022-05-16*
+
+- Standardise files with files in sous-chefs/repo-management
+
+## 7.0.0 - *2022-05-07*
+
+- Remove comp-lzo as a default option
+
+## 6.1.0 - *2022-02-24*
+
+- Add certificate properties to user resource
+
+## 6.0.0 - *2022-02-08*
+
+- Remove delivery and move to calling RSpec directly via a reusable workflow
+- Update tested platforms
+- Fix Fedora
+- Standardize kitchen settings
+- Enable unified_mode and require Chef >= 15.3
+- Fix various idempotency issues
+  - Set umask to 077 to match file permissions we expect
+  - Trigger various resources to run during first converge phase
+
+## 5.4.0 - *2022-01-18*
+
+- resolved cookstyle error: recipes/server.rb:88:3 refactor: `Chef/RedundantCode/UseCreateIfMissing`
+- resolved cookstyle error: recipes/server.rb:98:3 refactor: `Chef/RedundantCode/UseCreateIfMissing`
+
+## 5.3.2 - *2021-08-30*
+
+- Standardise files with files in sous-chefs/repo-management
+
+## 5.3.1 - *2021-06-01*
+
+- Standardise files with files in sous-chefs/repo-management
+
 ## 5.3.0 - *2021-03-16*
 
 - Fix openvpn_conf template handling
@@ -92,17 +185,17 @@ Locking yum dependency to '< 3'
 
 ### Bug
 
-- **[COOK-3317](https://tickets.chef.io/browse/COOK-3317)** - Fix and make `server.up.sh` useful and customizable
+- [COOK-3317] - Fix and make `server.up.sh` useful and customizable
 
 ### New Feature
 
-- **[COOK-3315](https://tickets.chef.io/browse/COOK-3315)** - Remove hardcoded variables in configuration file
+- [COOK-3315] - Remove hardcoded variables in configuration file
 
 ## v1.1.2
 
 ### Improvement
 
-- **[COOK-2820](https://tickets.chef.io/browse/COOK-2820)** - Update metadata.rb for all attributes and recipes
+- [COOK-2820] - Update metadata.rb for all attributes and recipes
 
 ## v1.1.0
 
