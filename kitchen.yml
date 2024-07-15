@@ -7,8 +7,6 @@ provisioner:
   multiple_converge: 2
   deprecations_as_errors: true
   chef_license: accept-no-persist
-  enforce_idempotency: true
-  multiple_converge: 2
 
 verifier:
   name: inspec
