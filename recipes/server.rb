@@ -101,13 +101,13 @@ end
 execute 'openvpn-initca' do
   environment(
     'KEY_CN' => "#{node['openvpn']['key']['org']} CA",
-    'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
-    'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
-    'KEY_CITY' => "#{node['openvpn']['key']['city']}",
-    'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
+    'KEY_EMAIL' => node['openvpn']['key']['email'].to_s,
+    'KEY_COUNTRY' => node['openvpn']['key']['country'].to_s,
+    'KEY_CITY' => node['openvpn']['key']['city'].to_s,
+    'KEY_PROVINCE' => node['openvpn']['key']['province'].to_s,
     'KEY_DIR' => '/etc/openvpn/keys',
-    'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
-    'KEY_ORG' => "#{node['openvpn']['key']['org']}",
+    'KEY_SIZE' => node['openvpn']['key']['size'].to_s,
+    'KEY_ORG' => node['openvpn']['key']['org'].to_s,
     'KEY_OU' => 'OpenVPN Server'
   )
   command 'umask 077 && ' \
@@ -122,13 +122,13 @@ end
 execute 'openvpn-server-key' do
   environment(
     'KEY_CN' => 'server',
-    'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
-    'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
-    'KEY_CITY' => "#{node['openvpn']['key']['city']}",
-    'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
+    'KEY_EMAIL' => node['openvpn']['key']['email'].to_s,
+    'KEY_COUNTRY' => node['openvpn']['key']['country'].to_s,
+    'KEY_CITY' => node['openvpn']['key']['city'].to_s,
+    'KEY_PROVINCE' => node['openvpn']['key']['province'].to_s,
     'KEY_DIR' => '/etc/openvpn/keys',
-    'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
-    'KEY_ORG' => "#{node['openvpn']['key']['org']}",
+    'KEY_SIZE' => node['openvpn']['key']['size'].to_s,
+    'KEY_ORG' => node['openvpn']['key']['org'].to_s,
     'KEY_OU' => 'OpenVPN Server'
   )
   command 'umask 077 && ' \
@@ -155,13 +155,13 @@ end
 execute 'gencrl' do
   environment(
     'KEY_CN' => "#{node['openvpn']['key']['org']} CA",
-    'KEY_EMAIL' => "#{node['openvpn']['key']['email']}",
-    'KEY_COUNTRY' => "#{node['openvpn']['key']['country']}",
-    'KEY_CITY' => "#{node['openvpn']['key']['city']}",
-    'KEY_PROVINCE' => "#{node['openvpn']['key']['province']}",
+    'KEY_EMAIL' => node['openvpn']['key']['email'].to_s,
+    'KEY_COUNTRY' => node['openvpn']['key']['country'].to_s,
+    'KEY_CITY' => node['openvpn']['key']['city'].to_s,
+    'KEY_PROVINCE' => node['openvpn']['key']['province'].to_s,
     'KEY_DIR' => '/etc/openvpn/keys',
-    'KEY_SIZE' => "#{node['openvpn']['key']['size']}",
-    'KEY_ORG' => "#{node['openvpn']['key']['org']}",
+    'KEY_SIZE' => node['openvpn']['key']['size'].to_s,
+    'KEY_ORG' => node['openvpn']['key']['org'].to_s,
     'KEY_OU' => 'OpenVPN Server'
   )
   command 'umask 077 && ' \
