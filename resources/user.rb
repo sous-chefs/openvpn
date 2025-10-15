@@ -29,18 +29,18 @@ action :create do
     command "umask 077 && ./pkitool #{new_resource.client_name}"
     cwd '/etc/openvpn/easy-rsa'
     environment(
-      'EASY_RSA'     => '/etc/openvpn/easy-rsa',
-      'KEY_CONFIG'   => '/etc/openvpn/easy-rsa/openssl.cnf',
-      'KEY_DIR'      => key_dir,
-      'CA_EXPIRE'    => (new_resource.key_vars['ca_expire'] || node['openvpn']['key']['ca_expire']).to_s,
-      'KEY_EXPIRE'   => (new_resource.key_vars['key_expire'] || node['openvpn']['key']['expire']).to_s,
-      'KEY_SIZE'     => (new_resource.key_vars['key_size'] || node['openvpn']['key']['size']).to_s,
-      'KEY_COUNTRY'  => (new_resource.key_vars['key_country'] || node['openvpn']['key']['country']),
-      'KEY_PROVINCE' => (new_resource.key_vars['key_province'] || node['openvpn']['key']['province']),
-      'KEY_CITY'     => (new_resource.key_vars['key_city'] || node['openvpn']['key']['city']),
-      'KEY_ORG'      => (new_resource.key_vars['key_org'] || node['openvpn']['key']['org']),
-      'KEY_EMAIL'    => (new_resource.key_vars['key_email'] || node['openvpn']['key']['email']),
-      'KEY_OU'       => (new_resource.key_vars['key_org_unit'] || 'OpenVPN Server')
+      'EASY_RSA' => '/etc/openvpn/easy-rsa',
+      'KEY_CONFIG' => '/etc/openvpn/easy-rsa/openssl.cnf',
+      'KEY_DIR' => key_dir,
+      'CA_EXPIRE' => (new_resource.key_vars['ca_expire'] || node['openvpn']['key']['ca_expire']).to_s,
+      'KEY_EXPIRE' => (new_resource.key_vars['key_expire'] || node['openvpn']['key']['expire']).to_s,
+      'KEY_SIZE' => (new_resource.key_vars['key_size'] || node['openvpn']['key']['size']).to_s,
+      'KEY_COUNTRY' => new_resource.key_vars['key_country'] || node['openvpn']['key']['country'],
+      'KEY_PROVINCE' => new_resource.key_vars['key_province'] || node['openvpn']['key']['province'],
+      'KEY_CITY' => new_resource.key_vars['key_city'] || node['openvpn']['key']['city'],
+      'KEY_ORG' => new_resource.key_vars['key_org'] || node['openvpn']['key']['org'],
+      'KEY_EMAIL' => new_resource.key_vars['key_email'] || node['openvpn']['key']['email'],
+      'KEY_OU' => new_resource.key_vars['key_org_unit'] || 'OpenVPN Server'
     )
     creates cert_path unless new_resource.force
     notifies :run, 'execute[gencrl]', :immediately
