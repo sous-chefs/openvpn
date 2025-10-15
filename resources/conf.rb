@@ -30,7 +30,7 @@ action :create do
                     "/etc/openvpn/#{new_resource.name}.conf"
                   end
 
-  template [node['openvpn']['fs_prefix'], "#{conf_location}"].join do
+  template [node['openvpn']['fs_prefix'], conf_location.to_s].join do
     cookbook new_resource.cookbook
     source new_resource.template_source
     owner 'root'
@@ -61,7 +61,7 @@ action :create do
 end
 
 action :delete do
-  file [node['openvpn']['fs_prefix'], "#{conf_location}"].join do
+  file [node['openvpn']['fs_prefix'], conf_location.to_s].join do
     action :delete
   end
 end

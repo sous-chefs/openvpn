@@ -5,7 +5,7 @@ license           'Apache-2.0'
 description       'Installs and configures openvpn and includes rake tasks for managing certs.'
 source_url        'https://github.com/sous-chefs/openvpn'
 issues_url        'https://github.com/sous-chefs/openvpn/issues'
-version           '7.0.20'
+version           '7.0.24'
 chef_version      '>= 15.3'
 
 supports 'arch'
