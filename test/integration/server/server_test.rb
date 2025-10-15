@@ -27,7 +27,7 @@ conf_location = if (os[:family] == 'redhat' && os[:release] >= '8') || os[:famil
                   '/etc/openvpn/server.conf'
                 end
 
-describe file("#{conf_location}") do
+describe file(conf_location.to_s) do
   its('content') { should include 'push "dhcp-option DOMAIN local"' }
   its('content') { should include 'push "dhcp-option DOMAIN-SEARCH local"' }
   its('content') { should include 'push "route 192.168.10.0 255.255.255.0"' }
