@@ -5,6 +5,11 @@ This file is used to list changes made in each version of the openvpn cookbook.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## Unreleased
+
+Standardise files with files in sous-chefs/repo-management
+
+
 ## [7.0.26](https://github.com/sous-chefs/openvpn/compare/v7.0.25...v7.0.26) (2025-10-16)
 
 
