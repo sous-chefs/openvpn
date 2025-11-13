@@ -5,6 +5,15 @@ This file is used to list changes made in each version of the openvpn cookbook.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## [7.0.27](https://github.com/sous-chefs/openvpn/compare/v7.0.26...v7.0.27) (2025-11-13)
+
+
+### Bug Fixes
+
+* align client configs with server settings ([#247](https://github.com/sous-chefs/openvpn/issues/247)) ([e303518](https://github.com/sous-chefs/openvpn/commit/e30351881f0e1c0a75893a43e41597089d34ee94))
+* **ci:** Update workflows to use release pipeline ([#243](https://github.com/sous-chefs/openvpn/issues/243)) ([f1235ff](https://github.com/sous-chefs/openvpn/commit/f1235ff7208fedf1608bc0f6470032f40e75b14f))
+* Slack posting ([#248](https://github.com/sous-chefs/openvpn/issues/248)) ([acef76c](https://github.com/sous-chefs/openvpn/commit/acef76cf380058694063df4ebdffcfb52c38c010))
+
 ## [7.0.26](https://github.com/sous-chefs/openvpn/compare/v7.0.25...v7.0.26) (2025-10-16)
 
 
