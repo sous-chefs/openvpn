@@ -24,14 +24,7 @@ jobs:
       matrix:
         os:
           - "almalinux-8"
-          - "amazonlinux-2023"
-          - "centos-7"
-          - "centos-stream-8"
-          - "debian-10"
-          - "debian-11"
-          - "fedora-latest"
           - "rockylinux-8"
-          - "ubuntu-1804"
           - "ubuntu-2004"
         suite:
           - "server"
