@@ -24,6 +24,11 @@ action :create do
   destination_path = ::File.expand_path(new_resource.destination || key_dir)
   bundle_filename = "#{new_resource.client_name}.tar.gz"
   bundle_full_path = ::File.expand_path(::File.join(destination_path, bundle_filename))
+  compression = if node['openvpn']['config']['compress']
+                  node['openvpn']['config']['compress']
+                elsif node['openvpn']['config']['comp-lzo']
+                  'lzo'
+                end
 
   execute "generate-openvpn-#{new_resource.client_name}" do
     command "umask 077 && ./pkitool #{new_resource.client_name}"
@@ -51,7 +56,7 @@ action :create do
 
   template "#{destination_path}/#{client_file_basename}.conf" do
     source 'client.conf.erb'
-    cookbook node['openvpn']['cookbook_user_conf']
+    cookbook lazy { node['openvpn']['cookbook_user_conf'] }
     variables(client_cn: new_resource.client_name)
     notifies :delete, "file[#{cleanup_name}]", :immediately
     only_if { new_resource.create_bundle }
@@ -59,7 +64,7 @@ action :create do
 
   template "#{destination_path}/#{client_file_basename}.ovpn" do
     source new_resource.create_bundle ? 'client.conf.erb' : 'client-inline.conf.erb'
-    cookbook node['openvpn']['cookbook_user_conf']
+    cookbook lazy { node['openvpn']['cookbook_user_conf'] }
     if new_resource.create_bundle
       variables(client_cn: new_resource.client_name)
     else
@@ -71,6 +76,7 @@ action :create do
             ca: IO.read(ca_cert_path),
             cert: IO.read(cert_path),
             key: IO.read(key_path),
+            compression: compression,
           }.merge(new_resource.additional_vars) { |key, oldval, newval| oldval } # rubocop:disable Lint/UnusedBlockArgument
         end
       )
