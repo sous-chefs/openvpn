@@ -57,7 +57,10 @@ action :create do
   template "#{destination_path}/#{client_file_basename}.conf" do
     source 'client.conf.erb'
     cookbook lazy { node['openvpn']['cookbook_user_conf'] }
-    variables(client_cn: new_resource.client_name)
+    variables(
+      client_cn: new_resource.client_name,
+      compression: compression
+    )
     notifies :delete, "file[#{cleanup_name}]", :immediately
     only_if { new_resource.create_bundle }
   end
@@ -66,7 +69,10 @@ action :create do
     source new_resource.create_bundle ? 'client.conf.erb' : 'client-inline.conf.erb'
     cookbook lazy { node['openvpn']['cookbook_user_conf'] }
     if new_resource.create_bundle
-      variables(client_cn: new_resource.client_name)
+      variables(
+        client_cn: new_resource.client_name,
+        compression: compression
+      )
     else
       sensitive true
       variables(
