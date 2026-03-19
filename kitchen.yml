@@ -24,36 +24,9 @@ platforms:
   - name: ubuntu-24.04
 
 suites:
-  - name: server
+  - name: default
     run_list:
-      - recipe[openvpn::server]
-    attributes:
-      openvpn:
-        config:
-          verb: 1
-          mute: 10
-          route: ["192.168.4.0 255.255.255.0"]
-        push_routes:
-          - 192.168.10.0 255.255.255.0
-          - 10.12.10.0 255.255.255.0
-        push_options:
-          dhcp-option:
-            - "DOMAIN local"
-            - "DOMAIN-SEARCH local"
-
-  - name: server_verification
-    run_list:
-      - recipe[openvpn::server]
-      - recipe[openvpn::users]
-    attributes:
-      openvpn:
-        server_verification: "remote-cert-tls server"
-
-  - name: server_verify_no_databag
-    run_list:
-      - recipe[openvpn::server]
-      - recipe[openvpn::users]
-    attributes:
-      openvpn:
-        server_verification: "remote-cert-tls server"
-        use_databag: false
+      - recipe[test::default]
+    verifier:
+      inspec_tests:
+        - path: test/integration/server

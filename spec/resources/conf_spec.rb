@@ -8,11 +8,6 @@ describe 'openvpn_conf' do
 
   context 'create action' do
     recipe do
-      node.default['openvpn']['fs_prefix'] = ''
-      node.default['openvpn']['config'] = {}
-      node.default['openvpn']['push_routes'] = []
-      node.default['openvpn']['push_options'] = {}
-      node.default['openvpn']['client_cn'] = []
       openvpn_conf 'server' do
         config(
           'port' => '1194',
@@ -26,7 +21,13 @@ describe 'openvpn_conf' do
     it { is_expected.to create_template('/etc/openvpn/server.conf') }
   end
 
-  # NOTE: The :delete action has a bug — it references `conf_location` which is
-  # a local variable scoped to the :create action block. This needs fixing in
-  # the resource before it can be tested.
+  context 'delete action' do
+    recipe do
+      openvpn_conf 'server' do
+        action :delete
+      end
+    end
+
+    it { is_expected.to delete_file('/etc/openvpn/server.conf') }
+  end
 end

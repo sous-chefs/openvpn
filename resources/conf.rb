@@ -1,48 +1,46 @@
 # frozen_string_literal: true
 
-#
-# Cookbook:: openvpn
-# Resource:: conf
-#
-# Copyright:: 2013-2018, Tacit Knowledge, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-property :cookbook, String, default: 'openvpn'
-property :config, Hash
-property :template_source, String, default: 'server.conf.erb'
-property :push_routes, Array
-property :push_options, Array
+provides :openvpn_conf
 unified_mode true
 
-action :create do
-  conf_location = if (platform_family?('rhel') && node['platform_version'].to_i >= 8) || platform_family?('fedora')
-                    "/etc/openvpn/#{new_resource.name}/#{new_resource.name}.conf"
-                  else
-                    "/etc/openvpn/#{new_resource.name}.conf"
-                  end
+default_action :create
 
-  template [node['openvpn']['fs_prefix'], conf_location.to_s].join do
-    cookbook new_resource.cookbook
+property :config, Hash, default: {}
+property :template_source, String, default: 'server.conf.erb'
+property :template_cookbook, String, default: 'openvpn'
+property :push_routes, Array, default: []
+property :push_options, [Hash, Array], default: {}
+property :conf_dir, String, default: lazy {
+  if platform_family?('rhel', 'fedora')
+    "/etc/openvpn/#{name}"
+  else
+    '/etc/openvpn'
+  end
+}
+
+action :create do
+  conf_path = ::File.join(new_resource.conf_dir, "#{new_resource.name}.conf")
+
+  # RHEL/Fedora use per-instance config dirs
+  if platform_family?('rhel', 'fedora')
+    directory new_resource.conf_dir do
+      owner 'root'
+      group 'root'
+      mode '0755'
+      recursive true
+    end
+  end
+
+  template conf_path do
+    cookbook new_resource.template_cookbook
     source new_resource.template_source
     owner 'root'
-    group node['root_group']
-    mode '644'
+    group 'root'
+    mode '0644'
     variables(
-      config: new_resource.config || node['openvpn']['config'],
-      push_routes: new_resource.push_routes || node['openvpn']['push_routes'],
-      push_options: new_resource.push_options || node['openvpn']['push_options'],
-      client_cn: node['openvpn']['client_cn']
+      config: new_resource.config,
+      push_routes: new_resource.push_routes,
+      push_options: new_resource.push_options
     )
     helpers do
       def render_push_options(push_options)
@@ -63,7 +61,9 @@ action :create do
 end
 
 action :delete do
-  file [node['openvpn']['fs_prefix'], conf_location.to_s].join do
+  conf_path = ::File.join(new_resource.conf_dir, "#{new_resource.name}.conf")
+
+  file conf_path do
     action :delete
   end
 end
