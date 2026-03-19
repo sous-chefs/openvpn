@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # this is done in a similar fashion to
 # https://github.com/xhost-cookbooks/openvpn/blob/master/recipes/service.rb
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe file('/etc/openvpn/easy-rsa/Rakefile') do
   describe '#content' do
     subject { super().content }
