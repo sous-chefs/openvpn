@@ -15,6 +15,12 @@ property :subnet, String, default: '10.8.0.0'
 property :netmask, String, default: '255.255.0.0'
 property :server_up_script, [true, false], default: true
 
+# Client config defaults (used in Rakefile template)
+property :dev, String, default: 'tun0'
+property :proto, String, default: 'udp'
+property :port, String, default: '1194'
+property :server_verification, [String, NilClass]
+
 action :create do
   ca_key = "#{new_resource.key_dir}/ca.key"
   ca_cert = "#{new_resource.key_dir}/ca.crt"
@@ -48,13 +54,18 @@ action :create do
         ca_expire: new_resource.ca_expire,
         key_expire: new_resource.key_expire,
         crl_expire: new_resource.crl_expire,
+        message_digest: message_digest,
         key_country: new_resource.key_country,
         key_province: new_resource.key_province,
         key_city: new_resource.key_city,
         key_org: new_resource.key_org,
         key_email: new_resource.key_email,
         signing_ca_cert: ca_cert,
-        signing_ca_key: ca_key
+        signing_ca_key: ca_key,
+        dev: new_resource.dev,
+        proto: new_resource.proto,
+        port: new_resource.port,
+        server_verification: new_resource.server_verification
       )
     end
   end

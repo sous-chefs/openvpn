@@ -16,6 +16,14 @@ property :compression, String
 property :client_prefix, String, default: 'vpn-prod'
 property :template_cookbook, String, default: 'openvpn'
 
+# Client config properties (used in client templates)
+property :dev, String, default: 'tun0'
+property :proto, String, default: 'udp'
+property :gateway, String, default: 'vpn.example.com'
+property :port, String, default: '1194'
+property :config_options, Hash, default: {}
+property :server_verification, [String, NilClass]
+
 action :create do
   key_dir = new_resource.key_dir
   cert_path = ::File.join(key_dir, "#{new_resource.client_name}.crt")
@@ -50,13 +58,21 @@ action :create do
 
   cleanup_name = "cleanup-old-bundle-#{new_resource.client_name}"
 
+  client_vars = {
+    client_cn: new_resource.client_name,
+    compression: new_resource.compression,
+    dev: new_resource.dev,
+    proto: new_resource.proto,
+    gateway: new_resource.gateway,
+    port: new_resource.port,
+    config_options: new_resource.config_options,
+    server_verification: new_resource.server_verification,
+  }
+
   template "#{destination_path}/#{client_file_basename}.conf" do
     source 'client.conf.erb'
     cookbook new_resource.template_cookbook
-    variables(
-      client_cn: new_resource.client_name,
-      compression: new_resource.compression
-    )
+    variables(client_vars)
     notifies :delete, "file[#{cleanup_name}]", :immediately
     only_if { new_resource.create_bundle }
   end
@@ -65,21 +81,16 @@ action :create do
     source new_resource.create_bundle ? 'client.conf.erb' : 'client-inline.conf.erb'
     cookbook new_resource.template_cookbook
     if new_resource.create_bundle
-      variables(
-        client_cn: new_resource.client_name,
-        compression: new_resource.compression
-      )
+      variables(client_vars)
     else
       sensitive true
       variables(
         lazy do
-          {
-            client_cn: new_resource.client_name,
+          client_vars.merge(
             ca: IO.read(ca_cert_path),
             cert: IO.read(cert_path),
-            key: IO.read(key_path),
-            compression: new_resource.compression,
-          }.merge(new_resource.additional_vars) { |_key, oldval, _newval| oldval }
+            key: IO.read(key_path)
+          ).merge(new_resource.additional_vars) { |_key, oldval, _newval| oldval }
         end
       )
     end
