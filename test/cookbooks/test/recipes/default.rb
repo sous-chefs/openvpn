@@ -9,6 +9,8 @@ openvpn_server 'default' do
   key_email 'test@example.com'
 end
 
+openvpn_group = platform_family?('debian') ? 'nogroup' : 'nobody'
+
 openvpn_conf 'server' do
   config(
     'port' => '1194',
@@ -19,7 +21,7 @@ openvpn_conf 'server' do
     'persist-tun' => '',
     'keepalive' => '10 120',
     'user' => 'nobody',
-    'group' => 'nogroup',
+    'group' => openvpn_group,
     'ca' => '/etc/openvpn/keys/ca.crt',
     'cert' => '/etc/openvpn/keys/server.crt',
     'key' => '/etc/openvpn/keys/server.key',

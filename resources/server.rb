@@ -157,7 +157,7 @@ action :create do
     command 'umask 077 && ' \
             "openssl req -batch -days #{new_resource.key_expire} " \
             "-nodes -new -newkey rsa:#{key_size} -keyout #{key_dir}/server.key " \
-            "-out #{key_dir}/server.csr -extensions server " \
+            "-out #{key_dir}/server.csr " \
             "-config #{key_dir}/openssl.cnf && " \
             "openssl ca -batch -days #{new_resource.ca_expire} " \
             "-out #{key_dir}/server.crt -in #{key_dir}/server.csr " \

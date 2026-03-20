@@ -7,6 +7,6 @@ summary: Integration tests for the openvpn cookbook default suite
 version: 1.0.0
 supports:
   - platform-family: debian
-  - platform-family: rhel
+  - platform-family: redhat
   - platform-family: fedora
   - platform-family: amazon

@@ -20,7 +20,7 @@ action :create do
   # RHEL/Fedora need a symlink for the instance service
   if platform_family?('rhel', 'fedora')
     link "/etc/systemd/system/multi-user.target.wants/#{service_name}" do
-      to '/usr/lib/systemd/system/openvpn@.service'
+      to "/usr/lib/systemd/system/openvpn-#{new_resource.vpn_type}@.service"
       not_if { ::File.exist?("/etc/systemd/system/multi-user.target.wants/#{service_name}") }
     end
   end

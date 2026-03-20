@@ -1,6 +1,5 @@
 # For use with easy-rsa version 2.0
 HOME			= .
-RANDFILE		= $ENV::HOME/.rnd
 openssl_conf		= openssl_init
 [ openssl_init ]
 oid_section		= new_oids
@@ -22,7 +21,7 @@ RANDFILE	= $dir/.rand
 x509_extensions	= usr_cert
 default_days	= <%= @ca_expire %>
 default_crl_days	= <%= @crl_expire %>
-default_md	= md5
+default_md	= sha256
 preserve	= no
 policy		= policy_anything
 unique_subject	= no
