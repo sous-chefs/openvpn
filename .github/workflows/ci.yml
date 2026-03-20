@@ -9,7 +9,7 @@ name: ci
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@5.0.8
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@main
     permissions:
       actions: write
       checks: write
@@ -40,12 +40,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v6
-      - name: Install Chef
-        uses: actionshub/chef-install@6.0.0
+      - name: Install Workstation
+        uses: sous-chefs/.github/.github/actions/install-workstation@main
       - name: Dokken
         uses: actionshub/test-kitchen@3.0.0
         env:
-          CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
         with:
           suite: ${{ matrix.suite }}

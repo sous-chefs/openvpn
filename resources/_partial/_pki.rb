@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 property :key_dir, String, default: '/etc/openvpn/keys'
 property :easy_rsa_dir, String, default: '/etc/openvpn/easy-rsa'
 property :key_size, Integer, default: 2048
