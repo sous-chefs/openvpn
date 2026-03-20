@@ -29,4 +29,4 @@ suites:
       - recipe[test::default]
     verifier:
       inspec_tests:
-        - path: test/integration/server
+        - path: test/integration/default

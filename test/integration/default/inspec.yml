@@ -1,0 +1,12 @@
+---
+name: default
+title: OpenVPN Default Tests
+maintainer: Sous Chefs
+license: Apache-2.0
+summary: Integration tests for the openvpn cookbook default suite
+version: 1.0.0
+supports:
+  - platform-family: debian
+  - platform-family: rhel
+  - platform-family: fedora
+  - platform-family: amazon
