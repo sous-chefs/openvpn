@@ -5,28 +5,16 @@ unified_mode true
 
 default_action :create
 
+use '_partial/_pki'
+
 property :client_name, String, name_property: true
 property :create_bundle, [true, false], default: true
 property :force, [true, false], default: false
 property :destination, String
 property :additional_vars, Hash, default: {}
 property :compression, String
-
-# PKI properties (previously from node attributes)
-property :key_dir, String, default: '/etc/openvpn/keys'
-property :easy_rsa_dir, String, default: '/etc/openvpn/easy-rsa'
 property :client_prefix, String, default: 'vpn-prod'
 property :template_cookbook, String, default: 'openvpn'
-
-# Key generation defaults
-property :ca_expire, Integer, default: 3650
-property :key_expire, Integer, default: 3650
-property :key_size, Integer, default: 2048
-property :key_country, String, default: 'US'
-property :key_province, String, default: 'CA'
-property :key_city, String, default: 'San Francisco'
-property :key_org, String, default: 'Fort Funston'
-property :key_email, String, default: 'admin@example.com'
 
 action :create do
   key_dir = new_resource.key_dir

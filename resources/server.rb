@@ -5,19 +5,10 @@ unified_mode true
 
 default_action :create
 
-# PKI/CA properties
-property :key_dir, String, default: '/etc/openvpn/keys'
-property :easy_rsa_dir, String, default: '/etc/openvpn/easy-rsa'
-property :key_size, Integer, default: 2048
-property :ca_expire, Integer, default: 3650
-property :key_expire, Integer, default: 3650
+use '_partial/_pki'
+
 property :crl_expire, Integer, default: 30
 property :message_digest, String, default: 'sha256'
-property :key_country, String, default: 'US'
-property :key_province, String, default: 'CA'
-property :key_city, String, default: 'San Francisco'
-property :key_org, String, default: 'Fort Funston'
-property :key_email, String, default: 'admin@example.com'
 
 # Server properties
 property :subnet, String, default: '10.8.0.0'
