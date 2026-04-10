@@ -2,7 +2,7 @@ driver:
   name: dokken
   privileged: true
   chef_image: cincproject/cinc
-  chef_version: current
+  chef_version: latest
 
 transport:
   name: dokken
