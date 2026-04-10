@@ -1,6 +1,7 @@
 driver:
   name: dokken
   privileged: true
+  chef_image: cincproject/cinc
   chef_version: current
 
 transport:
@@ -8,6 +9,8 @@ transport:
 
 provisioner:
   name: dokken
+  product_name: cinc
+  chef_binary: /opt/cinc/bin/cinc-client
 
 platforms:
   - name: almalinux-8
