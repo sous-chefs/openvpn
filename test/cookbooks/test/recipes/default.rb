@@ -2,7 +2,9 @@
 
 apt_update
 
-openvpn_install 'default'
+openvpn_install 'default' do
+  enable_ip_forwarding false
+end
 
 openvpn_server 'default' do
   key_org 'Test Org'
