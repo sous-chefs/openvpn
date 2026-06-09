@@ -5,9 +5,9 @@
 # configuration settings.
 
 client
-dev <%= node['openvpn']['config']['dev'].chomp('0') %>
-proto <%= node['openvpn']['config']['proto'] %>
-remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['config']['port'] %>
+dev <%= @dev.chomp('0') %>
+proto <%= @proto %>
+remote <%= @gateway %> <%= @port %>
 resolv-retry infinite
 nobind
 persist-key
@@ -18,15 +18,15 @@ key <%= @client_cn %>.key
 <% if @compression -%>
 compress <%= @compression %>
 <% end %>
-<% 
-%w(cipher tls-cipher auth keysize link-mtu).each do |conf| 
-  if node['openvpn']['config'][conf]
-%><%= "#{conf} #{node['openvpn']['config'][conf]}" %>
+<%
+%w(cipher tls-cipher auth keysize link-mtu).each do |conf|
+  if @config_options[conf]
+%><%= "#{conf} #{@config_options[conf]}" %>
 <%
   end
-end 
+end
 -%>
 verb 3
-<% if node['openvpn']['server_verification'] -%>
-<%= node['openvpn']['server_verification'] %>
+<% if @server_verification -%>
+<%= @server_verification %>
 <% end -%>

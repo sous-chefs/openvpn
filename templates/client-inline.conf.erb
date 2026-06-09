@@ -6,8 +6,8 @@
 
 client
 dev tun
-proto <%= node['openvpn']['config']['proto'] %>
-remote <%= node['openvpn']['gateway'] %> <%= node['openvpn']['config']['port'] %>
+proto <%= @proto %>
+remote <%= @gateway %> <%= @port %>
 resolv-retry infinite
 nobind
 persist-key
@@ -15,13 +15,13 @@ persist-tun
 <% if @compression -%>
 compress <%= @compression %>
 <% end %>
-<% 
-%w(cipher tls-cipher auth keysize link-mtu).each do |conf| 
-  if node['openvpn']['config'][conf]
-%><%= "#{conf} #{node['openvpn']['config'][conf]}" %>
+<%
+%w(cipher tls-cipher auth keysize link-mtu).each do |conf|
+  if @config_options[conf]
+%><%= "#{conf} #{@config_options[conf]}" %>
 <%
   end
-end 
+end
 -%>
 verb 3
 <ca>

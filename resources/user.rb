@@ -1,89 +1,96 @@
-#
-# Cookbook:: openvpn
-# Resource:: user
-#
+# frozen_string_literal: true
+
+provides :openvpn_user
+unified_mode true
+
+default_action :create
+
+use '_partial/_pki'
 
 property :client_name, String, name_property: true
 property :create_bundle, [true, false], default: true
-property :force, [true, false]
+property :force, [true, false], default: false
 property :destination, String
-property :key_vars, Hash, default: {}
 property :additional_vars, Hash, default: {}
+property :compression, String
+property :client_prefix, String, default: 'vpn-prod'
+property :template_cookbook, String, default: 'openvpn'
 
-unified_mode true
-
-# TODO: this action will not recreate if the client configuration data has
-#       changed. Requires manual intervention.
+# Client config properties (used in client templates)
+property :dev, String, default: 'tun0'
+property :proto, String, default: 'udp'
+property :gateway, String, default: 'vpn.example.com'
+property :port, String, default: '1194'
+property :config_options, Hash, default: {}
+property :server_verification, [String, NilClass]
 
 action :create do
-  key_dir = node['openvpn']['key_dir']
+  key_dir = new_resource.key_dir
   cert_path = ::File.join(key_dir, "#{new_resource.client_name}.crt")
   ca_cert_path = ::File.join(key_dir, 'ca.crt')
   key_path = ::File.join(key_dir, "#{new_resource.client_name}.key")
-  client_file_basename = [node['openvpn']['client_prefix'], new_resource.client_name].join('-')
+  client_file_basename = [new_resource.client_prefix, new_resource.client_name].join('-')
   destination_path = ::File.expand_path(new_resource.destination || key_dir)
   bundle_filename = "#{new_resource.client_name}.tar.gz"
   bundle_full_path = ::File.expand_path(::File.join(destination_path, bundle_filename))
-  compression = if node['openvpn']['config']['compress']
-                  node['openvpn']['config']['compress']
-                elsif node['openvpn']['config']['comp-lzo']
-                  'lzo'
-                end
 
   execute "generate-openvpn-#{new_resource.client_name}" do
     command "umask 077 && ./pkitool #{new_resource.client_name}"
-    cwd '/etc/openvpn/easy-rsa'
+    cwd new_resource.easy_rsa_dir
     environment(
-      'EASY_RSA' => '/etc/openvpn/easy-rsa',
-      'KEY_CONFIG' => '/etc/openvpn/easy-rsa/openssl.cnf',
+      'EASY_RSA' => new_resource.easy_rsa_dir,
+      'KEY_CONFIG' => "#{new_resource.easy_rsa_dir}/openssl.cnf",
       'KEY_DIR' => key_dir,
-      'CA_EXPIRE' => (new_resource.key_vars['ca_expire'] || node['openvpn']['key']['ca_expire']).to_s,
-      'KEY_EXPIRE' => (new_resource.key_vars['key_expire'] || node['openvpn']['key']['expire']).to_s,
-      'KEY_SIZE' => (new_resource.key_vars['key_size'] || node['openvpn']['key']['size']).to_s,
-      'KEY_COUNTRY' => new_resource.key_vars['key_country'] || node['openvpn']['key']['country'],
-      'KEY_PROVINCE' => new_resource.key_vars['key_province'] || node['openvpn']['key']['province'],
-      'KEY_CITY' => new_resource.key_vars['key_city'] || node['openvpn']['key']['city'],
-      'KEY_ORG' => new_resource.key_vars['key_org'] || node['openvpn']['key']['org'],
-      'KEY_EMAIL' => new_resource.key_vars['key_email'] || node['openvpn']['key']['email'],
-      'KEY_OU' => new_resource.key_vars['key_org_unit'] || 'OpenVPN Server'
+      'CA_EXPIRE' => new_resource.ca_expire.to_s,
+      'KEY_EXPIRE' => new_resource.key_expire.to_s,
+      'KEY_SIZE' => new_resource.key_size.to_s,
+      'KEY_COUNTRY' => new_resource.key_country,
+      'KEY_PROVINCE' => new_resource.key_province,
+      'KEY_CITY' => new_resource.key_city,
+      'KEY_ORG' => new_resource.key_org,
+      'KEY_EMAIL' => new_resource.key_email,
+      'KEY_OU' => 'OpenVPN Server'
     )
     creates cert_path unless new_resource.force
     notifies :run, 'execute[gencrl]', :immediately
-    notifies :create, "remote_file[#{[node['openvpn']['fs_prefix'], '/etc/openvpn/crl.pem'].join}]", :immediately
+    notifies :create, 'remote_file[/etc/openvpn/crl.pem]', :immediately
   end
 
   cleanup_name = "cleanup-old-bundle-#{new_resource.client_name}"
 
+  client_vars = {
+    client_cn: new_resource.client_name,
+    compression: new_resource.compression,
+    dev: new_resource.dev,
+    proto: new_resource.proto,
+    gateway: new_resource.gateway,
+    port: new_resource.port,
+    config_options: new_resource.config_options,
+    server_verification: new_resource.server_verification,
+  }
+
   template "#{destination_path}/#{client_file_basename}.conf" do
     source 'client.conf.erb'
-    cookbook lazy { node['openvpn']['cookbook_user_conf'] }
-    variables(
-      client_cn: new_resource.client_name,
-      compression: compression
-    )
+    cookbook new_resource.template_cookbook
+    variables(client_vars)
     notifies :delete, "file[#{cleanup_name}]", :immediately
     only_if { new_resource.create_bundle }
   end
 
   template "#{destination_path}/#{client_file_basename}.ovpn" do
     source new_resource.create_bundle ? 'client.conf.erb' : 'client-inline.conf.erb'
-    cookbook lazy { node['openvpn']['cookbook_user_conf'] }
+    cookbook new_resource.template_cookbook
     if new_resource.create_bundle
-      variables(
-        client_cn: new_resource.client_name,
-        compression: compression
-      )
+      variables(client_vars)
     else
       sensitive true
       variables(
         lazy do
-          {
-            client_cn: new_resource.client_name,
+          client_vars.merge(
             ca: IO.read(ca_cert_path),
             cert: IO.read(cert_path),
-            key: IO.read(key_path),
-            compression: compression,
-          }.merge(new_resource.additional_vars) { |key, oldval, newval| oldval } # rubocop:disable Lint/UnusedBlockArgument
+            key: IO.read(key_path)
+          ).merge(new_resource.additional_vars) { |_key, oldval, _newval| oldval }
         end
       )
     end
@@ -92,7 +99,6 @@ action :create do
 
   file cleanup_name do
     action :nothing
-
     path bundle_full_path
   end
 
@@ -106,8 +112,8 @@ action :create do
 end
 
 action :delete do
-  key_dir = node['openvpn']['key_dir']
-  client_file_basename = [node['openvpn']['client_prefix'], new_resource.client_name].join('-')
+  key_dir = new_resource.key_dir
+  client_file_basename = [new_resource.client_prefix, new_resource.client_name].join('-')
   destination_path = ::File.expand_path(new_resource.destination || key_dir)
   bundle_filename = "#{new_resource.client_name}.tar.gz"
   bundle_full_path = ::File.expand_path(::File.join(destination_path, bundle_filename))
@@ -116,9 +122,10 @@ action :delete do
     file "#{destination_path}/#{client_file_basename}.#{ext}" do
       action :delete
     end
-    file bundle_full_path do
-      action :delete
-      only_if { new_resource.create_bundle }
-    end
+  end
+
+  file bundle_full_path do
+    action :delete
+    only_if { new_resource.create_bundle }
   end
 end

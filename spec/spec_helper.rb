@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'chefspec'
 require 'chefspec/berkshelf'
 
@@ -19,5 +21,5 @@ RSpec.configure do |config|
   config.formatter = :documentation
   config.tty = true
   config.platform = 'ubuntu'
-  config.version = '16.04'
+  config.version = '22.04'
 end
