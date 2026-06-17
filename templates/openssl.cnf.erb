@@ -14,14 +14,14 @@ certs		= $dir
 crl_dir		= $dir
 database	= $dir/index.txt
 new_certs_dir	= $dir
-certificate	= <%= node['openvpn']['signing_ca_cert'] %>
+certificate	= <%= @signing_ca_cert %>
 serial		= $dir/serial
 crl		= $dir/crl.pem
-private_key	= <%= node['openvpn']['signing_ca_key'] %>
+private_key	= <%= @signing_ca_key %>
 RANDFILE	= $dir/.rand
 x509_extensions	= usr_cert
-default_days	= <%= node['openvpn']['key']['ca_expire'] %>
-default_crl_days	= <%= node['openvpn']['key']['crl_expire'] %>
+default_days	= <%= @ca_expire %>
+default_crl_days	= <%= @crl_expire %>
 default_md	= md5
 preserve	= no
 policy		= policy_anything

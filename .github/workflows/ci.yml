@@ -9,7 +9,7 @@ name: ci
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@6.0.0
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@8.0.1
     permissions:
       actions: write
       checks: write
@@ -24,12 +24,20 @@ jobs:
       matrix:
         os:
           - "almalinux-8"
+          - "almalinux-9"
+          - "amazonlinux-2023"
+          - "centos-stream-9"
+          - "debian-12"
+          - "debian-13"
+          - "fedora-latest"
+          - "oraclelinux-8"
+          - "oraclelinux-9"
           - "rockylinux-8"
-          - "ubuntu-2004"
+          - "rockylinux-9"
+          - "ubuntu-2204"
+          - "ubuntu-2404"
         suite:
-          - "server"
-          - "server-verification"
-          - "server-verify-no-databag"
+          - "default"
       fail-fast: false
 
     steps:
