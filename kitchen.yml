@@ -4,7 +4,8 @@ driver:
 
 provisioner:
   name: chef_infra
-  product_name: chef
+name: cinc_infra
+  product_name: cinc
   product_version: latest
   channel: stable
   chef_license: accept
