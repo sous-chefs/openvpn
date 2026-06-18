@@ -1,7 +1,8 @@
 ---
 provisioner:
   name: chef_infra
-  product_name: chef
+name: cinc_infra
+product_name: cinc
   product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
   channel: stable
   install_strategy: once
