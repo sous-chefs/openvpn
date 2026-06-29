@@ -1,7 +1,8 @@
 ---
 provisioner:
   name: chef_infra
-  product_name: chef
+name: cinc_infra
+product_name: cinc
   product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
   channel: stable
   install_strategy: once
@@ -19,14 +20,12 @@ platforms:
   - name: almalinux-9
   - name: amazonlinux-2023
   - name: centos-stream-9
-  - name: debian-11
   - name: debian-12
+  - name: debian-13
   - name: fedora-latest
-  - name: opensuse-leap-15
   - name: oraclelinux-8
   - name: oraclelinux-9
   - name: rockylinux-8
   - name: rockylinux-9
-  - name: ubuntu-20.04
   - name: ubuntu-22.04
   - name: ubuntu-24.04

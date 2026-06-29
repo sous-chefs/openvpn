@@ -46,9 +46,9 @@ task :client do
 
     conf = <<EOF
 client
-dev <%= node['openvpn']['config']['dev'].chomp('0') %>
-proto <%= node['openvpn']['config']['proto'] %>
-remote #{gateway} <%= node['openvpn']['config']['port'] %>
+dev <%= (@vpn_config['dev'] || 'tun0').chomp('0') %>
+proto <%= @vpn_config['proto'] || 'udp' %>
+remote #{gateway} <%= @vpn_config['port'] || '1194' %>
 resolv-retry infinite
 nobind
 persist-key
@@ -57,8 +57,8 @@ ca ca.crt
 cert #{usercn}.crt
 key #{usercn}.key
 verb 3
-<% if node['openvpn']['server_verification'] %>
-<%= node['openvpn']['server_verification'] %>
+<% if @server_verification %>
+<%= @server_verification %>
 <% end %>
 EOF
 

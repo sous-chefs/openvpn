@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 name              'openvpn'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
 license           'Apache-2.0'
-description       'Installs and configures openvpn and includes rake tasks for managing certs.'
+description       'Provides custom resources for installing and configuring OpenVPN.'
 source_url        'https://github.com/sous-chefs/openvpn'
 issues_url        'https://github.com/sous-chefs/openvpn/issues'
 version           '7.0.27'
 chef_version      '>= 15.3'
 
-supports 'arch'
-supports 'centos'
-supports 'debian'
+supports 'almalinux', '>= 8.0'
+supports 'amazon', '>= 2023.0'
+supports 'centos_stream', '>= 9.0'
+supports 'debian', '>= 12.0'
 supports 'fedora'
-supports 'redhat'
-supports 'ubuntu'
-
-depends 'yum-epel'
+supports 'oracle', '>= 8.0'
+supports 'rocky', '>= 8.0'
+supports 'ubuntu', '>= 22.04'

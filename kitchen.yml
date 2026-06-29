@@ -1,59 +1,46 @@
+---
 driver:
   name: vagrant
 
 provisioner:
   name: chef_infra
+name: cinc_infra
+  product_name: cinc
+  product_version: latest
+  channel: stable
+  chef_license: accept
   enforce_idempotency: true
   multiple_converge: 2
   deprecations_as_errors: true
-  chef_license: accept-no-persist
 
 verifier:
   name: inspec
 
 platforms:
-  - name: amazonlinux-2
-  - name: centos-7
-  - name: centos-stream-8
-  - name: debian-10
-  - name: debian-10
-  - name: freebsd-12
+  - name: almalinux-8
+  - name: almalinux-9
+  - name: amazonlinux-2023
+  - name: centos-stream-9
+  - name: debian-12
+  - name: debian-13
   - name: fedora-latest
-  - name: opensuse-leap-15
-  - name: ubuntu-18.04
-  - name: ubuntu-20.04
+  - name: oraclelinux-8
+  - name: oraclelinux-9
+  - name: rockylinux-8
+  - name: rockylinux-9
+  - name: ubuntu-22.04
+  - name: ubuntu-24.04
+
+x-run_lists:
+  default: &default_run_list
+    - recipe[test::default]
+
+x-verifiers:
+  default: &default_verifier
+    inspec_tests:
+      - path: test/integration/default
 
 suites:
-  - name: server
-    run_list:
-      - recipe[openvpn::server]
-    attributes:
-      openvpn:
-        config:
-          verb: 1
-          mute: 10
-          route: ["192.168.4.0 255.255.255.0"]
-        push_routes:
-          - 192.168.10.0 255.255.255.0
-          - 10.12.10.0 255.255.255.0
-        push_options:
-          dhcp-option:
-            - "DOMAIN local"
-            - "DOMAIN-SEARCH local"
-
-  - name: server_verification
-    run_list:
-      - recipe[openvpn::server]
-      - recipe[openvpn::users]
-    attributes:
-      openvpn:
-        server_verification: "remote-cert-tls server"
-
-  - name: server_verify_no_databag
-    run_list:
-      - recipe[openvpn::server]
-      - recipe[openvpn::users]
-    attributes:
-      openvpn:
-        server_verification: "remote-cert-tls server"
-        use_databag: false
+  - name: default
+    run_list: *default_run_list
+    verifier: *default_verifier
