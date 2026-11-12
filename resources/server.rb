@@ -48,6 +48,15 @@ action :create do
     only_if { new_resource.install_bridge_utils }
   end
 
+  # Chef's sysctl resource reloads this file even when it writes sysctl.d snippets.
+  file '/etc/sysctl.conf' do
+    action :create_if_missing
+    owner 'root'
+    group node['root_group']
+    mode '0644'
+    only_if { new_resource.enable_ip_forwarding }
+  end
+
   sysctl 'net.ipv4.conf.all.forwarding' do
     value 1
     only_if { new_resource.enable_ip_forwarding }

@@ -25,6 +25,7 @@ describe 'openvpn_server' do
 
   it { is_expected.to install_openvpn_install('default') }
   it { is_expected.to create_directory('/etc/openvpn/keys') }
+  it { is_expected.to create_file_if_missing('/etc/sysctl.conf') }
   it { is_expected.to create_directory('/etc/openvpn/easy-rsa') }
   it { is_expected.to create_template('/etc/openvpn/easy-rsa/openssl.cnf') }
   it { is_expected.to create_template('/etc/openvpn/server.up.sh') }

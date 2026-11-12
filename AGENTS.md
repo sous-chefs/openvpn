@@ -73,6 +73,10 @@ installation.
 * AlmaLinux's OpenSSL applies request extensions during `openssl req`; use `v3_req` for
   the CSR and apply `server` extensions only when the CA signs it. Applying the server
   authorityKeyIdentifier to a CSR fails because a request has no issuer certificate.
+* Debian 13 omits `/etc/sysctl.conf`, but Chef's native sysctl resource still reloads
+  that path. Create it only when absent and forwarding is enabled; preserve existing content.
+* Current Fedora OpenSSL no longer provides the engines module. The PKI template must
+  not initialise its unused legacy engine section, or all certificate commands fail to start.
 * Dokken is the default CI/local strategy because the resources are Linux systemd/package based.
 * The default suite exercises install, server config, service enable/start, PKI file generation,
   and one client bundle.
