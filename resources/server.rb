@@ -133,7 +133,7 @@ action :create do
     command 'umask 077 && ' \
             "openssl req -batch -days #{new_resource.key_expire} " \
             "-nodes -new -newkey rsa:#{new_resource.key_size} -keyout #{new_resource.key_dir}/server.key " \
-            "-out #{new_resource.key_dir}/server.csr -extensions server " \
+            "-out #{new_resource.key_dir}/server.csr -reqexts v3_req " \
             "-config #{new_resource.key_dir}/openssl.cnf && " \
             "openssl ca -batch -days #{new_resource.ca_expire} " \
             "-out #{new_resource.key_dir}/server.crt -in #{new_resource.key_dir}/server.csr " \
@@ -191,6 +191,7 @@ end
 
 action :delete do
   openvpn_service new_resource.config_name do
+    service_type 'server'
     action :delete
   end
 
@@ -210,8 +211,8 @@ action_class do
   def resolved_config_path
     return new_resource.config_path if new_resource.config_path
 
-    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora')
-      "/etc/openvpn/#{new_resource.config_name}/#{new_resource.config_name}.conf"
+    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora', 'arch')
+      "/etc/openvpn/server/#{new_resource.config_name}.conf"
     else
       "/etc/openvpn/#{new_resource.config_name}.conf"
     end
@@ -226,7 +227,7 @@ action_class do
   end
 
   def server_config
-    new_resource.config || default_server_config
+    default_server_config.merge(new_resource.config || {})
   end
 
   def default_server_config

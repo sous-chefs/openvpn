@@ -8,7 +8,7 @@ node attributes.
 * `recipes/` was removed. Use resources from a wrapper or policy cookbook instead.
 * `attributes/` was removed. Pass values directly to resource properties.
 * Berkshelf was replaced by `Policyfile.rb` for local test dependency resolution.
-* Platform support was reduced to current Linux systemd platforms that can be exercised by Kitchen.
+* EOL platform releases were removed; Arch Linux and Red Hat support remain available.
 
 ## Recipe Replacement
 
@@ -31,6 +31,25 @@ openvpn_server 'server' do
 end
 ```
 
+### `openvpn::client`
+
+```ruby
+openvpn_client 'office' do
+  config(
+    'client' => '',
+    'dev' => 'tun',
+    'proto' => 'udp',
+    'remote' => 'vpn.example.test 1194',
+    'ca' => '/etc/openvpn/office/ca.crt',
+    'cert' => '/etc/openvpn/office/client.crt',
+    'key' => '/etc/openvpn/office/client.key'
+  )
+end
+```
+
+Supply certificate files separately. `openvpn_client` manages the installed client;
+`openvpn_user` generates credentials and bundles for distribution to clients.
+
 ### `openvpn::users`
 
 ```ruby
@@ -47,6 +66,7 @@ end
 ## Resource Overview
 
 * `openvpn_install` installs OpenVPN packages.
+* `openvpn_client` configures and runs a client instance.
 * `openvpn_conf` renders an OpenVPN configuration file.
 * `openvpn_server` builds the baseline server, PKI files, configuration, and service.
 * `openvpn_service` manages the OpenVPN systemd service.

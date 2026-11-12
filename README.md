@@ -13,11 +13,13 @@ Provides custom resources for installing and configuring OpenVPN Community Editi
 ### Platforms
 
 * AlmaLinux 8+
+* Arch Linux
 * Amazon Linux 2023+
 * CentOS Stream 9+
 * Debian 12+
 * Fedora
 * Oracle Linux 8+
+* Red Hat Enterprise Linux 8+
 * Rocky Linux 8+
 * Ubuntu 22.04+
 
@@ -27,6 +29,7 @@ Chef Infra Client 15.3 or later.
 
 ## Resources
 
+* [openvpn_client](documentation/openvpn_client.md)
 * [openvpn_conf](documentation/openvpn_conf.md)
 * [openvpn_install](documentation/openvpn_install.md)
 * [openvpn_server](documentation/openvpn_server.md)

@@ -7,6 +7,15 @@ installation, server configuration, service management, and client certificate b
 
 ## Agent Findings
 
+* Owner confirmed Full Migration for PR #260 on 2026-11-12. Complete this existing PR;
+  do not close the competing incremental PR #253 or merge either PR without authorisation.
+* `openvpn_client` replaces the old client recipe: install the package, write an explicit
+  client configuration and enable/start its service. Client certificates remain caller-managed.
+* Named RHEL/Fedora instances use `/etc/openvpn/server/<name>.conf` and
+  `/etc/openvpn/client/<name>.conf`, matching the package systemd templates.
+* Removed the unused `kitchen.exec.yml` macOS/Windows scaffold: neither the original
+  main metadata nor this migration declares macOS or Windows support, README lists Linux
+  only, and CI exclusively uses Dokken Linux images. No supported target was removed.
 * This is a full migration from recipes and node attributes to resources. Do not reintroduce
   `recipes/` or `attributes/`; use resource properties in test cookbooks and wrapper cookbooks.
 * The cookbook intentionally uses distribution packages rather than the legacy
@@ -54,6 +63,16 @@ installation.
 
 ## Test and CI Notes
 
+* Arch Linux and Red Hat support are retained from main, including ChefSpec coverage. The
+  Docker registry returned `no such manifest: docker.io/dokken/archlinux:latest` on 2026-11-12.
+  No licensed Red Hat integration image is configured in this repository. Kitchen/CI keeps
+  its existing 13 Linux images; AlmaLinux covers the RHEL-family package/service workflow,
+  but is not direct evidence of Red Hat or Arch convergence.
+* Arch packages ship the upstream split `openvpn-client@` / `openvpn-server@` units, not the
+  obsolete `openvpn@` unit. Use the same client/server subdirectories as Fedora/RHEL.
+* AlmaLinux's OpenSSL applies request extensions during `openssl req`; use `v3_req` for
+  the CSR and apply `server` extensions only when the CA signs it. Applying the server
+  authorityKeyIdentifier to a CSR fails because a request has no issuer certificate.
 * Dokken is the default CI/local strategy because the resources are Linux systemd/package based.
 * The default suite exercises install, server config, service enable/start, PKI file generation,
   and one client bundle.
@@ -67,3 +86,6 @@ installation.
 * [Ubuntu 22.04 openvpn package](https://packages.ubuntu.com/jammy/openvpn)
 * [Ubuntu 24.04 openvpn package](https://packages.ubuntu.com/noble/openvpn)
 * [Fedora openvpn package](https://packages.fedoraproject.org/pkgs/openvpn/openvpn/)
+* [Fedora OpenVPN service and configuration paths](https://fedoraproject.org/wiki/OpenVPN)
+* [Upstream systemd instance layout](https://github.com/OpenVPN/openvpn/blob/master/distro/systemd/README.systemd)
+* [Arch OpenVPN package files](https://archlinux.org/packages/extra/x86_64/openvpn/files/)

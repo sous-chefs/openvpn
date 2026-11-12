@@ -34,4 +34,35 @@ describe 'openvpn_server' do
   it { is_expected.to create_openvpn_conf('server') }
   it { is_expected.to enable_openvpn_service('server') }
   it { is_expected.to start_openvpn_service('server') }
+
+  context 'with a named RHEL instance and partial configuration' do
+    platform 'almalinux', '9'
+
+    recipe do
+      openvpn_server 'office' do
+        config('port' => '1195')
+      end
+    end
+
+    it 'uses the distribution server directory and retains required PKI defaults' do
+      resource = chef_run.openvpn_conf('office')
+      expect(resource.config_path).to eq('/etc/openvpn/server/office.conf')
+      expect(resource.config).to include('port' => '1195', 'dh' => '/etc/openvpn/keys/dh2048.pem')
+    end
+  end
+
+  context 'deleting a named RHEL server' do
+    platform 'almalinux', '9'
+
+    recipe do
+      openvpn_server 'office' do
+        action :delete
+      end
+    end
+
+    it 'stops the server unit rather than deriving its type from the instance name' do
+      expect(chef_run.openvpn_service('office').service_type).to eq('server')
+    end
+    it { is_expected.to delete_openvpn_conf('office').with(config_path: '/etc/openvpn/server/office.conf') }
+  end
 end

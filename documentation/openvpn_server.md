@@ -2,6 +2,9 @@
 
 Installs OpenVPN, prepares PKI files, renders server configuration, and manages the service.
 
+`config` overrides individual generated defaults, so a partial hash retains the required PKI
+paths. RHEL, Fedora and Arch use `/etc/openvpn/server/<name>.conf` for named instances.
+
 ## Actions
 
 | Action    | Description                             |

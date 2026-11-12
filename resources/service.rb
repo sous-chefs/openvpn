@@ -10,8 +10,6 @@ property :config_path, [String, nil]
 property :supports, Hash, default: { status: true, restart: true }
 
 action :enable do
-  arch_git_config_link if platform_family?('arch')
-
   service resolved_service_name do
     supports new_resource.supports
     action :enable
@@ -19,8 +17,6 @@ action :enable do
 end
 
 action :start do
-  arch_git_config_link if platform_family?('arch')
-
   service resolved_service_name do
     supports new_resource.supports
     action :start
@@ -56,8 +52,8 @@ action_class do
   def resolved_config_path
     return new_resource.config_path if new_resource.config_path
 
-    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora')
-      "/etc/openvpn/#{new_resource.config_name}/#{new_resource.config_name}.conf"
+    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora', 'arch')
+      "/etc/openvpn/#{resolved_service_type}/#{new_resource.config_name}.conf"
     else
       "/etc/openvpn/#{new_resource.config_name}.conf"
     end
@@ -66,19 +62,12 @@ action_class do
   def resolved_service_name
     return new_resource.service_name if new_resource.service_name
 
-    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora')
+    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora', 'arch')
       "openvpn-#{resolved_service_type}@#{new_resource.config_name}.service"
     elsif platform_family?('debian', 'arch')
       "openvpn@#{new_resource.config_name}.service"
     else
       'openvpn'
-    end
-  end
-
-  def arch_git_config_link
-    link "/etc/openvpn/#{new_resource.config_name}/#{new_resource.config_name}.conf" do
-      to resolved_config_path
-      only_if { ::File.exist?(resolved_config_path) }
     end
   end
 end

@@ -61,7 +61,7 @@ action_class do
   def resolved_config_path
     return new_resource.config_path if new_resource.config_path
 
-    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora')
+    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora', 'arch')
       "/etc/openvpn/#{new_resource.config_name}/#{new_resource.config_name}.conf"
     else
       "/etc/openvpn/#{new_resource.config_name}.conf"

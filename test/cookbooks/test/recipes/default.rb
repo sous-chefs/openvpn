@@ -44,3 +44,17 @@ openvpn_user 'vpn_user' do
   create_bundle false
   only_if { ::File.exist?('/etc/openvpn/keys/server.crt') }
 end
+
+openvpn_client 'office' do
+  config(
+    'client' => '',
+    'dev' => 'tun1',
+    'proto' => 'udp',
+    'remote' => '127.0.0.1 1194',
+    'nobind' => '',
+    'ca' => '/etc/openvpn/keys/ca.crt',
+    'cert' => '/etc/openvpn/keys/vpn_user.crt',
+    'key' => '/etc/openvpn/keys/vpn_user.key',
+    'verb' => 1
+  )
+end

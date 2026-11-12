@@ -51,5 +51,26 @@ control 'openvpn-service-01' do
   describe systemd_service(service_name) do
     it { should be_installed }
     it { should be_enabled }
+    it { should be_running }
+  end
+end
+
+control 'openvpn-client-01' do
+  impact 1.0
+  title 'Named client configuration and service are managed'
+
+  split_units = os.family == 'redhat' || os.name == 'fedora' || os.name == 'amazon'
+  config_path = split_units ? '/etc/openvpn/client/office.conf' : '/etc/openvpn/office.conf'
+  service_name = split_units ? 'openvpn-client@office' : 'openvpn@office'
+
+  describe file(config_path) do
+    it { should exist }
+    its('content') { should match(/^remote 127\.0\.0\.1 1194$/) }
+    its('content') { should match(%r{^cert /etc/openvpn/keys/vpn_user.crt$}) }
+  end
+
+  describe systemd_service(service_name) do
+    it { should be_enabled }
+    it { should be_running }
   end
 end
