@@ -2,8 +2,8 @@
 
 [![Cookbook Version](https://img.shields.io/cookbook/v/openvpn.svg)](https://supermarket.chef.io/cookbooks/openvpn)
 [![CI State](https://github.com/sous-chefs/openvpn/workflows/ci/badge.svg)](https://github.com/sous-chefs/openvpn/actions?query=workflow%3Aci)
-[![OpenCollective](https://opencollective.com/sous-chefs/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/sous-chefs/sponsors/badge.svg)](#sponsors)
+[![OpenCollective](https://opencollective.com/sous-chefs/backers/badge.svg)](https://opencollective.com/sous-chefs)
+[![OpenCollective](https://opencollective.com/sous-chefs/sponsors/badge.svg)](https://opencollective.com/sous-chefs)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Provides custom resources for installing and configuring OpenVPN Community Edition.
