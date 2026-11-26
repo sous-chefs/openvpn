@@ -64,6 +64,10 @@ control 'openvpn-client-01' do
   service_name = split_units ? 'openvpn-client@office' : 'openvpn@office'
 
   describe file(config_path) do
+    it { should be_symlink }
+  end
+
+  describe file('/etc/openvpn/custom/office.conf') do
     it { should exist }
     its('content') { should match(/^remote 127\.0\.0\.1 1194$/) }
     its('content') { should match(%r{^cert /etc/openvpn/keys/vpn_user.crt$}) }

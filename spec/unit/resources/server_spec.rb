@@ -29,12 +29,25 @@ describe 'openvpn_server' do
   it { is_expected.to create_directory('/etc/openvpn/easy-rsa') }
   it { is_expected.to create_template('/etc/openvpn/easy-rsa/openssl.cnf') }
   it { is_expected.to create_template('/etc/openvpn/server.up.sh') }
+  it { is_expected.to render_file('/etc/openvpn/server.up.sh').with_content('net.ipv4.ip_forward=1') }
   it { is_expected.to create_file_if_missing('/etc/openvpn/keys/dh512.pem') }
   it { is_expected.to run_execute('openvpn-initca') }
   it { is_expected.to run_execute('openvpn-server-key') }
   it { is_expected.to create_openvpn_conf('server') }
   it { is_expected.to enable_openvpn_service('server') }
   it { is_expected.to start_openvpn_service('server') }
+
+  context 'with host forwarding managed separately and a custom hook directory' do
+    recipe do
+      openvpn_server 'server' do
+        enable_ip_forwarding false
+        up_script_dir '/etc/openvpn/custom hooks'
+      end
+    end
+
+    it { is_expected.not_to render_file('/etc/openvpn/server.up.sh').with_content('/sbin/sysctl') }
+    it { is_expected.to render_file('/etc/openvpn/server.up.sh').with_content('/etc/openvpn/custom\ hooks/*.sh') }
+  end
 
   context 'with a named RHEL instance and partial configuration' do
     platform 'almalinux', '9'

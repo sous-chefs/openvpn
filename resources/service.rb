@@ -10,6 +10,7 @@ property :config_path, [String, nil]
 property :supports, Hash, default: { status: true, restart: true }
 
 action :enable do
+  link_package_config
   service resolved_service_name do
     supports new_resource.supports
     action :enable
@@ -17,6 +18,7 @@ action :enable do
 end
 
 action :start do
+  link_package_config
   service resolved_service_name do
     supports new_resource.supports
     action :start
@@ -24,6 +26,7 @@ action :start do
 end
 
 action :restart do
+  link_package_config
   service resolved_service_name do
     supports new_resource.supports
     action :restart
@@ -42,6 +45,12 @@ action :delete do
     supports new_resource.supports
     action [:stop, :disable]
   end
+
+  if custom_package_config? && package_config_link?
+    link package_config_path do
+      action :delete
+    end
+  end
 end
 
 action_class do
@@ -49,13 +58,34 @@ action_class do
     new_resource.service_type || new_resource.config_name
   end
 
-  def resolved_config_path
-    return new_resource.config_path if new_resource.config_path
-
+  def package_config_path
     if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora', 'arch')
       "/etc/openvpn/#{resolved_service_type}/#{new_resource.config_name}.conf"
     else
       "/etc/openvpn/#{new_resource.config_name}.conf"
+    end
+  end
+
+  def custom_package_config?
+    new_resource.config_path && !new_resource.service_name &&
+      ::File.expand_path(new_resource.config_path) != package_config_path
+  end
+
+  def package_config_link?
+    ::File.symlink?(package_config_path) &&
+      ::File.expand_path(::File.readlink(package_config_path), ::File.dirname(package_config_path)) == ::File.expand_path(new_resource.config_path)
+  end
+
+  def link_package_config
+    return unless custom_package_config?
+    return if package_config_link?
+
+    if ::File.exist?(package_config_path) || ::File.symlink?(package_config_path)
+      raise Chef::Exceptions::ValidationFailed, "OpenVPN package configuration already exists at #{package_config_path}"
+    end
+
+    link package_config_path do
+      to ::File.expand_path(new_resource.config_path)
     end
   end
 

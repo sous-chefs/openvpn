@@ -46,6 +46,7 @@ openvpn_user 'vpn_user' do
 end
 
 openvpn_client 'office' do
+  config_path '/etc/openvpn/custom/office.conf'
   config(
     'client' => '',
     'dev' => 'tun1',

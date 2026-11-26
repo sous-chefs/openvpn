@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'openssl'
+require 'shellwords'
 
 provides :openvpn_server
 unified_mode true
@@ -93,7 +94,10 @@ action :create do
     owner 'root'
     group node['root_group']
     mode '0755'
-    variables(template_variables)
+    variables(template_variables.merge(
+      enable_ip_forwarding: new_resource.enable_ip_forwarding,
+      up_script_dir: Shellwords.escape(new_resource.up_script_dir)
+    ))
     notifies :restart, "openvpn_service[#{new_resource.config_name}]"
   end
 
@@ -200,6 +204,7 @@ end
 
 action :delete do
   openvpn_service new_resource.config_name do
+    config_path resolved_config_path
     service_type 'server'
     action :delete
   end

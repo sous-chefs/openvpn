@@ -32,6 +32,7 @@ end
 
 action :delete do
   openvpn_service new_resource.config_name do
+    config_path resolved_config_path
     service_type 'client'
     action :delete
   end
