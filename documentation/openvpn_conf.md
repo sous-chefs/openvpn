@@ -11,16 +11,19 @@ Renders an OpenVPN configuration file.
 
 ## Properties
 
-| Property          | Type   | Default                     | Description                         |
-|-------------------|--------|-----------------------------|-------------------------------------|
-| `config_name`     | String | name property               | OpenVPN instance/config name        |
-| `config_path`     | String | platform-specific           | Destination config path             |
-| `cookbook`        | String | `'openvpn'`                 | Template cookbook                   |
-| `config`          | Hash   | `{}`                        | OpenVPN directives                  |
-| `template_source` | String | `'server.conf.erb'`         | Template source                     |
-| `push_routes`     | Array  | `[]`                        | Routes rendered as push directives  |
-| `push_options`    | Hash   | `{}`                        | Additional push options             |
-| `client_cn`       | String | `'client'`                  | Client common name                  |
+| Property          | Type        | Default                     | Description                         |
+|-------------------|-------------|-----------------------------|-------------------------------------|
+| `config_name`     | String      | name property               | OpenVPN instance/config name        |
+| `config_path`     | String      | platform-specific           | Destination config path             |
+| `cookbook`        | String      | `'openvpn'`                 | Template cookbook                   |
+| `config`          | Hash        | `{}`                        | OpenVPN directives                  |
+| `template_source` | String      | `'server.conf.erb'`         | Template source                     |
+| `push_routes`     | Array       | `[]`                        | Routes rendered as push directives  |
+| `push_options`    | Hash, Array | `{}`                        | Additional push options             |
+| `client_cn`       | String      | `'client'`                  | Client common name                  |
+
+Pass an array of `[option, value]` pairs to retain order and repeated options. In either
+form, a value can be a string or an array of strings.
 
 ## Examples
 

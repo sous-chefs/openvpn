@@ -9,7 +9,7 @@ property :cookbook, String, default: 'openvpn'
 property :config, Hash, default: {}
 property :template_source, String, default: 'server.conf.erb'
 property :push_routes, Array, default: []
-property :push_options, Hash, default: {}
+property :push_options, [Hash, Array], default: {}
 property :client_cn, String, default: 'client'
 
 action :create do

@@ -12,6 +12,7 @@ property :install_epel, [true, false], default: true
 property :key_dir, String, default: '/etc/openvpn/keys'
 property :easy_rsa_dir, String, default: '/etc/openvpn/easy-rsa'
 property :config_path, [String, nil]
+property :server_up_script, [true, false], default: true
 property :up_script_path, String, default: '/etc/openvpn/server.up.sh'
 property :up_script_dir, String, default: '/etc/openvpn/server.up.d'
 property :crl_path, String, default: '/etc/openvpn/crl.pem'
@@ -19,8 +20,9 @@ property :subnet, String, default: '10.8.0.0'
 property :netmask, String, default: '255.255.0.0'
 property :config, [Hash, nil]
 property :push_routes, Array, default: []
-property :push_options, Hash, default: {}
+property :push_options, [Hash, Array], default: {}
 property :client_cn, String, default: 'client'
+property :server_verification, [String, nil]
 property :key_size, [Integer, String], default: 2048
 property :ca_expire, [Integer, String], default: 3650
 property :key_expire, [Integer, String], default: 3650
@@ -68,7 +70,9 @@ action :create do
     only_if { new_resource.enable_ip_forwarding && ::Dir.exist?('/proc/sys/net/ipv6') }
   end
 
-  [new_resource.key_dir, new_resource.easy_rsa_dir, new_resource.up_script_dir].each do |dir|
+  directories = [new_resource.key_dir, new_resource.easy_rsa_dir]
+  directories << new_resource.up_script_dir if new_resource.server_up_script
+  directories.each do |dir|
     directory dir do
       owner 'root'
       group node['root_group']
@@ -99,6 +103,7 @@ action :create do
       up_script_dir: Shellwords.escape(new_resource.up_script_dir)
     ))
     notifies :restart, "openvpn_service[#{new_resource.config_name}]"
+    only_if { new_resource.server_up_script }
   end
 
   template "#{new_resource.key_dir}/openssl.cnf" do
@@ -214,10 +219,13 @@ action :delete do
     action :delete
   end
 
-  [new_resource.crl_path, new_resource.up_script_path].each do |path|
-    file path do
-      action :delete
-    end
+  file new_resource.crl_path do
+    action :delete
+  end
+
+  file new_resource.up_script_path do
+    action :delete
+    only_if { new_resource.server_up_script }
   end
 end
 
@@ -261,7 +269,7 @@ action_class do
       'proto' => 'udp',
       'script-security' => 2,
       'server' => "#{new_resource.subnet} #{new_resource.netmask}",
-      'up' => new_resource.up_script_path,
+      'up' => new_resource.server_up_script ? new_resource.up_script_path : nil,
       'user' => 'nobody',
     }
   end
@@ -305,7 +313,7 @@ action_class do
       key_size: new_resource.key_size,
       message_digest: new_resource.message_digest,
       netmask: new_resource.netmask,
-      server_verification: nil,
+      server_verification: new_resource.server_verification,
       signing_ca_cert: signing_ca_cert,
       signing_ca_key: signing_ca_key,
       subnet: new_resource.subnet,
