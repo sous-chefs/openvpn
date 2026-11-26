@@ -5,6 +5,23 @@ This file is used to list changes made in each version of the openvpn cookbook.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## [8.0.0](https://github.com/sous-chefs/openvpn/compare/v7.0.27...v8.0.0) (2026-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove recipes/, attributes/, and legacy service management.
+* public recipes and node['openvpn'] attributes have been removed; consumers must use the openvpn_* custom resources.
+
+### Features
+
+* migrate openvpn to resources ([#260](https://github.com/sous-chefs/openvpn/issues/260)) ([2989ac6](https://github.com/sous-chefs/openvpn/commit/2989ac6994d6204f67c69bd08b852fe19041d8c0))
+
+
+### Bug Fixes
+
+* preserve OpenVPN server migration compatibility ([0851739](https://github.com/sous-chefs/openvpn/commit/0851739582e7646e6242c664890bbf96fbe6e7bc))
+
 ## [7.0.27](https://github.com/sous-chefs/openvpn/compare/v7.0.26...v7.0.27) (2025-11-13)
 
 

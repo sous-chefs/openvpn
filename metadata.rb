@@ -7,7 +7,7 @@ license           'Apache-2.0'
 description       'Provides custom resources for installing and configuring OpenVPN.'
 source_url        'https://github.com/sous-chefs/openvpn'
 issues_url        'https://github.com/sous-chefs/openvpn/issues'
-version           '7.0.27'
+version           '8.0.0'
 chef_version      '>= 15.3'
 
 supports 'almalinux', '>= 8.0'
