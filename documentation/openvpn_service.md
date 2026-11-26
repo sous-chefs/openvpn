@@ -19,7 +19,7 @@ Manages an OpenVPN systemd service.
 | `config_name`  | String | name property     | OpenVPN instance/config name        |
 | `service_type` | String | `config_name`     | Service type, usually `server`      |
 | `service_name` | String | platform-specific | Full service unit name              |
-| `config_path`  | String | platform-specific | Configuration file read by the packaged service |
+| `config_path`  | String | platform-specific | Config file path                    |
 | `supports`     | Hash   | status/restart    | Chef service support map            |
 
 For a custom `config_path`, the resource links the packaged instance's expected path to the custom file. The file must be visible and readable inside the unit's sandbox. Move an existing regular file at the packaged path before adopting a custom path. Remove the old link before changing the custom path or returning to the packaged default. A service selected explicitly with `service_name` keeps its own configuration handling.

@@ -41,9 +41,11 @@ paths. RHEL, Fedora and Arch use `/etc/openvpn/server/<name>.conf` for named ins
 | `key_email`            | String      | `'admin@foobar.com'`          | Certificate email            |
 | `message_digest`       | String      | `'sha256'`                    | OpenSSL message digest       |
 | `configure`            | true, false | `true`                        | Render server config         |
-| `enable_ip_forwarding` | true, false | `true`                        | Enable IPv4/IPv6 forwarding. `false` leaves host forwarding settings untouched. |
+| `enable_ip_forwarding` | true, false | `true`                        | Enable IPv4/IPv6 forwarding  |
 | `install_bridge_utils` | true, false | `false`                       | Install bridge utilities     |
 | `cookbook`             | String      | `'openvpn'`                   | Template cookbook            |
+
+Set `enable_ip_forwarding` to `false` to leave the host's forwarding settings untouched, including when OpenVPN runs its startup hook.
 
 ## Examples
 
