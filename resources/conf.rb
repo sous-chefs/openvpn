@@ -3,51 +3,42 @@
 provides :openvpn_conf
 unified_mode true
 
-default_action :create
-
+property :config_name, String, name_property: true
+property :config_path, [String, nil]
+property :cookbook, String, default: 'openvpn'
 property :config, Hash, default: {}
 property :template_source, String, default: 'server.conf.erb'
-property :template_cookbook, String, default: 'openvpn'
 property :push_routes, Array, default: []
 property :push_options, [Hash, Array], default: {}
-property :conf_dir, String, default: lazy {
-  if platform_family?('rhel', 'fedora')
-    "/etc/openvpn/#{name}"
-  else
-    '/etc/openvpn'
-  end
-}
+property :client_cn, String, default: 'client'
 
 action :create do
-  conf_path = ::File.join(new_resource.conf_dir, "#{new_resource.name}.conf")
-
-  # RHEL/Fedora use per-instance config dirs
-  if platform_family?('rhel', 'fedora')
-    directory new_resource.conf_dir do
-      owner 'root'
-      group 'root'
-      mode '0755'
-      recursive true
-    end
+  directory ::File.dirname(resolved_config_path) do
+    owner 'root'
+    group node['root_group']
+    mode '0755'
+    recursive true
   end
 
-  template conf_path do
-    cookbook new_resource.template_cookbook
+  template resolved_config_path do
+    cookbook new_resource.cookbook
     source new_resource.template_source
     owner 'root'
-    group 'root'
+    group node['root_group']
     mode '0644'
     variables(
       config: new_resource.config,
       push_routes: new_resource.push_routes,
-      push_options: new_resource.push_options
+      push_options: new_resource.push_options,
+      client_cn: new_resource.client_cn
     )
     helpers do
       def render_push_options(push_options)
         return [] if push_options.nil?
+
         push_options.each_with_object([]) do |(option, conf), m|
           case conf
-          when Chef::Node::ImmutableArray, Array
+          when Array
             conf.each { |o| m << "push \"#{option} #{o}\"" }
           when String
             m << "push \"#{option} #{conf}\""
@@ -61,9 +52,19 @@ action :create do
 end
 
 action :delete do
-  conf_path = ::File.join(new_resource.conf_dir, "#{new_resource.name}.conf")
-
-  file conf_path do
+  file resolved_config_path do
     action :delete
+  end
+end
+
+action_class do
+  def resolved_config_path
+    return new_resource.config_path if new_resource.config_path
+
+    if (platform_family?('rhel', 'amazon') && node['platform_version'].to_i >= 8) || platform_family?('fedora', 'arch')
+      "/etc/openvpn/#{new_resource.config_name}/#{new_resource.config_name}.conf"
+    else
+      "/etc/openvpn/#{new_resource.config_name}.conf"
+    end
   end
 end

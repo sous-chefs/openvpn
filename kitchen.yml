@@ -1,9 +1,13 @@
+---
 driver:
   name: vagrant
 
 provisioner:
   name: chef_infra
-  product_name: cinc
+  product_name: chef
+  product_version: latest
+  channel: stable
+  chef_license: accept
   enforce_idempotency: true
   multiple_converge: 2
   deprecations_as_errors: true
@@ -17,16 +21,25 @@ platforms:
   - name: amazonlinux-2023
   - name: centos-stream-9
   - name: debian-12
+  - name: debian-13
   - name: fedora-latest
+  - name: oraclelinux-8
+  - name: oraclelinux-9
   - name: rockylinux-8
   - name: rockylinux-9
   - name: ubuntu-22.04
   - name: ubuntu-24.04
 
+x-run_lists:
+  default: &default_run_list
+    - recipe[test::default]
+
+x-verifiers:
+  default: &default_verifier
+    inspec_tests:
+      - path: test/integration/default
+
 suites:
   - name: default
-    run_list:
-      - recipe[test::default]
-    verifier:
-      inspec_tests:
-        - path: test/integration/default
+    run_list: *default_run_list
+    verifier: *default_verifier

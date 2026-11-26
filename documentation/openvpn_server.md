@@ -1,65 +1,71 @@
 # openvpn_server
 
-Sets up the OpenVPN PKI infrastructure including CA certificates, server keys, DH parameters, easy-rsa tools, and certificate revocation list (CRL).
+Installs OpenVPN, prepares PKI files, renders server configuration, and manages the service.
+
+`config` overrides individual generated defaults, so a partial hash retains the required PKI
+paths. RHEL, Fedora and Arch use `/etc/openvpn/server/<name>.conf` for named instances.
 
 ## Actions
 
 | Action    | Description                              |
-|-----------|------------------------------------------|
-| `:create` | Creates the PKI infrastructure (default) |
+| --------- | ---------------------------------------- |
+| `:create` | Creates the server baseline (default)    |
+| `:delete` | Removes config/service-managed artifacts |
 
 ## Properties
 
-Properties from the `_pki` partial (shared with `openvpn_user`):
+| Property               | Type        | Default                       | Description                  |
+| ---------------------- | ----------- | ----------------------------- | ---------------------------- |
+| `config_name`          | String      | name property                 | OpenVPN instance/config name |
+| `package_name`         | String      | `'openvpn'`                   | OpenVPN package name         |
+| `install_epel`         | true, false | `true`                        | Install EPEL on EL nodes     |
+| `key_dir`              | String      | `'/etc/openvpn/keys'`         | PKI directory                |
+| `easy_rsa_dir`         | String      | `'/etc/openvpn/easy-rsa'`     | easy-rsa helper directory    |
+| `config_path`          | String      | platform-specific             | Server config path           |
+| `server_up_script`     | true, false | `true`                        | Manage the startup hook      |
+| `up_script_path`       | String      | `'/etc/openvpn/server.up.sh'` | Startup script path          |
+| `up_script_dir`        | String      | `'/etc/openvpn/server.up.d'`  | Startup script directory     |
+| `crl_path`             | String      | `'/etc/openvpn/crl.pem'`      | Public CRL copy path         |
+| `subnet`               | String      | `'10.8.0.0'`                  | VPN subnet                   |
+| `netmask`              | String      | `'255.255.0.0'`               | VPN netmask                  |
+| `config`               | Hash        | generated defaults            | OpenVPN config directives    |
+| `push_routes`          | Array       | `[]`                          | Client route pushes          |
+| `push_options`         | Hash, Array | `{}`                          | Client option pushes         |
+| `server_verification`  | String, nil | `nil`                         | Manual client verification   |
+| `key_size`             | Integer     | `2048`                        | RSA/DH key size              |
+| `ca_expire`            | Integer     | `3650`                        | CA validity in days          |
+| `key_expire`           | Integer     | `3650`                        | Certificate validity in days |
+| `crl_expire`           | Integer     | `30`                          | CRL validity in days         |
+| `key_country`          | String      | `'US'`                        | Certificate country          |
+| `key_province`         | String      | `'CA'`                        | Certificate province         |
+| `key_city`             | String      | `'San Francisco'`             | Certificate city             |
+| `key_org`              | String      | `'Fort Funston'`              | Certificate organization     |
+| `key_email`            | String      | `'admin@foobar.com'`          | Certificate email            |
+| `message_digest`       | String      | `'sha256'`                    | OpenSSL message digest       |
+| `configure`            | true, false | `true`                        | Render server config         |
+| `enable_ip_forwarding` | true, false | `true`                        | Enable IPv4/IPv6 forwarding  |
+| `install_bridge_utils` | true, false | `false`                       | Install bridge utilities     |
+| `cookbook`             | String      | `'openvpn'`                   | Template cookbook            |
 
-| Property       | Type    | Default                   | Description                  |
-|----------------|---------|---------------------------|------------------------------|
-| `key_dir`      | String  | `'/etc/openvpn/keys'`     | Directory to store PKI files |
-| `easy_rsa_dir` | String  | `'/etc/openvpn/easy-rsa'` | Easy-RSA tools directory     |
-| `key_size`     | Integer | `2048`                    | RSA key size in bits         |
-| `ca_expire`    | Integer | `3650`                    | CA certificate expiry (days) |
-| `key_expire`   | Integer | `3650`                    | Key expiry (days)            |
-| `key_country`  | String  | `'US'`                    | Certificate country          |
-| `key_province` | String  | `'CA'`                    | Certificate state/province   |
-| `key_city`     | String  | `'San Francisco'`         | Certificate city             |
-| `key_org`      | String  | `'Fort Funston'`          | Certificate organization     |
-| `key_email`    | String  | `'admin@example.com'`     | Certificate email            |
+Set `server_up_script` to `false` to leave the startup script and its hook directory
+unmanaged and omit the default `up` directive. Set `up` explicitly in `config` to run
+your own hook. `enable_ip_forwarding` controls the cookbook's forwarding settings
+independently of hook management.
 
-Server-specific properties:
-
-| Property           | Type    | Default         | Description                            |
-|--------------------|---------|-----------------|----------------------------------------|
-| `crl_expire`       | Integer | `30`            | CRL expiry (days)                      |
-| `message_digest`   | String  | `'sha256'`      | Message digest algorithm               |
-| `subnet`           | String  | `'10.8.0.0'`    | VPN subnet for server.up.sh            |
-| `netmask`          | String  | `'255.255.0.0'` | VPN netmask for server.up.sh           |
-| `server_up_script` | Boolean | `true`          | Deploy the server.up.sh startup script |
+Set `server_verification` to add a directive such as `remote-cert-tls server` to client
+bundles generated manually with the Easy-RSA Rakefile. For bundles generated by Chef,
+set the same property on `openvpn_user`.
 
 ## Examples
 
-### Basic usage
-
 ```ruby
-openvpn_server 'default'
-```
-
-### Custom PKI settings
-
-```ruby
-openvpn_server 'default' do
-  key_org 'My Company'
-  key_email 'vpn@example.com'
-  key_country 'GB'
-  key_province 'London'
-  key_city 'London'
-  key_size 4096
-end
-```
-
-### Without server up script
-
-```ruby
-openvpn_server 'default' do
-  server_up_script false
+openvpn_server 'server' do
+  config(
+    'dev' => 'tun0',
+    'port' => '1194',
+    'proto' => 'udp',
+    'server' => '10.8.0.0 255.255.0.0'
+  )
+  push_routes ['192.168.10.0 255.255.255.0']
 end
 ```

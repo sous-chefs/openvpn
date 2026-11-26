@@ -1,38 +1,61 @@
 # frozen_string_literal: true
 
-apt_update
-
-openvpn_install 'default' do
-  enable_ip_forwarding false
-end
-
-openvpn_server 'default' do
-  key_org 'Test Org'
-  key_email 'test@example.com'
-end
-
-openvpn_group = platform_family?('debian') ? 'nogroup' : 'nobody'
-
-openvpn_conf 'server' do
+openvpn_server 'server' do
+  key_size 2048
   config(
-    'port' => '1194',
-    'proto' => 'udp',
-    'dev' => 'tun0',
-    'server' => '10.8.0.0 255.255.0.0',
-    'persist-key' => '',
-    'persist-tun' => '',
-    'keepalive' => '10 120',
-    'user' => 'nobody',
-    'group' => openvpn_group,
     'ca' => '/etc/openvpn/keys/ca.crt',
     'cert' => '/etc/openvpn/keys/server.crt',
-    'key' => '/etc/openvpn/keys/server.key',
+    'crl-verify' => '/etc/openvpn/crl.pem',
+    'dev' => 'tun0',
     'dh' => '/etc/openvpn/keys/dh2048.pem',
-    'crl-verify' => '/etc/openvpn/crl.pem'
+    'group' => platform_family?('debian') ? 'nogroup' : 'nobody',
+    'keepalive' => '10 120',
+    'key' => '/etc/openvpn/keys/server.key',
+    'log' => '/var/log/openvpn.log',
+    'persist-key' => '',
+    'persist-tun' => '',
+    'port' => '1194',
+    'proto' => 'udp',
+    'script-security' => 2,
+    'server' => '10.8.0.0 255.255.0.0',
+    'up' => '/etc/openvpn/server.up.sh',
+    'user' => 'nobody',
+    'verb' => 1
   )
-  push_routes ['10.0.0.0 255.255.255.0']
+  push_routes [
+    '192.168.10.0 255.255.255.0',
+    '10.12.10.0 255.255.255.0',
+  ]
+  push_options(
+    'dhcp-option' => [
+      'DOMAIN local',
+      'DOMAIN-SEARCH local',
+    ]
+  )
 end
 
-openvpn_service 'default' do
-  vpn_type 'server'
+openvpn_user 'vpn_user' do
+  config(
+    'dev' => 'tun0',
+    'port' => '1194',
+    'proto' => 'udp'
+  )
+  gateway 'vpn.example.test'
+  create_bundle false
+  only_if { ::File.exist?('/etc/openvpn/keys/server.crt') }
+end
+
+openvpn_client 'office' do
+  config_path '/etc/openvpn/custom/office.conf'
+  config(
+    'client' => '',
+    'dev' => 'tun1',
+    'proto' => 'udp',
+    'remote' => '127.0.0.1 1194',
+    'nobind' => '',
+    'ca' => '/etc/openvpn/keys/ca.crt',
+    'cert' => '/etc/openvpn/keys/vpn_user.crt',
+    'key' => '/etc/openvpn/keys/vpn_user.key',
+    'verb' => 1
+  )
 end

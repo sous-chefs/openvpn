@@ -6,8 +6,8 @@
 
 client
 dev tun
-proto <%= @proto %>
-remote <%= @gateway %> <%= @port %>
+proto <%= @config['proto'] || 'udp' %>
+remote <%= @gateway %> <%= @config['port'] || '1194' %>
 resolv-retry infinite
 nobind
 persist-key
@@ -15,14 +15,17 @@ persist-tun
 <% if @compression -%>
 compress <%= @compression %>
 <% end %>
-<%
-%w(cipher tls-cipher auth keysize link-mtu).each do |conf|
-  if @config_options[conf]
-%><%= "#{conf} #{@config_options[conf]}" %>
+<% 
+%w(cipher tls-cipher auth keysize link-mtu).each do |conf| 
+  if @config[conf]
+%><%= "#{conf} #{@config[conf]}" %>
 <%
   end
-end
+end 
 -%>
+<% if @server_verification -%>
+<%= @server_verification %>
+<% end -%>
 verb 3
 <ca>
 <%= @ca -%>

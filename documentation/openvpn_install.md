@@ -1,43 +1,33 @@
 # openvpn_install
 
-Installs the OpenVPN package and optionally configures IP forwarding and package repositories.
+Installs or removes OpenVPN packages.
 
 ## Actions
 
-| Action    | Description                         |
-|-----------|-------------------------------------|
-| `:create` | Installs OpenVPN packages (default) |
-| `:delete` | Removes OpenVPN packages            |
+| Action     | Description                         |
+|------------|-------------------------------------|
+| `:install` | Installs OpenVPN packages (default) |
+| `:remove`  | Removes OpenVPN packages            |
 
 ## Properties
 
-| Property               | Type    | Default                      | Description                                     |
-|------------------------|---------|------------------------------|-------------------------------------------------|
-| `packages`             | Array   | `['openvpn']`                | List of packages to install                     |
-| `enable_ip_forwarding` | Boolean | `true`                       | Enable IPv4/IPv6 forwarding via sysctl          |
-| `use_apt_repo`         | Boolean | `true` on Debian family      | Add the official OpenVPN APT repository         |
-| `use_epel`             | Boolean | `true` on RHEL/Amazon family | Include the yum-epel recipe for EPEL repository |
+| Property           | Type          | Default     | Description                         |
+|--------------------|---------------|-------------|-------------------------------------|
+| `package_name`     | String        | `'openvpn'` | OpenVPN package name                |
+| `install_epel`     | true, false   | `true`      | Install `epel-release` on EL nodes  |
+| `install_easy_rsa` | true, false   | `false`     | Install distribution `easy-rsa`     |
+| `install_tar`      | true, false   | `true`      | Install `tar` for client bundles    |
+| `install_bash`     | true, false   | `true`      | Install `bash` for helper scripts   |
 
 ## Examples
-
-### Basic usage
 
 ```ruby
 openvpn_install 'default'
 ```
 
-### Without IP forwarding
-
 ```ruby
-openvpn_install 'default' do
-  enable_ip_forwarding false
-end
-```
-
-### Without the official APT repository
-
-```ruby
-openvpn_install 'default' do
-  use_apt_repo false
+openvpn_install 'custom' do
+  package_name 'openvpn'
+  install_easy_rsa true
 end
 ```

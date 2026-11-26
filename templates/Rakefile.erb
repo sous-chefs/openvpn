@@ -46,9 +46,9 @@ task :client do
 
     conf = <<EOF
 client
-dev <%= @dev.chomp('0') %>
-proto <%= @proto %>
-remote #{gateway} <%= @port %>
+dev <%= (@vpn_config['dev'] || 'tun0').chomp('0') %>
+proto <%= @vpn_config['proto'] || 'udp' %>
+remote #{gateway} <%= @vpn_config['port'] || '1194' %>
 resolv-retry infinite
 nobind
 persist-key

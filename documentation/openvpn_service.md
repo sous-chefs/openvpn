@@ -1,49 +1,34 @@
 # openvpn_service
 
-Manages the OpenVPN systemd service. Handles platform-specific service naming conventions for Debian and RHEL family systems.
+Manages an OpenVPN systemd service.
 
 ## Actions
 
-| Action    | Description                                      |
-|-----------|--------------------------------------------------|
-| `:create` | Enables and starts the OpenVPN service (default) |
-| `:delete` | Stops and disables the OpenVPN service           |
+| Action     | Description                         |
+|------------|-------------------------------------|
+| `:enable`  | Enables the service (default)       |
+| `:start`   | Starts the service                  |
+| `:restart` | Restarts the service                |
+| `:stop`    | Stops and disables the service      |
+| `:delete`  | Stops and disables the service      |
 
 ## Properties
 
-| Property        | Type   | Default    | Description                                |
-|-----------------|--------|------------|--------------------------------------------|
-| `instance_name` | String | name       | Instance name (name property)              |
-| `vpn_type`      | String | `'server'` | VPN type, must be `'server'` or `'client'` |
+| Property       | Type   | Default           | Description                         |
+|----------------|--------|-------------------|-------------------------------------|
+| `config_name`  | String | name property     | OpenVPN instance/config name        |
+| `service_type` | String | `config_name`     | Service type, usually `server`      |
+| `service_name` | String | platform-specific | Full service unit name              |
+| `config_path`  | String | platform-specific | Config file path                    |
+| `supports`     | Hash   | status/restart    | Chef service support map            |
 
-### Platform Notes
-
-- **Debian/Ubuntu**: Uses `openvpn@<vpn_type>.service`
-- **RHEL/Fedora (8+)**: Uses `openvpn-<vpn_type>@<vpn_type>.service` with a systemd symlink
-- **Other**: Uses the generic `openvpn` service name
+For a custom `config_path`, the resource links the packaged instance's expected path to the custom file. The file must be visible and readable inside the unit's sandbox. Move an existing regular file at the packaged path before adopting a custom path. Remove the old link before changing the custom path or returning to the packaged default. A service selected explicitly with `service_name` keeps its own configuration handling.
 
 ## Examples
 
-### Basic server service
-
 ```ruby
-openvpn_service 'default' do
-  vpn_type 'server'
-end
-```
-
-### Client service
-
-```ruby
-openvpn_service 'default' do
-  vpn_type 'client'
-end
-```
-
-### Remove service
-
-```ruby
-openvpn_service 'default' do
-  action :delete
+openvpn_service 'server' do
+  service_type 'server'
+  action [:enable, :start]
 end
 ```

@@ -3,52 +3,43 @@
 provides :openvpn_install
 unified_mode true
 
-default_action :create
+property :package_name, String, default: 'openvpn'
+property :install_epel, [true, false], default: true
+property :install_easy_rsa, [true, false], default: false
+property :install_tar, [true, false], default: true
+property :install_bash, [true, false], default: true
 
-property :packages, Array, default: lazy { %w(openvpn) }
-property :enable_ip_forwarding, [true, false], default: true
-property :use_apt_repo, [true, false], default: lazy { platform_family?('debian') }
-property :use_epel, [true, false], default: lazy { platform_family?('rhel', 'amazon') }
-
-action :create do
-  apt_update
-
-  if new_resource.use_epel
-    include_recipe 'yum-epel'
+action :install do
+  package 'epel-release' do
+    action :install
+    only_if { new_resource.install_epel && platform_family?('rhel') }
   end
 
-  if new_resource.use_apt_repo
-    apt_package 'gnupg'
+  package new_resource.package_name
 
-    apt_repository 'openvpn' do
-      uri 'http://build.openvpn.net/debian/openvpn/stable/'
-      key 'https://swupdate.openvpn.net/repos/repo-public.gpg'
-      components ['main']
-    end
+  package 'easy-rsa' do
+    action :install
+    only_if { new_resource.install_easy_rsa }
   end
 
-  new_resource.packages.each do |pkg|
-    package pkg
+  package 'tar' do
+    action :install
+    only_if { new_resource.install_tar }
   end
 
-  package 'tar'
-
-  if new_resource.enable_ip_forwarding
-    sysctl 'net.ipv4.conf.all.forwarding' do
-      value 1
-    end
-
-    sysctl 'net.ipv6.conf.all.forwarding' do
-      value 1
-      only_if { ::Dir.exist?('/proc/sys/net/ipv6') }
-    end
+  package 'bash' do
+    action :install
+    only_if { new_resource.install_bash }
   end
 end
 
-action :delete do
-  new_resource.packages.each do |pkg|
-    package pkg do
-      action :remove
-    end
+action :remove do
+  package new_resource.package_name do
+    action :remove
+  end
+
+  package 'easy-rsa' do
+    action :remove
+    only_if { new_resource.install_easy_rsa }
   end
 end

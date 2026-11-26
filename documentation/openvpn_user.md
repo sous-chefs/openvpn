@@ -1,81 +1,48 @@
 # openvpn_user
 
-Generates OpenVPN client certificates, configuration files, and optional tar.gz bundles for VPN users.
+Creates OpenVPN client certificates and configuration files.
 
 ## Actions
 
-| Action    | Description                                       |
-|-----------|---------------------------------------------------|
-| `:create` | Generates client certificate and bundle (default) |
-| `:delete` | Removes client configuration files and bundle     |
+| Action    | Description                         |
+|-----------|-------------------------------------|
+| `:create` | Creates client files (default)      |
+| `:delete` | Deletes generated client files      |
 
 ## Properties
 
-Properties from the `_pki` partial (shared with `openvpn_server`):
-
-| Property       | Type    | Default                   | Description                  |
-|----------------|---------|---------------------------|------------------------------|
-| `key_dir`      | String  | `'/etc/openvpn/keys'`     | Directory to store PKI files |
-| `easy_rsa_dir` | String  | `'/etc/openvpn/easy-rsa'` | Easy-RSA tools directory     |
-| `key_size`     | Integer | `2048`                    | RSA key size in bits         |
-| `ca_expire`    | Integer | `3650`                    | CA certificate expiry (days) |
-| `key_expire`   | Integer | `3650`                    | Key expiry (days)            |
-| `key_country`  | String  | `'US'`                    | Certificate country          |
-| `key_province` | String  | `'CA'`                    | Certificate state/province   |
-| `key_city`     | String  | `'San Francisco'`         | Certificate city             |
-| `key_org`      | String  | `'Fort Funston'`          | Certificate organization     |
-| `key_email`    | String  | `'admin@example.com'`     | Certificate email            |
-
-User-specific properties:
-
-| Property            | Type    | Default      | Description                                   |
-|---------------------|---------|--------------|-----------------------------------------------|
-| `client_name`       | String  | name         | Client name (name property)                   |
-| `create_bundle`     | Boolean | `true`       | Create a tar.gz bundle with certs and configs |
-| `force`             | Boolean | `false`      | Force regeneration of existing certificates   |
-| `destination`       | String  | `key_dir`    | Output directory for bundle and configs       |
-| `additional_vars`   | Hash    | `{}`         | Extra template variables for inline configs   |
-| `compression`       | String  | `nil`        | Compression setting for client config         |
-| `client_prefix`     | String  | `'vpn-prod'` | Prefix for client config filenames            |
-| `template_cookbook` | String  | `'openvpn'`  | Cookbook containing client config templates   |
+| Property              | Type        | Default                    | Description                         |
+|-----------------------|-------------|----------------------------|-------------------------------------|
+| `client_name`         | String      | name property              | Client certificate common name      |
+| `create_bundle`       | true, false | `true`                     | Create tar bundle plus config files |
+| `force`               | true, false | `nil`                      | Regenerate files even if present    |
+| `destination`         | String      | `key_dir`                  | Destination directory               |
+| `key_vars`            | Hash        | `{}`                       | Certificate environment overrides   |
+| `additional_vars`     | Hash        | `{}`                       | Extra inline template variables     |
+| `key_dir`             | String      | `'/etc/openvpn/keys'`      | PKI directory                       |
+| `easy_rsa_dir`        | String      | `'/etc/openvpn/easy-rsa'`  | easy-rsa helper directory           |
+| `client_prefix`       | String      | `'vpn-prod'`               | Client config filename prefix       |
+| `cookbook`            | String      | `'openvpn'`                | Template cookbook                   |
+| `config`              | Hash        | `{}`                       | Client config defaults              |
+| `gateway`             | String      | node FQDN                  | VPN gateway hostname                |
+| `server_verification` | String, nil | `nil`                      | Server verification directive       |
 
 ## Examples
 
-### Basic user with bundle
-
 ```ruby
-openvpn_user 'jsmith'
+openvpn_user 'alice' do
+  gateway 'vpn.example.com'
+  config(
+    'dev' => 'tun0',
+    'port' => '1194',
+    'proto' => 'udp'
+  )
+end
 ```
 
-### User with inline config (no bundle)
-
 ```ruby
-openvpn_user 'jsmith' do
+openvpn_user 'bob' do
   create_bundle false
-end
-```
-
-### Custom prefix and destination
-
-```ruby
-openvpn_user 'jsmith' do
-  client_prefix 'vpn-staging'
-  destination '/tmp/vpn-configs'
-end
-```
-
-### Force certificate regeneration
-
-```ruby
-openvpn_user 'jsmith' do
-  force true
-end
-```
-
-### Remove a user
-
-```ruby
-openvpn_user 'jsmith' do
-  action :delete
+  gateway 'vpn.example.com'
 end
 ```

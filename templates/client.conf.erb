@@ -5,9 +5,9 @@
 # configuration settings.
 
 client
-dev <%= @dev.chomp('0') %>
-proto <%= @proto %>
-remote <%= @gateway %> <%= @port %>
+dev <%= (@config['dev'] || 'tun0').chomp('0') %>
+proto <%= @config['proto'] || 'udp' %>
+remote <%= @gateway %> <%= @config['port'] || '1194' %>
 resolv-retry infinite
 nobind
 persist-key
@@ -18,13 +18,13 @@ key <%= @client_cn %>.key
 <% if @compression -%>
 compress <%= @compression %>
 <% end %>
-<%
-%w(cipher tls-cipher auth keysize link-mtu).each do |conf|
-  if @config_options[conf]
-%><%= "#{conf} #{@config_options[conf]}" %>
+<% 
+%w(cipher tls-cipher auth keysize link-mtu).each do |conf| 
+  if @config[conf]
+%><%= "#{conf} #{@config[conf]}" %>
 <%
   end
-end
+end 
 -%>
 verb 3
 <% if @server_verification -%>
